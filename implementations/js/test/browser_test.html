@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Chrono-ID Browser Test</title>
+    <style>
+        body {
+            font-family: sans-serif;
+            padding: 20px;
+            line-height: 1.5;
+        }
+
+        .pass {
+            color: green;
+        }
+
+        .fail {
+            color: red;
+            font-weight: bold;
+        }
+
+        .summary {
+            border-top: 2px solid #ccc;
+            margin-top: 20px;
+            padding-top: 10px;
+        }
+
+        pre {
+            background: #f4f4f4;
+            padding: 10px;
+            border-radius: 4px;
+            overflow-x: auto;
+        }
+    </style>
+    <script src="../src/index.js"></script>
+    <script src="./logic.js"></script>
+</head>
+
+<body>
+    <h1>Chrono-ID Browser Test Suite</h1>
+    <div id="results">Running tests...</div>
+
+    <script>
+        const resultsContainer = document.getElementById('results');
+        const logs = [];
+        let passed = 0;
+        let failed = 0;
+
+        // --- Test Runner Shim ---
+        const describe = (name, fn) => {
+            logs.push(`<h2>${name}</h2>`);
+            fn();
+        };
+
+        const it = (name, fn) => {
+            try {
+                fn();
+                logs.push(`<div class="pass">✔ ${name}</div>`);
+                passed++;
+            } catch (e) {
+                logs.push(`<div class="fail">✘ ${name}</div>`);
+                logs.push(`<pre>${e.message}\n${e.stack}</pre>`);
+                failed++;
+            }
+        };
+
+        const assert = {
+            ok: (val, msg) => { if (!val) throw new Error(msg || 'Expected true'); },
+            strictEqual: (a, b) => { if (a !== b) throw new Error(`Expected ${b}, got ${a}`); },
+            notStrictEqual: (a, b) => { if (a === b) throw new Error(`Expected not ${b}`); },
+            throws: (fn, regex) => {
+                try {
+                    fn();
+                } catch (e) {
+                    if (regex.test(e.message)) return;
+                    throw new Error(`Expected error matching ${regex}, but got: ${e.message}`);
+                }
+                throw new Error(`Expected function to throw, but it succeeded.`);
+            }
+        };
+
+        // --- Run Shared Tests ---
+        defineTests(describe, it, assert, ChronoID);
+
+        // --- Render Results ---
+        let html = logs.join('');
+        html += `<div class="summary">
+            <h3>Summary</h3>
+            <p>Total: ${passed + failed}</p>
+            <p class="pass">Passed: ${passed}</p>
+            <p class="fail">Failed: ${failed}</p>
+        </div>`;
+
+        if (failed === 0) {
+            html += `<h2 class="pass">✅ ALL BROWSER TESTS PASSED (Web Crypto Verified)</h2>`;
+        } else {
+            html += `<h2 class="fail">❌ SOME TESTS FAILED</h2>`;
+        }
+
+        resultsContainer.innerHTML = html;
+    </script>
+</body>
+
+</html>

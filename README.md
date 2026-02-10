@@ -11,15 +11,27 @@ Chrono-ID is a library of compact, lexicographically sortable identifiers that e
 Chrono-ID uses a bit-packing strategy to combine a high-resolution timestamp with a random entropy pool.
 
 ### The Design Philosophy
-1. **K-Sortability:** By placing the timestamp in the most significant bits, IDs generated at different times are naturally ordered. This prevents B-Tree index fragmentation in databases like PostgreSQL and SQLite.
-2. **Signed Safety:** For all "Signed" versions (`Chrono`), the Most Significant Bit (MSB) is forced to `0`. This ensures the ID remains a positive integer in environments that do not support unsigned types (Postgres, Java, C#, etc.).
-3. **Optimized Epochs:**
+1. **K-Sortability:** By placing the timestamp in the most significant bits, IDs generated at different times are naturally ordered. This prevents B-Tree index fragmentation.
+2. **UTC Consistency:** All implementations use **UTC** internals. This avoids "Epoch Boundary" overlap bugs and ensures consistency across distributed systems.
+3. **Signed Safety:** For all "Signed" versions (`Chrono`), the Most Significant Bit (MSB) is forced to `0`. This ensures the ID remains a positive integer in environments that do not support unsigned types (Postgres, Java, etc.).
+4. **Optimized Epochs:**
    - **32-bit family** uses a custom epoch (**January 1, 2000**) to maximize longevity.
    - **64-bit family** uses the standard **Unix Epoch (January 1, 1970)** for global compatibility.
 
-### Bit Layout Examples
-*   **Chrono32 (Day):** `[0 (1b)] [Days since 2000 (18b)] [Random (13b)]`
-*   **Chrono64ms (Milli):** `[0 (1b)] [Ms since 1970 (44b)] [Random (19b)]`
+### Bit Layout Table
+
+| Identifier      | Total Bits | MSB (Sign) | Time Bits  | Random Bits | Precision |
+| :---            | :---       | :---       | :---       | :---        | :---      |
+| **Chrono32**    | 32         | `0` (1b)   | 18b (Day)  | 13b         | Day       |
+| **UChrono32**   | 32         | -          | 18b (Day)  | 14b         | Day       |
+| **Chrono32h**   | 32         | `0` (1b)   | 21b (Hour) | 10b         | Hour      |
+| **UChrono32h**  | 32         | -          | 21b (Hour) | 11b         | Hour      |
+| **Chrono32m**   | 32         | `0` (1b)   | 27b (Min)  | 4b          | Minute    |
+| **UChrono32m**  | 32         | -          | 27b (Min)  | 5b          | Minute    |
+| **Chrono64**    | 64         | `0` (1b)   | 36b (Sec)  | 27b         | Second    |
+| **UChrono64**   | 64         | -          | 36b (Sec)  | 28b         | Second    |
+| **Chrono64ms**  | 64         | `0` (1b)   | 44b (Ms)   | 19b         | Milli     |
+| **UChrono64ms** | 64         | -          | 44b (Ms)   | 20b         | Milli     |
 
 ---
 
@@ -40,79 +52,55 @@ Chrono-ID uses a bit-packing strategy to combine a high-resolution timestamp wit
 
 ---
 
-## 📂 Directory Structure
+## 📂 Project Structure
 
-```text
-chrono-id/
-├── db-extensions/
-│   └── postgres/
-│       └── chrono_id.sql      # PL/pgSQL implementations
-├── implementations/
-│   └── python/
-│       └── src/
-│           └── chrono_id.py   # Python class-based implementation
-└── ...
-```
+- [**Python Implementation**](./implementations/python) - Class-based logic with integer inheritance.
+- [**JS / TypeScript Implementation**](./implementations/js) - Node.js and Browser support with Web Crypto.
+- [**PostgreSQL Extension**](./db-extensions/postgres) - Native PL/pgSQL functions for ID generation.
 
 ---
 
 ## 🚀 Getting Started
 
 ### Python
-The Python implementation allows IDs to act exactly like standard integers while providing temporal decoding methods.
-
-**File:** `implementations/python/src/chrono_id.py`
-
 ```python
-from chrono_id import Chrono64ms, Chrono32
-from datetime import datetime
-
+from chrono_id import Chrono64ms
 # Generate a high-precision ID
-order_id = Chrono64ms()
-print(f"ID: {order_id}")
-print(f"Created at: {order_id.get_time()}")
+id = Chrono64ms()
+print(f"ID: {id} | Created at: {id.get_time()}")
+```
 
-# Generate a space-efficient ID for a specific date
-past_date = datetime(2022, 5, 15)
-tenant_id = Chrono32.from_time(past_date)
+### JavaScript
+```javascript
+const ChronoID = require('chrono-id');
+// Works in Node.js and Browsers
+const id = new ChronoID.Chrono64ms();
+console.log(id.toString(), id.getTime());
 ```
 
 ### PostgreSQL
-Directly integrate Chrono-ID into your database schema as primary key defaults.
-
-**File:** `db-extensions/postgres/chrono_id.sql`
-
 ```sql
--- Create table with automatic Chrono-ID
-CREATE TABLE users (
-    id INTEGER PRIMARY KEY DEFAULT chrono32(),
-    email TEXT UNIQUE
-);
-
--- Extract time from ID for analysis without a created_at column
-SELECT email, chrono32_get_time(id) as joined_date
-FROM users;
+-- Generate 10k unique IDs
+SELECT chrono64ms() FROM generate_series(1, 10000);
 ```
 
 ---
 
 ## 🛠 Roadmap
 
-### Database Support (TODO)
+### Database Support
 - [x] **Postgres:** Implementation via PL/pgSQL.
 - [ ] **SQLite:** Implementation via Zig extension (Coming Soon).
 - [ ] **ClickHouse:** Native function support.
 - [ ] **DuckDB:** Portable SQL implementation.
 - [ ] **MySQL:** Stored function implementation.
 
-### Language Support (TODO)
+### Language Support
 - [x] **Python**
 - [ ] **Zig** (Core library + SQLite Extension)
 - [ ] **Go**
 - [ ] **Rust**
 - [x] **JS / TypeScript**
-- [ ] **Lua**
-- [ ] **C / C++** (Header-only library)
 
 ---
 

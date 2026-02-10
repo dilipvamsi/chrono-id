@@ -1,5 +1,7 @@
 # python
 __pycache__
+venv/
+implementations/python/.coverage
 
 # Logs
 logs

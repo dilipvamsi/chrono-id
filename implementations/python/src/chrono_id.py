@@ -1,6 +1,5 @@
-import time
+from datetime import datetime, timezone
 import secrets
-from datetime import datetime
 
 # --- Constants ---
 EPOCH_2000 = 946684800  # Jan 1, 2000 (Unix Timestamp)
@@ -16,13 +15,13 @@ class ChronoBase(int):
     def __new__(cls, value=None):
         """If value is None, generate a new ID based on current time."""
         if value is None:
-            return cls.from_time(datetime.now())
+            return cls.from_time(datetime.now(timezone.utc))
         return super().__new__(cls, value)
 
     def get_time(self) -> datetime:
         """Extracts the timestamp embedded in the ID."""
         unix_ts = self._extract_unix_ts()
-        return datetime.fromtimestamp(unix_ts)
+        return datetime.fromtimestamp(unix_ts, tz=timezone.utc)
 
     @classmethod
     def from_time(cls, dt: datetime, random_val: int = None):
@@ -41,65 +40,105 @@ class ChronoBase(int):
 # 32-BIT FAMILY (Epoch: Jan 1, 2000)
 # ==========================================
 
+# ==========================================
+# 32-BIT FAMILY (Epoch: Jan 1, 2000)
+# ==========================================
+
 class UChrono32(ChronoBase):
     """Unsigned 32-bit Day ID. [Day: 18b][Rand: 14b]. Expires: 2717."""
+    EPOCH = EPOCH_2000
+    TIME_UNIT_DIVISOR = 86400  # Day
+    TIME_MASK = 0x3FFFF
+    SHIFT = 14
     RANDOM_BITS = 14
-    @staticmethod
-    def _pack_time(ts, rand):
-        days = int((ts - EPOCH_2000) // 86400)
-        return ((days & 0x3FFFF) << 14) | rand
+
+    @classmethod
+    def _pack_time(cls, ts, rand):
+        units = int((ts - cls.EPOCH) // cls.TIME_UNIT_DIVISOR)
+        return ((units & cls.TIME_MASK) << cls.SHIFT) | rand
+
     def _extract_unix_ts(self):
-        return EPOCH_2000 + ((self >> 14) * 86400)
+        return self.EPOCH + ((self >> self.SHIFT) * self.TIME_UNIT_DIVISOR)
 
 class Chrono32(ChronoBase):
     """Signed 32-bit Day ID. [0][Day: 18b][Rand: 13b]. Expires: 2717."""
+    EPOCH = EPOCH_2000
+    TIME_UNIT_DIVISOR = 86400  # Day
+    TIME_MASK = 0x3FFFF
+    SHIFT = 13
     RANDOM_BITS = 13
-    @staticmethod
-    def _pack_time(ts, rand):
-        days = int((ts - EPOCH_2000) // 86400)
-        return ((days & 0x3FFFF) << 13) | rand
+
+    @classmethod
+    def _pack_time(cls, ts, rand):
+        units = int((ts - cls.EPOCH) // cls.TIME_UNIT_DIVISOR)
+        return ((units & cls.TIME_MASK) << cls.SHIFT) | rand
+
     def _extract_unix_ts(self):
-        return EPOCH_2000 + ((self >> 13) * 86400)
+        return self.EPOCH + ((self >> self.SHIFT) * self.TIME_UNIT_DIVISOR)
 
 class UChrono32h(ChronoBase):
     """Unsigned 32-bit Hour ID. [Hour: 21b][Rand: 11b]. Expires: 2239."""
+    EPOCH = EPOCH_2000
+    TIME_UNIT_DIVISOR = 3600  # Hour
+    TIME_MASK = 0x1FFFFF
+    SHIFT = 11
     RANDOM_BITS = 11
-    @staticmethod
-    def _pack_time(ts, rand):
-        hours = int((ts - EPOCH_2000) // 3600)
-        return ((hours & 0x1FFFFF) << 11) | rand
+
+    @classmethod
+    def _pack_time(cls, ts, rand):
+        units = int((ts - cls.EPOCH) // cls.TIME_UNIT_DIVISOR)
+        return ((units & cls.TIME_MASK) << cls.SHIFT) | rand
+
     def _extract_unix_ts(self):
-        return EPOCH_2000 + ((self >> 11) * 3600)
+        return self.EPOCH + ((self >> self.SHIFT) * self.TIME_UNIT_DIVISOR)
 
 class Chrono32h(ChronoBase):
     """Signed 32-bit Hour ID. [0][Hour: 21b][Rand: 10b]. Expires: 2239."""
+    EPOCH = EPOCH_2000
+    TIME_UNIT_DIVISOR = 3600  # Hour
+    TIME_MASK = 0x1FFFFF
+    SHIFT = 10
     RANDOM_BITS = 10
-    @staticmethod
-    def _pack_time(ts, rand):
-        hours = int((ts - EPOCH_2000) // 3600)
-        return ((hours & 0x1FFFFF) << 10) | rand
+
+    @classmethod
+    def _pack_time(cls, ts, rand):
+        units = int((ts - cls.EPOCH) // cls.TIME_UNIT_DIVISOR)
+        return ((units & cls.TIME_MASK) << cls.SHIFT) | rand
+
     def _extract_unix_ts(self):
-        return EPOCH_2000 + ((self >> 10) * 3600)
+        return self.EPOCH + ((self >> self.SHIFT) * self.TIME_UNIT_DIVISOR)
 
 class UChrono32m(ChronoBase):
     """Unsigned 32-bit Minute ID. [Min: 27b][Rand: 5b]. Expires: 2255."""
+    EPOCH = EPOCH_2000
+    TIME_UNIT_DIVISOR = 60  # Minute
+    TIME_MASK = 0x7FFFFFF
+    SHIFT = 5
     RANDOM_BITS = 5
-    @staticmethod
-    def _pack_time(ts, rand):
-        minutes = int((ts - EPOCH_2000) // 60)
-        return ((minutes & 0x7FFFFFF) << 5) | rand
+
+    @classmethod
+    def _pack_time(cls, ts, rand):
+        units = int((ts - cls.EPOCH) // cls.TIME_UNIT_DIVISOR)
+        return ((units & cls.TIME_MASK) << cls.SHIFT) | rand
+
     def _extract_unix_ts(self):
-        return EPOCH_2000 + ((self >> 5) * 60)
+        return self.EPOCH + ((self >> self.SHIFT) * self.TIME_UNIT_DIVISOR)
 
 class Chrono32m(ChronoBase):
     """Signed 32-bit Minute ID. [0][Min: 27b][Rand: 4b]. Expires: 2255."""
+    EPOCH = EPOCH_2000
+    TIME_UNIT_DIVISOR = 60  # Minute
+    TIME_MASK = 0x7FFFFFF
+    SHIFT = 4
     RANDOM_BITS = 4
-    @staticmethod
-    def _pack_time(ts, rand):
-        minutes = int((ts - EPOCH_2000) // 60)
-        return ((minutes & 0x7FFFFFF) << 4) | rand
+
+    @classmethod
+    def _pack_time(cls, ts, rand):
+        units = int((ts - cls.EPOCH) // cls.TIME_UNIT_DIVISOR)
+        return ((units & cls.TIME_MASK) << cls.SHIFT) | rand
+
     def _extract_unix_ts(self):
-        return EPOCH_2000 + ((self >> 4) * 60)
+        return self.EPOCH + ((self >> self.SHIFT) * self.TIME_UNIT_DIVISOR)
 
 # ==========================================
 # 64-BIT FAMILY (Epoch: Jan 1, 1970)
@@ -107,48 +146,72 @@ class Chrono32m(ChronoBase):
 
 class UChrono64(ChronoBase):
     """Unsigned 64-bit Second ID. [Sec: 36b][Rand: 28b]. Expires: 4147."""
+    EPOCH = 0
+    TIME_UNIT_DIVISOR = 1  # Second
+    TIME_MASK = 0xFFFFFFFFF
+    SHIFT = 28
     RANDOM_BITS = 28
-    @staticmethod
-    def _pack_time(ts, rand):
-        secs = int(ts)
-        return ((secs & 0xFFFFFFFFF) << 28) | rand
+
+    @classmethod
+    def _pack_time(cls, ts, rand):
+        units = int((ts - cls.EPOCH) // cls.TIME_UNIT_DIVISOR)
+        return ((units & cls.TIME_MASK) << cls.SHIFT) | rand
+
     def _extract_unix_ts(self):
-        return float(self >> 28)
+        return float(self.EPOCH + ((self >> self.SHIFT) * self.TIME_UNIT_DIVISOR))
 
 class Chrono64(ChronoBase):
     """Signed 64-bit Second ID. [0][Sec: 36b][Rand: 27b]. Expires: 4147."""
+    EPOCH = 0
+    TIME_UNIT_DIVISOR = 1  # Second
+    TIME_MASK = 0xFFFFFFFFF
+    SHIFT = 27
     RANDOM_BITS = 27
-    @staticmethod
-    def _pack_time(ts, rand):
-        secs = int(ts)
-        return ((secs & 0xFFFFFFFFF) << 27) | rand
+
+    @classmethod
+    def _pack_time(cls, ts, rand):
+        units = int((ts - cls.EPOCH) // cls.TIME_UNIT_DIVISOR)
+        return ((units & cls.TIME_MASK) << cls.SHIFT) | rand
+
     def _extract_unix_ts(self):
-        return float(self >> 27)
+        return float(self.EPOCH + ((self >> self.SHIFT) * self.TIME_UNIT_DIVISOR))
 
 class UChrono64ms(ChronoBase):
     """Unsigned 64-bit Millisecond ID. [MS: 44b][Rand: 20b]. Expires: 2527."""
+    EPOCH = 0
+    TIME_UNIT_DIVISOR = 0.001  # Millisecond
+    TIME_MASK = 0xFFFFFFFFFFF
+    SHIFT = 20
     RANDOM_BITS = 20
-    @staticmethod
-    def _pack_time(ts, rand):
-        ms = int(ts * 1000)
-        return ((ms & 0xFFFFFFFFFFF) << 20) | rand
+
+    @classmethod
+    def _pack_time(cls, ts, rand):
+        units = int((ts - cls.EPOCH) // cls.TIME_UNIT_DIVISOR)
+        return ((units & cls.TIME_MASK) << cls.SHIFT) | rand
+
     def _extract_unix_ts(self):
-        return (self >> 20) / 1000.0
+        return self.EPOCH + ((self >> self.SHIFT) * self.TIME_UNIT_DIVISOR)
 
 class Chrono64ms(ChronoBase):
     """Signed 64-bit Millisecond ID. [0][MS: 44b][Rand: 19b]. Expires: 2527."""
+    EPOCH = 0
+    TIME_UNIT_DIVISOR = 0.001  # Millisecond
+    TIME_MASK = 0xFFFFFFFFFFF
+    SHIFT = 19
     RANDOM_BITS = 19
-    @staticmethod
-    def _pack_time(ts, rand):
-        ms = int(ts * 1000)
-        return ((ms & 0xFFFFFFFFFFF) << 19) | rand
+
+    @classmethod
+    def _pack_time(cls, ts, rand):
+        units = int((ts - cls.EPOCH) // cls.TIME_UNIT_DIVISOR)
+        return ((units & cls.TIME_MASK) << cls.SHIFT) | rand
+
     def _extract_unix_ts(self):
-        return (self >> 19) / 1000.0
+        return self.EPOCH + ((self >> self.SHIFT) * self.TIME_UNIT_DIVISOR)
 
 # ==========================================
 # DEMONSTRATION
 # ==========================================
-if __name__ == "__main__":
+if __name__ == "__main__":  # pragma: no cover
     header = f"{'Function':<12} | {'Value':<20} | {'Decoded Time':<20} | {'Expires'}"
     print(header)
     print("-" * len(header))
