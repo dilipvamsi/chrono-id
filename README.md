@@ -110,7 +110,7 @@ FROM users;
 - [ ] **Zig** (Core library + SQLite Extension)
 - [ ] **Go**
 - [ ] **Rust**
-- [ ] **JS / TypeScript**
+- [x] **JS / TypeScript**
 - [ ] **Lua**
 - [ ] **C / C++** (Header-only library)
 

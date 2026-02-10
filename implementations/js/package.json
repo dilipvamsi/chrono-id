@@ -1,0 +1,43 @@
+{
+  "name": "chrono-id",
+  "version": "1.0.0",
+  "description": "A zero-lookup, partition-aware UUIDv8 implementation with microsecond precision.",
+  "main": "src/index.js",
+  "unpkg": "dist/chrono-id.min.js",
+  "jsdelivr": "dist/chrono-id.min.js",
+  "types": "types/index.d.ts",
+  "files": [
+    "src",
+    "dist",
+    "types",
+    "README.md"
+  ],
+  "scripts": {
+    "test": "node test/test.js",
+    "build": "mkdir -p dist && terser ./src/index.js --compress --mangle --output dist/chrono-id.min.js",
+    "prepublishOnly": "npm run build"
+  },
+  "keywords": [
+    "unique",
+    "time-ordered",
+    "k-sorted",
+    "database"
+  ],
+  "author": "dilipvamsi",
+  "license": "MIT",
+  "engines": {
+    "node": ">=10.4.0"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/dilipvamsi/chrono-id.git",
+    "directory": "implementations/js"
+  },
+  "bugs": {
+    "url": "https://github.com/dilipvamsi/chrono-id/issues"
+  },
+  "homepage": "https://github.com/dilipvamsi/chrono-id#readme",
+  "devDependencies": {
+    "terser": "^5.44.1"
+  }
+}
