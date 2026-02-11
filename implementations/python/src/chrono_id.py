@@ -208,6 +208,38 @@ class Chrono64ms(ChronoBase):
     def _extract_unix_ts(self):
         return self.EPOCH + ((self >> self.SHIFT) * self.TIME_UNIT_DIVISOR)
 
+class UChrono64us(ChronoBase):
+    """Unsigned 64-bit Microsecond ID. [us: 54b][Rand: 10b]. Expires: 2540."""
+    EPOCH = 0
+    TIME_UNIT_DIVISOR = 0.000001  # Microsecond
+    TIME_MASK = 0x3FFFFFFFFFFFFF
+    SHIFT = 10
+    RANDOM_BITS = 10
+
+    @classmethod
+    def _pack_time(cls, ts, rand):
+        units = int((ts - cls.EPOCH) // cls.TIME_UNIT_DIVISOR)
+        return ((units & cls.TIME_MASK) << cls.SHIFT) | rand
+
+    def _extract_unix_ts(self):
+        return self.EPOCH + ((self >> self.SHIFT) * self.TIME_UNIT_DIVISOR)
+
+class Chrono64us(ChronoBase):
+    """Signed 64-bit Microsecond ID. [0][us: 54b][Rand: 9b]. Expires: 2540."""
+    EPOCH = 0
+    TIME_UNIT_DIVISOR = 0.000001  # Microsecond
+    TIME_MASK = 0x3FFFFFFFFFFFFF
+    SHIFT = 9
+    RANDOM_BITS = 9
+
+    @classmethod
+    def _pack_time(cls, ts, rand):
+        units = int((ts - cls.EPOCH) // cls.TIME_UNIT_DIVISOR)
+        return ((units & cls.TIME_MASK) << cls.SHIFT) | rand
+
+    def _extract_unix_ts(self):
+        return self.EPOCH + ((self >> self.SHIFT) * self.TIME_UNIT_DIVISOR)
+
 # ==========================================
 # DEMONSTRATION
 # ==========================================
@@ -221,7 +253,8 @@ if __name__ == "__main__":  # pragma: no cover
         (UChrono32h, "Year 2239"), (Chrono32h, "Year 2239"),
         (UChrono32,  "Year 2717"), (Chrono32,  "Year 2717"),
         (UChrono64,  "Year 4147"), (Chrono64,  "Year 4147"),
-        (UChrono64ms,"Year 2527"), (Chrono64ms,"Year 2527")
+        (UChrono64ms,"Year 2527"), (Chrono64ms,"Year 2527"),
+        (UChrono64us,"Year 2540"), (Chrono64us,"Year 2540")
     ]
 
     for cls, expiry in examples:

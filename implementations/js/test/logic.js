@@ -34,7 +34,9 @@ function defineTests(describe, it, assert, ChronoID) {
                 { cls: ChronoID.UChrono64, precision: 1000 },
                 { cls: ChronoID.Chrono64, precision: 1000 },
                 { cls: ChronoID.UChrono64ms, precision: 1 },
-                { cls: ChronoID.Chrono64ms, precision: 1 }
+                { cls: ChronoID.Chrono64ms, precision: 1 },
+                { cls: ChronoID.UChrono64us, precision: 1 }, // precision in ms for accuracy check
+                { cls: ChronoID.Chrono64us, precision: 1 }
             ];
 
             for (const { cls, precision } of variants) {

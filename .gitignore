@@ -3,6 +3,13 @@ __pycache__
 venv/
 implementations/python/.coverage
 
+
+# cpp
+implementations/cpp/build
+
+# sqlite
+db-extensions/sqlite/build
+
 # Logs
 logs
 *.log

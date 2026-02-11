@@ -81,6 +81,20 @@ CREATE OR REPLACE FUNCTION uchrono64ms() RETURNS BIGINT AS $$
     ) | (floor(random() * 1048576)::bigint); -- 20 bits Random (2^20)
 $$ LANGUAGE sql VOLATILE PARALLEL SAFE;
 
+-- 3. Microsecond Precision (54 bits time)
+-- 54 bits Microsecond = ~570 years | 9/10 bits Random
+CREATE OR REPLACE FUNCTION chrono64us() RETURNS BIGINT AS $$
+    SELECT (
+        ((floor(EXTRACT(EPOCH FROM (now() AT TIME ZONE 'utc')) * 1000000)::BIGINT) & x'3FFFFFFFFFFFFF'::bigint) << 9 -- 54 bits US shifted by 9
+    ) | (floor(random() * 512)::bigint); -- 9 bits Random (2^9)
+$$ LANGUAGE sql VOLATILE PARALLEL SAFE;
+
+CREATE OR REPLACE FUNCTION uchrono64us() RETURNS BIGINT AS $$
+    SELECT (
+        ((floor(EXTRACT(EPOCH FROM (now() AT TIME ZONE 'utc')) * 1000000)::BIGINT) & x'3FFFFFFFFFFFFF'::bigint) << 10 -- 54 bits US shifted by 10
+    ) | (floor(random() * 1024)::bigint); -- 10 bits Random (2^10)
+$$ LANGUAGE sql VOLATILE PARALLEL SAFE;
+
 
 -- =========================================================
 --  RETRIEVAL FUNCTIONS (Get Time from ID)
@@ -111,6 +125,14 @@ $$ LANGUAGE sql IMMUTABLE PARALLEL SAFE;
 
 CREATE OR REPLACE FUNCTION chrono64ms_get_time(id BIGINT) RETURNS TIMESTAMPTZ AS $$
     SELECT TO_TIMESTAMP((id >> 19) / 1000.0); -- Unshift 19, convert ms to sec
+$$ LANGUAGE sql IMMUTABLE PARALLEL SAFE;
+
+CREATE OR REPLACE FUNCTION chrono64us_get_time(id BIGINT) RETURNS TIMESTAMPTZ AS $$
+    SELECT TO_TIMESTAMP((id >> 9) / 1000000.0); -- Unshift 9, convert us to sec
+$$ LANGUAGE sql IMMUTABLE PARALLEL SAFE;
+
+CREATE OR REPLACE FUNCTION uchrono64us_get_time(id BIGINT) RETURNS TIMESTAMPTZ AS $$
+    SELECT TO_TIMESTAMP((id >> 10) / 1000000.0); -- Unshift 10, convert us to sec
 $$ LANGUAGE sql IMMUTABLE PARALLEL SAFE;
 
 -- Example Usage:

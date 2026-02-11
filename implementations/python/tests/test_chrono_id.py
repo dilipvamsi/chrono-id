@@ -3,7 +3,8 @@ from datetime import datetime, timezone
 import time
 from chrono_id import (
     UChrono32, Chrono32, UChrono32h, Chrono32h, UChrono32m, Chrono32m,
-    UChrono64, Chrono64, UChrono64ms, Chrono64ms, ChronoBase, EPOCH_2000
+    UChrono64, Chrono64, UChrono64ms, Chrono64ms, UChrono64us, Chrono64us,
+    ChronoBase, EPOCH_2000
 )
 
 # Helper to get UTC datetime
@@ -38,8 +39,10 @@ class TestChronoID(unittest.TestCase):
             (Chrono32m, 60),
             (UChrono64, 1),        # Second precision
             (Chrono64, 1),
-            (UChrono64ms, 0.001),  # Millisecond precision
+            (UChrono64ms, 0.001),
             (Chrono64ms, 0.001),
+            (UChrono64us, 0.000001), # Microsecond precision
+            (Chrono64us, 0.000001),
         ]
         
         for cls, precision in variants:

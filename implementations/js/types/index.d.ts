@@ -80,3 +80,9 @@ export class UChrono64ms extends ChronoBase { }
 
 /** Signed 64-bit Millisecond ID. Capacity: 524k/ms. Expires: 2527. */
 export class Chrono64ms extends ChronoBase { }
+
+/** Unsigned 64-bit Microsecond ID. Capacity: 1,024/us. Expires: 2540. */
+export class UChrono64us extends ChronoBase { }
+
+/** Signed 64-bit Microsecond ID. Capacity: 512/us. Expires: 2540. */
+export class Chrono64us extends ChronoBase { }

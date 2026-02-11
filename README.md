@@ -32,6 +32,8 @@ Chrono-ID uses a bit-packing strategy to combine a high-resolution timestamp wit
 | **UChrono64**   | 64         | -          | 36b (Sec)  | 28b         | Second    |
 | **Chrono64ms**  | 64         | `0` (1b)   | 44b (Ms)   | 19b         | Milli     |
 | **UChrono64ms** | 64         | -          | 44b (Ms)   | 20b         | Milli     |
+| **Chrono64us**  | 64         | `0` (1b)   | 54b (us)   | 9b          | Micro     |
+| **UChrono64us** | 64         | -          | 54b (us)   | 10b         | Micro     |
 
 ---
 
@@ -49,6 +51,49 @@ Chrono-ID uses a bit-packing strategy to combine a high-resolution timestamp wit
 | **UChrono64**  | Unsigned | Second    | 268M / Sec   | **4147**  | 1970  |
 | **Chrono64ms** | Signed   | Milli     | 524k / Ms    | **2527**  | 1970  |
 | **UChrono64ms**| Unsigned | Milli     | 1M / Ms      | **2527**  | 1970  |
+| **Chrono64us** | Signed   | Micro     | 512 / us     | **2540**  | 1970  |
+| **UChrono64us**| Unsigned | Micro     | 1,024 / us   | **2540**  | 1970  |
+
+---
+
+## 📈 Log Stream Analysis
+
+Chrono-ID is exceptionally well-suited for high-throughput log streams due to its **K-Sortable** nature and compact binary representation.
+
+### Why it works:
+1. **Append-Only Performance:** Being naturally ordered by time, IDs are always inserted at the end of B-Tree indexes. This prevents random I/O and expensive page splits common with standard UUIDs.
+2. **Compact Storage:** A 64-bit integer significantly reduces index volume compared to 128-bit UUIDs or string-based ISO timestamps, leading to better cache utilization.
+3. **Implicit Time Indexing:** Range queries can be performed directly on the ID (`ID >= target_start AND ID <= target_end`), often eliminating the need for a separate `created_at` index.
+
+### Precision vs. Entropy:
+- **Chrono64us (Precision First):** Provides microsecond granularity, which is ideal for high-precision event ordering on a single node or small clusters. By dedicating 54 bits to time, it leaves 9-10 bits for random entropy (512-1024 IDs/us). This is perfect for high-resolution logging where sub-millisecond sequencing is the priority.
+- **Chrono64ms (Scale First):** Specifically designed for massive distributed deployments. By using millisecond precision, it frees up **19-20 bits of entropy** (over 1 million unique IDs per millisecond). This makes it practically immune to global collisions in large-scale server fleets across thousands of nodes, while still maintaining excellent K-sortability for database indexing.
+
+---
+
+## 🎯 Selection Guide
+
+| Scenario | Recommended ID | Rationale |
+| :--- | :--- | :--- |
+| **Distributed Systems** | `Chrono64ms` | High entropy (20-bit) minimizes global collision risk across many nodes. |
+| **High-Precision Logging**| `Chrono64us` | Microsecond precision for perfect event sequencing on a single node. |
+| **Standard DB Identity** | `Chrono64` | Balanced longevity (4147 AD) and ordering for primary keys. |
+| **Mobile/Low-Bandwidth** | `Chrono32` | 4-byte footprint saves bandwidth and storage while remaining time-ordered. |
+| **Hourly/Batch Tasks**  | `Chrono32h` | Efficiently group IDs by hour with zero looking up. |
+| **Postgres / Java**      | `Chrono*` (Signed) | Use "Chrono" versions to avoid MSB issues in signed-only environments. |
+
+---
+
+## 📖 Use Case Examples
+
+| Identifier | Real-World Use Case | Why? |
+| :--- | :--- | :--- |
+| **Chrono32** | **Daily Batch IDs** | IDs generated per-batch per-day; only 4 bytes needed. |
+| **Chrono32h** | **IoT Sensor Data** | Hourly readings for millions of sensors; compact storage is vital. |
+| **Chrono32m** | **Blog Comments** | Sorted chronologically; minute-level precision is sufficient. |
+| **Chrono64** | **Database Primary Keys**| Standard choice for production tables; lasts over 2000 years. |
+| **Chrono64ms**| **Distributed Messaging**| High uniqueness required across many global server regions. |
+| **Chrono64us**| **Financial Transactions**| High-frequency events where microsecond ordering is critical. |
 
 ---
 
@@ -56,7 +101,9 @@ Chrono-ID uses a bit-packing strategy to combine a high-resolution timestamp wit
 
 - [**Python Implementation**](./implementations/python) - Class-based logic with integer inheritance.
 - [**JS / TypeScript Implementation**](./implementations/js) - Node.js and Browser support with Web Crypto.
+- [**C++ Implementation**](./implementations/cpp) - Header-only library using `std::chrono`. [Read Documentation](./implementations/cpp/README.md)
 - [**PostgreSQL Extension**](./db-extensions/postgres) - Native PL/pgSQL functions for ID generation.
+- [**SQLite Extension**](./db-extensions/sqlite) - Native C++ extension for ID generation. [Read Documentation](./db-extensions/sqlite/README.md)
 
 ---
 
@@ -84,20 +131,32 @@ console.log(id.toString(), id.getTime());
 SELECT chrono64ms() FROM generate_series(1, 10000);
 ```
 
+### C++
+```cpp
+#include "chrono_id.hpp"
+#include <iostream>
+
+int main() {
+    chrono_id::UChrono64us id;
+    std::cout << "ID: " << id.value << std::endl;
+    return 0;
+}
+```
+
 ---
 
 ## 🛠 Roadmap
 
 ### Database Support
 - [x] **Postgres:** Implementation via PL/pgSQL.
-- [ ] **SQLite:** Implementation via Zig extension (Coming Soon).
+- [x] **SQLite:** Implementation via C++ extension.
 - [ ] **ClickHouse:** Native function support.
 - [ ] **DuckDB:** Portable SQL implementation.
 - [ ] **MySQL:** Stored function implementation.
 
 ### Language Support
 - [x] **Python**
-- [ ] **Zig** (Core library + SQLite Extension)
+- [x] **C++** (Header only library)
 - [ ] **Go**
 - [ ] **Rust**
 - [x] **JS / TypeScript**

@@ -328,6 +328,46 @@ class Chrono64ms extends ChronoBase {
     }
 }
 
+class UChrono64us extends ChronoBase {
+    static SHIFT = 10n;
+    static MASK = 0x3FFFFFFFFFFFFFn;
+    static RAND_MASK = 0x3FFn;
+    static PRECISION_MS = 0.001; // Microsecond in terms of ms (Date object precision)
+    static EPOCH = 0n;
+
+    static _pack(date, rand = null) {
+        const ms = date.getTime();
+        // JavaScript Date only has millisecond precision. 
+        // We pack the ms and assume 0 for micro parts since Date doesn't provide it.
+        const units = BigInt(Math.floor(ms)) * 1000n;
+        const r = rand !== null ? BigInt(rand) : getRandomBits(Number(this.SHIFT));
+        return ((units & this.MASK) << this.SHIFT) | (r & this.RAND_MASK);
+    }
+    static _unpack(val) {
+        const totalUs = val >> this.SHIFT;
+        return totalUs / 1000n; // Return ms for Date constructor
+    }
+}
+
+class Chrono64us extends ChronoBase {
+    static SHIFT = 9n;
+    static MASK = 0x3FFFFFFFFFFFFFn;
+    static RAND_MASK = 0x1FFn;
+    static PRECISION_MS = 0.001;
+    static EPOCH = 0n;
+
+    static _pack(date, rand = null) {
+        const ms = date.getTime();
+        const units = BigInt(Math.floor(ms)) * 1000n;
+        const r = rand !== null ? BigInt(rand) : getRandomBits(Number(this.SHIFT));
+        return ((units & this.MASK) << this.SHIFT) | (r & this.RAND_MASK);
+    }
+    static _unpack(val) {
+        const totalUs = val >> this.SHIFT;
+        return totalUs / 1000n;
+    }
+}
+
 // Export for Node.js or Browser Global
 if (typeof module !== 'undefined' && module.exports) {
     module.exports = {
@@ -335,7 +375,8 @@ if (typeof module !== 'undefined' && module.exports) {
         UChrono32h, Chrono32h,
         UChrono32m, Chrono32m,
         UChrono64, Chrono64,
-        UChrono64ms, Chrono64ms
+        UChrono64ms, Chrono64ms,
+        UChrono64us, Chrono64us
     };
     /* v8 ignore next 9 */
 } else if (typeof window !== 'undefined') {
@@ -344,6 +385,7 @@ if (typeof module !== 'undefined' && module.exports) {
         UChrono32h, Chrono32h,
         UChrono32m, Chrono32m,
         UChrono64, Chrono64,
-        UChrono64ms, Chrono64ms
+        UChrono64ms, Chrono64ms,
+        UChrono64us, Chrono64us
     };
 }

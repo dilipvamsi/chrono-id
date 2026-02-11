@@ -37,7 +37,8 @@ class TestChronoIDPostgres(unittest.TestCase):
             "chrono32h", "uchrono32h",
             "chrono32m", "uchrono32m",
             "chrono64", "uchrono64",
-            "chrono64ms", "uchrono64ms"
+            "chrono64ms", "uchrono64ms",
+            "chrono64us", "uchrono64us"
         ]
         for func in variants:
             with self.subTest(func=func):
@@ -59,7 +60,9 @@ class TestChronoIDPostgres(unittest.TestCase):
             ("chrono32h_get_time", 0, 2000),
             ("chrono32m_get_time", 0, 2000),
             ("chrono64_get_time", 0, 1970),
-            ("chrono64ms_get_time", 0, 1970)
+            ("chrono64ms_get_time", 0, 1970),
+            ("chrono64us_get_time", 0, 1970),
+            ("uchrono64us_get_time", 0, 1970)
         ]
         for func, val, expected_year in retrievals:
             with self.subTest(func=func):
@@ -76,7 +79,8 @@ class TestChronoIDPostgres(unittest.TestCase):
             ("chrono32h", "chrono32h_get_time", 3600),
             ("chrono32m", "chrono32m_get_time", 60),
             ("chrono64", "chrono64_get_time", 1),
-            ("chrono64ms", "chrono64ms_get_time", 0.001)
+            ("chrono64ms", "chrono64ms_get_time", 0.001),
+            ("chrono64us", "chrono64us_get_time", 0.000001)
         ]
         for gen, get, precision in test_cases:
             with self.subTest(gen=gen):
