@@ -20,6 +20,8 @@ using chrono64ms = chrono_id::Chrono64ms;
 using uchrono64ms = chrono_id::UChrono64ms;
 using chrono64us = chrono_id::Chrono64us;
 using uchrono64us = chrono_id::UChrono64us;
+using chrono32w = chrono_id::Chrono32w;
+using uchrono32w = chrono_id::UChrono32w;
 
 // --- Result Helpers ---
 
@@ -50,7 +52,9 @@ enum class Variant {
   C64MS,
   UC64MS,
   C64US,
-  UC64US
+  UC64US,
+  C32W,
+  UC32W
 };
 
 Variant parse_variant(const char *type) {
@@ -78,6 +82,10 @@ Variant parse_variant(const char *type) {
     return Variant::C64US;
   if (strcmp(type, "u64us") == 0 || strcmp(type, "uchrono64us") == 0)
     return Variant::UC64US;
+  if (strcmp(type, "32w") == 0 || strcmp(type, "chrono32w") == 0)
+    return Variant::C32W;
+  if (strcmp(type, "u32w") == 0 || strcmp(type, "uchrono32w") == 0)
+    return Variant::UC32W;
   return Variant::C64MS; // Default
 }
 
@@ -125,6 +133,12 @@ static void chrono_new_func(sqlite3_context *context, int argc,
     break;
   case Variant::UC64US:
     set_result(context, (uint64_t)uchrono64us());
+    break;
+  case Variant::C32W:
+    set_result(context, (int32_t)chrono32w());
+    break;
+  case Variant::UC32W:
+    set_result(context, (uint32_t)uchrono32w());
     break;
   }
 }
@@ -178,6 +192,12 @@ static void chrono_to_iso_func(sqlite3_context *context, int argc,
   case Variant::UC64US:
     res = uchrono64us((uint64_t)id).to_iso_string();
     break;
+  case Variant::C32W:
+    res = chrono32w((int32_t)id).to_iso_string();
+    break;
+  case Variant::UC32W:
+    res = uchrono32w((uint32_t)id).to_iso_string();
+    break;
   }
   sqlite3_result_text(context, res.c_str(), -1, SQLITE_TRANSIENT);
 }
@@ -230,6 +250,12 @@ static void chrono_from_iso_func(sqlite3_context *context, int argc,
       break;
     case Variant::UC64US:
       set_result(context, (uint64_t)uchrono64us::from_iso_cstring(iso));
+      break;
+    case Variant::C32W:
+      set_result(context, (int32_t)chrono32w::from_iso_cstring(iso));
+      break;
+    case Variant::UC32W:
+      set_result(context, (uint32_t)uchrono32w::from_iso_cstring(iso));
       break;
     }
   } catch (const std::exception &e) {
@@ -285,6 +311,12 @@ static void chrono_get_time_func(sqlite3_context *context, int argc,
   case Variant::UC64US:
     set_result(context, uchrono64us((uint64_t)id).get_timestamp());
     break;
+  case Variant::C32W:
+    set_result(context, chrono32w((int32_t)id).get_timestamp());
+    break;
+  case Variant::UC32W:
+    set_result(context, uchrono32w((uint32_t)id).get_timestamp());
+    break;
   }
 }
 
@@ -332,6 +364,8 @@ DEFINE_CHRONO_METHODS(chrono64ms)
 DEFINE_CHRONO_METHODS(uchrono64ms)
 DEFINE_CHRONO_METHODS(chrono64us)
 DEFINE_CHRONO_METHODS(uchrono64us)
+DEFINE_CHRONO_METHODS(chrono32w)
+DEFINE_CHRONO_METHODS(uchrono32w)
 
 #define REGISTER_VARIANT(name)                                                 \
   sqlite3_create_function(db, #name, 0, SQLITE_UTF8, 0, name##_func, 0, 0);    \
@@ -374,6 +408,8 @@ int sqlite3_chronoid_init(sqlite3 *db, char **pzErrMsg,
   REGISTER_VARIANT(uchrono64ms);
   REGISTER_VARIANT(chrono64us);
   REGISTER_VARIANT(uchrono64us);
+  REGISTER_VARIANT(chrono32w);
+  REGISTER_VARIANT(uchrono32w);
 
   return SQLITE_OK;
 }

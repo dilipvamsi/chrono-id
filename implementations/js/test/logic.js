@@ -36,7 +36,9 @@ function defineTests(describe, it, assert, ChronoID) {
                 { cls: ChronoID.UChrono64ms, precision: 1 },
                 { cls: ChronoID.Chrono64ms, precision: 1 },
                 { cls: ChronoID.UChrono64us, precision: 1 }, // precision in ms for accuracy check
-                { cls: ChronoID.Chrono64us, precision: 1 }
+                { cls: ChronoID.Chrono64us, precision: 1 },
+                { cls: ChronoID.UChrono32w, precision: 604800000 }, // Week precision in ms
+                { cls: ChronoID.Chrono32w, precision: 604800000 }
             ];
 
             for (const { cls, precision } of variants) {
@@ -117,12 +119,32 @@ function defineTests(describe, it, assert, ChronoID) {
         });
 
         it('Invalid date throwing error', () => {
-            assert.throws(() => ChronoID.Chrono64ms.fromTime('not a date'), /Invalid date object/);
+            assert.throws(() => ChronoID.Chrono64ms.fromTime('not a date'), ChronoID.ChronoError, /Invalid date object/);
         });
 
         it('Constructor with specific value', () => {
             const id = new ChronoID.Chrono32('100');
             assert.strictEqual(id.toBigInt(), 100n);
+        });
+
+        it('fromISOString and standardized errors', () => {
+            // Valid ISO
+            const id = ChronoID.Chrono64ms.fromISOString('2023-05-20T10:30:00.123Z');
+            assert.strictEqual(id.getTime().toISOString(), '2023-05-20T10:30:00.123Z');
+
+            // Null/Undefined inputs
+            assert.throws(() => ChronoID.Chrono64ms.fromISOString(null), ChronoID.ChronoError, /Input string is null/);
+            assert.throws(() => ChronoID.Chrono64ms.fromISOString(undefined), ChronoID.ChronoError, /Input string is null/);
+            assert.throws(() => ChronoID.Chrono32.fromTime(null), ChronoID.ChronoError, /Input date is null/);
+
+            // Invalid format
+            assert.throws(() => ChronoID.Chrono64ms.fromISOString('not-a-date'), ChronoID.ChronoError, /Invalid ISO 8601 format/);
+
+            // Underflow 64-bit (Pre-1970)
+            assert.throws(() => ChronoID.Chrono64.fromISOString('1960-01-01T00:00:00Z'), ChronoID.ChronoError, /Date is before Unix Epoch/);
+
+            // Underflow 32-bit (Pre-2000)
+            assert.throws(() => ChronoID.Chrono32.fromISOString('1999-12-31T23:59:59Z'), ChronoID.ChronoError, /Date is before Epoch/);
         });
     });
 }

@@ -27,7 +27,7 @@ class TestChronoIDSQLite(unittest.TestCase):
 
     def test_generic_functions(self):
         # chrono_new(type)
-        variants = ["32", "u32", "32h", "32m", "64", "64ms", "64us"]
+        variants = ["32", "u32", "32h", "32m", "32w", "64", "64ms", "64us"]
         for v in variants:
             with self.subTest(variant=v):
                 self.cursor.execute("SELECT chrono_new(?)", (v,))
@@ -37,7 +37,7 @@ class TestChronoIDSQLite(unittest.TestCase):
 
     def test_individual_wrappers(self):
         # Individual functions like chrono32() (Postgres naming)
-        wrappers = ["chrono32", "uchrono32", "chrono32h", "chrono32m", "chrono64", "chrono64ms", "chrono64us"]
+        wrappers = ["chrono32", "uchrono32", "chrono32h", "chrono32m", "chrono32w", "uchrono32w", "chrono64", "chrono64ms", "chrono64us"]
         for f in wrappers:
             with self.subTest(func=f):
                 self.cursor.execute(f"SELECT {f}()")
@@ -89,6 +89,16 @@ class TestChronoIDSQLite(unittest.TestCase):
         with self.assertRaises(sqlite3.OperationalError) as cm:
              self.cursor.execute("SELECT chrono_from_iso(NULL, '64ms')")
         self.assertIn("Input string is null", str(cm.exception))
+
+        # Test Underflow (Pre-2000 for 32-bit)
+        with self.assertRaises(sqlite3.OperationalError) as cm:
+             self.cursor.execute("SELECT chrono_from_iso('1999-12-31T23:59:59Z', '32')")
+        self.assertIn("Timestamp underflow", str(cm.exception))
+        self.assertIn("2000-01-01", str(cm.exception))
+
+        with self.assertRaises(sqlite3.OperationalError) as cm:
+             self.cursor.execute("SELECT chrono_from_iso('1960-01-01T00:00:00Z', '64')")
+        self.assertIn("Pre-1970 not supported", str(cm.exception))
 
 if __name__ == "__main__":
     unittest.main()

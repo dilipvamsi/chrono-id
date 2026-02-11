@@ -3,8 +3,9 @@ from datetime import datetime, timezone
 import time
 from chrono_id import (
     UChrono32, Chrono32, UChrono32h, Chrono32h, UChrono32m, Chrono32m,
+    UChrono32w, Chrono32w,
     UChrono64, Chrono64, UChrono64ms, Chrono64ms, UChrono64us, Chrono64us,
-    ChronoBase, EPOCH_2000
+    ChronoBase, EPOCH_2000, ChronoError
 )
 
 # Helper to get UTC datetime
@@ -43,6 +44,8 @@ class TestChronoID(unittest.TestCase):
             (Chrono64ms, 0.001),
             (UChrono64us, 0.000001), # Microsecond precision
             (Chrono64us, 0.000001),
+            (UChrono32w, 604800),    # Week precision
+            (Chrono32w, 604800),
         ]
         
         for cls, precision in variants:
@@ -132,6 +135,36 @@ class TestChronoID(unittest.TestCase):
         self.assertEqual(obj + 500, 1500)
         self.assertTrue(obj > 500)
         self.assertEqual(str(obj), "1000")
+
+    def test_from_iso_string(self):
+        # Valid ISO strings
+        with self.subTest(case="ms-precision"):
+            obj1 = Chrono64ms.from_iso_string("2023-05-20T10:30:00.123Z")
+            self.assertEqual(obj1.to_iso_string(), "2023-05-20T10:30:00.123Z")
+        
+        # Test error: Null input
+        with self.subTest(case="null-iso"):
+            with self.assertRaisesRegex(ChronoError, "Input string is null"):
+                Chrono64ms.from_iso_string(None)
+            
+        # Test error: Invalid format
+        with self.subTest(case="invalid-format"):
+            with self.assertRaisesRegex(ChronoError, "Invalid ISO 8601 format"):
+                Chrono64ms.from_iso_string("not-a-date")
+            
+        # Test error: Underflow Pre-1970 (64-bit)
+        with self.subTest(case="underflow-64"):
+            with self.assertRaisesRegex(ChronoError, "Date is before Unix Epoch"):
+                Chrono64.from_iso_string("1960-01-01T00:00:00Z")
+            
+        # Test error: Underflow Pre-2000 (32-bit)
+        with self.subTest(case="underflow-32"):
+            with self.assertRaisesRegex(ChronoError, "Date is before Epoch"):
+                Chrono32.from_iso_string("1999-12-31T23:59:59Z")
+
+    def test_from_time_null(self):
+        with self.assertRaisesRegex(ChronoError, "Input date is null"):
+            Chrono32.from_time(None)
 
 if __name__ == "__main__":
     unittest.main()

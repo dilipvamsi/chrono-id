@@ -13,6 +13,14 @@
 namespace chrono_id {
 
 /**
+ * Custom exception for Chrono-ID library.
+ */
+class ChronoError : public std::invalid_argument {
+public:
+  using std::invalid_argument::invalid_argument;
+};
+
+/**
  * Internal utilities for Chrono-ID generation and parsing.
  * These are not intended for direct use by consumers.
  */
@@ -117,7 +125,7 @@ struct ChronoID {
    */
   static ChronoID from_iso_cstring(const char *iso, uint64_t rand_val) {
     if (!iso) {
-      throw std::invalid_argument("Input string is null");
+      throw ChronoError("Input string is null");
     }
     int y, m, d, hh, mm, ss;
     char dash, t, colon;
@@ -126,7 +134,7 @@ struct ChronoID {
     // Parse the fixed-length date and time components
     if (!(s >> y >> dash >> m >> dash >> d >> t >> hh >> colon >> mm >> colon >>
           ss)) {
-      throw std::invalid_argument("Invalid ISO 8601 format");
+      throw ChronoError("Invalid ISO 8601 format");
     }
 
     // Extract sub-second (microseconds) if present
@@ -151,17 +159,22 @@ struct ChronoID {
                         hh * 3600LL + mm * 60LL + ss;
 
     if (total_sec < 0) {
-      throw std::invalid_argument(
-          "Invalid date: Pre-1970 not supported by this implementation");
+      throw ChronoError(
+          "Timestamp underflow: Date is before Unix Epoch (1970-01-01)");
     }
 
     uint64_t total_us = static_cast<uint64_t>(total_sec) * 1000000ULL + us_part;
     uint64_t epoch_us = EpochSec * 1000000ULL;
-    // Safety check for underflow if using custom epoch later than date
-    if constexpr (EpochSec > 0) {
-      if (total_us < epoch_us) {
-        throw std::invalid_argument(
-            "Timestamp underflow: Date is before Epoch");
+
+    // Strict Epoch Check: Reject dates before the configured epoch
+    if (total_us < epoch_us) {
+      if constexpr (EpochSec > 0) {
+        throw ChronoError(
+            "Timestamp underflow: Date is before Epoch (32-bit types require "
+            "2000-01-01 or later)");
+      } else {
+        throw ChronoError(
+            "Timestamp underflow: Date is before Unix Epoch (1970-01-01)");
       }
     }
 
@@ -274,37 +287,56 @@ private:
 
 // --- 32-bit Family (Epoch 2000) ---
 
-/// 32-bit Unsigned Day Precision (18b Time, 14b Rand) - Longevity ~717 years
+/// 32-bit Day Precision (Longevity ~716 years)
+/// Unsigned: 18b Time, 14b Rand, Shift 14
 using UChrono32 =
     ChronoID<uint32_t, detail::EPOCH_2000_SEC, 86400000000ULL, 0x3FFFF, 14, 14>;
-/// 32-bit Signed Day Precision (18b Time, 13b Rand, 1b Sign)
+/// Signed: 18b Time, 13b Rand, Shift 13
 using Chrono32 =
     ChronoID<int32_t, detail::EPOCH_2000_SEC, 86400000000ULL, 0x3FFFF, 13, 13>;
 
 /// 32-bit Hour Precision (Longevity ~239 years)
+/// Unsigned: 21b Time, 11b Rand, Shift 11
 using UChrono32h =
     ChronoID<uint32_t, detail::EPOCH_2000_SEC, 3600000000ULL, 0x1FFFFF, 11, 11>;
+/// Signed: 21b Time, 10b Rand, Shift 10
 using Chrono32h =
     ChronoID<int32_t, detail::EPOCH_2000_SEC, 3600000000ULL, 0x1FFFFF, 10, 10>;
 
 /// 32-bit Minute Precision (Longevity ~255 years)
+/// Unsigned: 27b Time, 5b Rand, Shift 5
 using UChrono32m =
     ChronoID<uint32_t, detail::EPOCH_2000_SEC, 60000000ULL, 0x7FFFFFF, 5, 5>;
+/// Signed: 27b Time, 4b Rand, Shift 4
 using Chrono32m =
     ChronoID<int32_t, detail::EPOCH_2000_SEC, 60000000ULL, 0x7FFFFFF, 4, 4>;
 
+/// 32-bit Week Precision (Longevity ~314 years)
+/// Unsigned: 14b Week, 18b Rand, Shift 18
+using UChrono32w =
+    ChronoID<uint32_t, detail::EPOCH_2000_SEC, 604800000000ULL, 0x3FFF, 18, 18>;
+/// Signed: 14b Week, 17b Rand, Shift 17
+using Chrono32w =
+    ChronoID<int32_t, detail::EPOCH_2000_SEC, 604800000000ULL, 0x3FFF, 17, 17>;
+
 // --- 64-bit Family (Epoch 1970) ---
 
-/// 64-bit Second Precision (Longevity ~17,400 years)
+/// 64-bit Second Precision (Longevity ~2177 years)
+/// Unsigned: 36b Time, 28b Rand, Shift 28
 using UChrono64 = ChronoID<uint64_t, 0, 1000000ULL, 0xFFFFFFFFFULL, 28, 28>;
+/// Signed: 36b Time, 27b Rand, Shift 27
 using Chrono64 = ChronoID<int64_t, 0, 1000000ULL, 0xFFFFFFFFFULL, 27, 27>;
 
-/// 64-bit Millisecond Precision (Longevity ~584 years)
+/// 64-bit Millisecond Precision (Longevity ~557 years)
+/// Unsigned: 44b Time, 20b Rand, Shift 20
 using UChrono64ms = ChronoID<uint64_t, 0, 1000ULL, 0xFFFFFFFFFFFULL, 20, 20>;
+/// Signed: 44b Time, 19b Rand, Shift 19
 using Chrono64ms = ChronoID<int64_t, 0, 1000ULL, 0xFFFFFFFFFFFULL, 19, 19>;
 
-/// 64-bit Microsecond Precision (Longevity ~584 years)
+/// 64-bit Microsecond Precision (Longevity ~285 years)
+/// Unsigned: 54b Time, 10b Rand, Shift 10
 using UChrono64us = ChronoID<uint64_t, 0, 1ULL, 0x3FFFFFFFFFFFFFULL, 10, 10>;
+/// Signed: 54b Time, 9b Rand, Shift 9
 using Chrono64us = ChronoID<int64_t, 0, 1ULL, 0x3FFFFFFFFFFFFFULL, 9, 9>;
 
 } // namespace chrono_id
