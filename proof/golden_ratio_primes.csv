@@ -1,0 +1,758 @@
+Variant,Type,Calc_Bits,Time_Bits,Node_Bits,Seq_Bits,Target_Phi,Rank,Prime_Dec,Prime_Hex,Dist,Error_Pct,Quality,Is_Safe
+Chrono64 (27b),Sequence,15,36,12,15,20251,1,20249,0x4f19,2,0.009876,Excellent,YES
+Chrono64 (27b),Sequence,15,36,12,15,20251,2,20261,0x4f25,10,0.049380,Excellent,YES
+Chrono64 (27b),Sequence,15,36,12,15,20251,3,20233,0x4f09,18,0.088884,Excellent,YES
+Chrono64 (27b),Sequence,15,36,12,15,20251,4,20269,0x4f2d,18,0.088884,Excellent,YES
+Chrono64 (27b),Sequence,15,36,12,15,20251,5,20231,0x4f07,20,0.098761,Excellent,YES
+Chrono64 (27b),Sequence,15,36,12,15,20251,6,20219,0x4efb,32,0.158017,Very Good,YES
+Chrono64 (27b),Sequence,15,36,12,15,20251,7,20287,0x4f3f,36,0.177769,Very Good,YES
+Chrono64 (27b),Sequence,15,36,12,15,20251,8,20297,0x4f49,46,0.227149,Very Good,YES
+Chrono64 (27b),Sequence,15,36,12,15,20251,9,20201,0x4ee9,50,0.246901,Very Good,YES
+Chrono64 (27b),Sequence,15,36,12,15,20251,10,20183,0x4ed7,68,0.335786,Very Good,YES
+Chrono64 (27b),Sequence,15,36,12,15,20251,11,20323,0x4f63,72,0.355538,Very Good,YES
+Chrono64 (27b),Sequence,15,36,12,15,20251,12,20177,0x4ed1,74,0.365414,Very Good,YES
+Chrono64 (27b),Sequence,15,36,12,15,20251,13,20327,0x4f67,76,0.375290,Very Good,YES
+Chrono64 (27b),Sequence,15,36,12,15,20251,14,20173,0x4ecd,78,0.385166,Very Good,YES
+Chrono64 (27b),Sequence,15,36,12,15,20251,15,20333,0x4f6d,82,0.404918,Very Good,YES
+Chrono64 (27b),Sequence,15,36,12,15,20251,16,20161,0x4ec1,90,0.444422,Very Good,YES
+Chrono64 (27b),Sequence,15,36,12,15,20251,17,20341,0x4f75,90,0.444422,Very Good,YES
+Chrono64 (27b),Sequence,15,36,12,15,20251,18,20347,0x4f7b,96,0.474051,Very Good,YES
+Chrono64 (27b),Sequence,15,36,12,15,20251,19,20149,0x4eb5,102,0.503679,Very Good,YES
+Chrono64 (27b),Sequence,15,36,12,15,20251,20,20353,0x4f81,102,0.503679,Very Good,YES
+Chrono64 (27b),Sequence,15,36,12,15,20251,21,20147,0x4eb3,104,0.513555,Very Good,YES
+Chrono64 (27b),Sequence,15,36,12,15,20251,22,20357,0x4f85,106,0.523431,Very Good,YES
+Chrono64 (27b),Sequence,15,36,12,15,20251,23,20143,0x4eaf,108,0.533307,Very Good,YES
+Chrono64 (27b),Sequence,15,36,12,15,20251,24,20359,0x4f87,108,0.533307,Very Good,YES
+Chrono64 (27b),Sequence,15,36,12,15,20251,25,20369,0x4f91,118,0.582687,Very Good,YES
+Chrono64 (27b),Sequence,15,36,12,15,20251,26,20129,0x4ea1,122,0.602439,Very Good,YES
+Chrono64 (27b),Sequence,15,36,12,15,20251,27,20123,0x4e9b,128,0.632068,Very Good,YES
+Chrono64 (27b),Sequence,15,36,12,15,20251,28,20117,0x4e95,134,0.661696,Very Good,YES
+Chrono64 (27b),Sequence,15,36,12,15,20251,29,20113,0x4e91,138,0.681448,Very Good,YES
+Chrono64 (27b),Sequence,15,36,12,15,20251,30,20389,0x4fa5,138,0.681448,Very Good,YES
+Chrono64 (27b),Sequence,15,36,12,15,20251,31,20393,0x4fa9,142,0.701200,Very Good,YES
+Chrono64 (27b),Sequence,15,36,12,15,20251,32,20107,0x4e8b,144,0.711076,Very Good,YES
+Chrono64 (27b),Sequence,15,36,12,15,20251,33,20399,0x4faf,148,0.730828,Very Good,YES
+Chrono64 (27b),Sequence,15,36,12,15,20251,34,20101,0x4e85,150,0.740704,Very Good,YES
+Chrono64 (27b),Sequence,15,36,12,15,20251,35,20407,0x4fb7,156,0.770332,Very Good,YES
+Chrono64 (27b),Sequence,15,36,12,15,20251,36,20411,0x4fbb,160,0.790084,Very Good,YES
+Chrono64 (27b),Sequence,15,36,12,15,20251,37,20089,0x4e79,162,0.799960,Very Good,YES
+Chrono64 (27b),Sequence,15,36,12,15,20251,38,20071,0x4e67,180,0.888845,Very Good,YES
+Chrono64 (27b),Sequence,15,36,12,15,20251,39,20431,0x4fcf,180,0.888845,Very Good,YES
+Chrono64 (27b),Sequence,15,36,12,15,20251,40,20063,0x4e5f,188,0.928349,Very Good,YES
+Chrono64 (27b),Sequence,15,36,12,15,20251,41,20441,0x4fd9,190,0.938225,Very Good,YES
+Chrono64 (27b),Sequence,15,36,12,15,20251,42,20443,0x4fdb,192,0.948101,Very Good,YES
+Chrono64 (27b),Sequence,15,36,12,15,20251,43,20051,0x4e53,200,0.987606,Very Good,YES
+Chrono64 (27b),Sequence,15,36,12,15,20251,44,20047,0x4e4f,204,1.007358,Good,YES
+Chrono64 (27b),Sequence,15,36,12,15,20251,45,20029,0x4e3d,222,1.096242,Good,YES
+Chrono64 (27b),Sequence,15,36,12,15,20251,46,20477,0x4ffd,226,1.115994,Good,YES
+Chrono64 (27b),Sequence,15,36,12,15,20251,47,20023,0x4e37,228,1.125870,Good,YES
+Chrono64 (27b),Sequence,15,36,12,15,20251,48,20479,0x4fff,228,1.125870,Good,YES
+Chrono64 (27b),Sequence,15,36,12,15,20251,49,20021,0x4e35,230,1.135746,Good,YES
+Chrono64 (27b),Sequence,15,36,12,15,20251,50,20483,0x5003,232,1.145622,Good,YES
+Chrono64ms (19b),Sequence,9,44,10,9,316,1,317,0x13d,1,0.316456,Very Good,YES
+Chrono64ms (19b),Sequence,9,44,10,9,316,2,313,0x139,3,0.949367,Very Good,YES
+Chrono64ms (19b),Sequence,9,44,10,9,316,3,311,0x137,5,1.582278,Good,YES
+Chrono64ms (19b),Sequence,9,44,10,9,316,4,307,0x133,9,2.848101,Fair,NO
+Chrono64ms (19b),Sequence,9,44,10,9,316,5,331,0x14b,15,4.746835,Fair,NO
+Chrono64ms (19b),Sequence,9,44,10,9,316,6,337,0x151,21,6.645570,Poor,NO
+Chrono64ms (19b),Sequence,9,44,10,9,316,7,293,0x125,23,7.278481,Poor,NO
+Chrono64ms (19b),Sequence,9,44,10,9,316,8,347,0x15b,31,9.810127,Poor,NO
+Chrono64ms (19b),Sequence,9,44,10,9,316,9,283,0x11b,33,10.443038,Poor,NO
+Chrono64ms (19b),Sequence,9,44,10,9,316,10,349,0x15d,33,10.443038,Poor,NO
+Chrono64ms (19b),Sequence,9,44,10,9,316,11,281,0x119,35,11.075949,Poor,NO
+Chrono64ms (19b),Sequence,9,44,10,9,316,12,353,0x161,37,11.708861,Poor,NO
+Chrono64ms (19b),Sequence,9,44,10,9,316,13,277,0x115,39,12.341772,Poor,NO
+Chrono64ms (19b),Sequence,9,44,10,9,316,14,359,0x167,43,13.607595,Poor,NO
+Chrono64ms (19b),Sequence,9,44,10,9,316,15,271,0x10f,45,14.240506,Poor,NO
+Chrono64ms (19b),Sequence,9,44,10,9,316,16,269,0x10d,47,14.873418,Poor,NO
+Chrono64ms (19b),Sequence,9,44,10,9,316,17,367,0x16f,51,16.139241,Poor,NO
+Chrono64ms (19b),Sequence,9,44,10,9,316,18,263,0x107,53,16.772152,Poor,NO
+Chrono64ms (19b),Sequence,9,44,10,9,316,19,373,0x175,57,18.037975,Poor,NO
+Chrono64ms (19b),Sequence,9,44,10,9,316,20,257,0x101,59,18.670886,Poor,NO
+Chrono64ms (19b),Sequence,9,44,10,9,316,21,379,0x17b,63,19.936709,Poor,NO
+Chrono64ms (19b),Sequence,9,44,10,9,316,22,251,0xfb,65,20.569620,Poor,NO
+Chrono64ms (19b),Sequence,9,44,10,9,316,23,383,0x17f,67,21.202532,Poor,NO
+Chrono64ms (19b),Sequence,9,44,10,9,316,24,389,0x185,73,23.101266,Poor,NO
+Chrono64ms (19b),Sequence,9,44,10,9,316,25,241,0xf1,75,23.734177,Poor,NO
+Chrono64ms (19b),Sequence,9,44,10,9,316,26,239,0xef,77,24.367089,Poor,NO
+Chrono64ms (19b),Sequence,9,44,10,9,316,27,397,0x18d,81,25.632911,Poor,NO
+Chrono64ms (19b),Sequence,9,44,10,9,316,28,233,0xe9,83,26.265823,Poor,NO
+Chrono64ms (19b),Sequence,9,44,10,9,316,29,401,0x191,85,26.898734,Poor,NO
+Chrono64ms (19b),Sequence,9,44,10,9,316,30,229,0xe5,87,27.531646,Poor,NO
+Chrono64ms (19b),Sequence,9,44,10,9,316,31,227,0xe3,89,28.164557,Poor,NO
+Chrono64ms (19b),Sequence,9,44,10,9,316,32,223,0xdf,93,29.430380,Poor,NO
+Chrono64ms (19b),Sequence,9,44,10,9,316,33,409,0x199,93,29.430380,Poor,NO
+Chrono64ms (19b),Sequence,9,44,10,9,316,34,419,0x1a3,103,32.594937,Poor,NO
+Chrono64ms (19b),Sequence,9,44,10,9,316,35,211,0xd3,105,33.227848,Poor,NO
+Chrono64ms (19b),Sequence,9,44,10,9,316,36,421,0x1a5,105,33.227848,Poor,NO
+Chrono64ms (19b),Sequence,9,44,10,9,316,37,431,0x1af,115,36.392405,Poor,NO
+Chrono64ms (19b),Sequence,9,44,10,9,316,38,199,0xc7,117,37.025316,Poor,NO
+Chrono64ms (19b),Sequence,9,44,10,9,316,39,433,0x1b1,117,37.025316,Poor,NO
+Chrono64ms (19b),Sequence,9,44,10,9,316,40,197,0xc5,119,37.658228,Poor,NO
+Chrono64ms (19b),Sequence,9,44,10,9,316,41,193,0xc1,123,38.924051,Poor,NO
+Chrono64ms (19b),Sequence,9,44,10,9,316,42,439,0x1b7,123,38.924051,Poor,NO
+Chrono64ms (19b),Sequence,9,44,10,9,316,43,191,0xbf,125,39.556962,Poor,NO
+Chrono64ms (19b),Sequence,9,44,10,9,316,44,443,0x1bb,127,40.189873,Poor,NO
+Chrono64ms (19b),Sequence,9,44,10,9,316,45,449,0x1c1,133,42.088608,Poor,NO
+Chrono64ms (19b),Sequence,9,44,10,9,316,46,181,0xb5,135,42.721519,Poor,NO
+Chrono64ms (19b),Sequence,9,44,10,9,316,47,179,0xb3,137,43.354430,Poor,NO
+Chrono64ms (19b),Sequence,9,44,10,9,316,48,457,0x1c9,141,44.620253,Poor,NO
+Chrono64ms (19b),Sequence,9,44,10,9,316,49,173,0xad,143,45.253165,Poor,NO
+Chrono64ms (19b),Sequence,9,44,10,9,316,50,461,0x1cd,145,45.886076,Poor,NO
+Chrono64us (9b),Sequence,9,54,0,9,316,1,317,0x13d,1,0.316456,Very Good,YES
+Chrono64us (9b),Sequence,9,54,0,9,316,2,313,0x139,3,0.949367,Very Good,YES
+Chrono64us (9b),Sequence,9,54,0,9,316,3,311,0x137,5,1.582278,Good,YES
+Chrono64us (9b),Sequence,9,54,0,9,316,4,307,0x133,9,2.848101,Fair,NO
+Chrono64us (9b),Sequence,9,54,0,9,316,5,331,0x14b,15,4.746835,Fair,NO
+Chrono64us (9b),Sequence,9,54,0,9,316,6,337,0x151,21,6.645570,Poor,NO
+Chrono64us (9b),Sequence,9,54,0,9,316,7,293,0x125,23,7.278481,Poor,NO
+Chrono64us (9b),Sequence,9,54,0,9,316,8,347,0x15b,31,9.810127,Poor,NO
+Chrono64us (9b),Sequence,9,54,0,9,316,9,283,0x11b,33,10.443038,Poor,NO
+Chrono64us (9b),Sequence,9,54,0,9,316,10,349,0x15d,33,10.443038,Poor,NO
+Chrono64us (9b),Sequence,9,54,0,9,316,11,281,0x119,35,11.075949,Poor,NO
+Chrono64us (9b),Sequence,9,54,0,9,316,12,353,0x161,37,11.708861,Poor,NO
+Chrono64us (9b),Sequence,9,54,0,9,316,13,277,0x115,39,12.341772,Poor,NO
+Chrono64us (9b),Sequence,9,54,0,9,316,14,359,0x167,43,13.607595,Poor,NO
+Chrono64us (9b),Sequence,9,54,0,9,316,15,271,0x10f,45,14.240506,Poor,NO
+Chrono64us (9b),Sequence,9,54,0,9,316,16,269,0x10d,47,14.873418,Poor,NO
+Chrono64us (9b),Sequence,9,54,0,9,316,17,367,0x16f,51,16.139241,Poor,NO
+Chrono64us (9b),Sequence,9,54,0,9,316,18,263,0x107,53,16.772152,Poor,NO
+Chrono64us (9b),Sequence,9,54,0,9,316,19,373,0x175,57,18.037975,Poor,NO
+Chrono64us (9b),Sequence,9,54,0,9,316,20,257,0x101,59,18.670886,Poor,NO
+Chrono64us (9b),Sequence,9,54,0,9,316,21,379,0x17b,63,19.936709,Poor,NO
+Chrono64us (9b),Sequence,9,54,0,9,316,22,251,0xfb,65,20.569620,Poor,NO
+Chrono64us (9b),Sequence,9,54,0,9,316,23,383,0x17f,67,21.202532,Poor,NO
+Chrono64us (9b),Sequence,9,54,0,9,316,24,389,0x185,73,23.101266,Poor,NO
+Chrono64us (9b),Sequence,9,54,0,9,316,25,241,0xf1,75,23.734177,Poor,NO
+Chrono64us (9b),Sequence,9,54,0,9,316,26,239,0xef,77,24.367089,Poor,NO
+Chrono64us (9b),Sequence,9,54,0,9,316,27,397,0x18d,81,25.632911,Poor,NO
+Chrono64us (9b),Sequence,9,54,0,9,316,28,233,0xe9,83,26.265823,Poor,NO
+Chrono64us (9b),Sequence,9,54,0,9,316,29,401,0x191,85,26.898734,Poor,NO
+Chrono64us (9b),Sequence,9,54,0,9,316,30,229,0xe5,87,27.531646,Poor,NO
+Chrono64us (9b),Sequence,9,54,0,9,316,31,227,0xe3,89,28.164557,Poor,NO
+Chrono64us (9b),Sequence,9,54,0,9,316,32,223,0xdf,93,29.430380,Poor,NO
+Chrono64us (9b),Sequence,9,54,0,9,316,33,409,0x199,93,29.430380,Poor,NO
+Chrono64us (9b),Sequence,9,54,0,9,316,34,419,0x1a3,103,32.594937,Poor,NO
+Chrono64us (9b),Sequence,9,54,0,9,316,35,211,0xd3,105,33.227848,Poor,NO
+Chrono64us (9b),Sequence,9,54,0,9,316,36,421,0x1a5,105,33.227848,Poor,NO
+Chrono64us (9b),Sequence,9,54,0,9,316,37,431,0x1af,115,36.392405,Poor,NO
+Chrono64us (9b),Sequence,9,54,0,9,316,38,199,0xc7,117,37.025316,Poor,NO
+Chrono64us (9b),Sequence,9,54,0,9,316,39,433,0x1b1,117,37.025316,Poor,NO
+Chrono64us (9b),Sequence,9,54,0,9,316,40,197,0xc5,119,37.658228,Poor,NO
+Chrono64us (9b),Sequence,9,54,0,9,316,41,193,0xc1,123,38.924051,Poor,NO
+Chrono64us (9b),Sequence,9,54,0,9,316,42,439,0x1b7,123,38.924051,Poor,NO
+Chrono64us (9b),Sequence,9,54,0,9,316,43,191,0xbf,125,39.556962,Poor,NO
+Chrono64us (9b),Sequence,9,54,0,9,316,44,443,0x1bb,127,40.189873,Poor,NO
+Chrono64us (9b),Sequence,9,54,0,9,316,45,449,0x1c1,133,42.088608,Poor,NO
+Chrono64us (9b),Sequence,9,54,0,9,316,46,181,0xb5,135,42.721519,Poor,NO
+Chrono64us (9b),Sequence,9,54,0,9,316,47,179,0xb3,137,43.354430,Poor,NO
+Chrono64us (9b),Sequence,9,54,0,9,316,48,457,0x1c9,141,44.620253,Poor,NO
+Chrono64us (9b),Sequence,9,54,0,9,316,49,173,0xad,143,45.253165,Poor,NO
+Chrono64us (9b),Sequence,9,54,0,9,316,50,461,0x1cd,145,45.886076,Poor,NO
+UChrono64 (28b),Sequence,15,36,13,15,20251,1,20249,0x4f19,2,0.009876,Excellent,YES
+UChrono64 (28b),Sequence,15,36,13,15,20251,2,20261,0x4f25,10,0.049380,Excellent,YES
+UChrono64 (28b),Sequence,15,36,13,15,20251,3,20233,0x4f09,18,0.088884,Excellent,YES
+UChrono64 (28b),Sequence,15,36,13,15,20251,4,20269,0x4f2d,18,0.088884,Excellent,YES
+UChrono64 (28b),Sequence,15,36,13,15,20251,5,20231,0x4f07,20,0.098761,Excellent,YES
+UChrono64 (28b),Sequence,15,36,13,15,20251,6,20219,0x4efb,32,0.158017,Very Good,YES
+UChrono64 (28b),Sequence,15,36,13,15,20251,7,20287,0x4f3f,36,0.177769,Very Good,YES
+UChrono64 (28b),Sequence,15,36,13,15,20251,8,20297,0x4f49,46,0.227149,Very Good,YES
+UChrono64 (28b),Sequence,15,36,13,15,20251,9,20201,0x4ee9,50,0.246901,Very Good,YES
+UChrono64 (28b),Sequence,15,36,13,15,20251,10,20183,0x4ed7,68,0.335786,Very Good,YES
+UChrono64 (28b),Sequence,15,36,13,15,20251,11,20323,0x4f63,72,0.355538,Very Good,YES
+UChrono64 (28b),Sequence,15,36,13,15,20251,12,20177,0x4ed1,74,0.365414,Very Good,YES
+UChrono64 (28b),Sequence,15,36,13,15,20251,13,20327,0x4f67,76,0.375290,Very Good,YES
+UChrono64 (28b),Sequence,15,36,13,15,20251,14,20173,0x4ecd,78,0.385166,Very Good,YES
+UChrono64 (28b),Sequence,15,36,13,15,20251,15,20333,0x4f6d,82,0.404918,Very Good,YES
+UChrono64 (28b),Sequence,15,36,13,15,20251,16,20161,0x4ec1,90,0.444422,Very Good,YES
+UChrono64 (28b),Sequence,15,36,13,15,20251,17,20341,0x4f75,90,0.444422,Very Good,YES
+UChrono64 (28b),Sequence,15,36,13,15,20251,18,20347,0x4f7b,96,0.474051,Very Good,YES
+UChrono64 (28b),Sequence,15,36,13,15,20251,19,20149,0x4eb5,102,0.503679,Very Good,YES
+UChrono64 (28b),Sequence,15,36,13,15,20251,20,20353,0x4f81,102,0.503679,Very Good,YES
+UChrono64 (28b),Sequence,15,36,13,15,20251,21,20147,0x4eb3,104,0.513555,Very Good,YES
+UChrono64 (28b),Sequence,15,36,13,15,20251,22,20357,0x4f85,106,0.523431,Very Good,YES
+UChrono64 (28b),Sequence,15,36,13,15,20251,23,20143,0x4eaf,108,0.533307,Very Good,YES
+UChrono64 (28b),Sequence,15,36,13,15,20251,24,20359,0x4f87,108,0.533307,Very Good,YES
+UChrono64 (28b),Sequence,15,36,13,15,20251,25,20369,0x4f91,118,0.582687,Very Good,YES
+UChrono64 (28b),Sequence,15,36,13,15,20251,26,20129,0x4ea1,122,0.602439,Very Good,YES
+UChrono64 (28b),Sequence,15,36,13,15,20251,27,20123,0x4e9b,128,0.632068,Very Good,YES
+UChrono64 (28b),Sequence,15,36,13,15,20251,28,20117,0x4e95,134,0.661696,Very Good,YES
+UChrono64 (28b),Sequence,15,36,13,15,20251,29,20113,0x4e91,138,0.681448,Very Good,YES
+UChrono64 (28b),Sequence,15,36,13,15,20251,30,20389,0x4fa5,138,0.681448,Very Good,YES
+UChrono64 (28b),Sequence,15,36,13,15,20251,31,20393,0x4fa9,142,0.701200,Very Good,YES
+UChrono64 (28b),Sequence,15,36,13,15,20251,32,20107,0x4e8b,144,0.711076,Very Good,YES
+UChrono64 (28b),Sequence,15,36,13,15,20251,33,20399,0x4faf,148,0.730828,Very Good,YES
+UChrono64 (28b),Sequence,15,36,13,15,20251,34,20101,0x4e85,150,0.740704,Very Good,YES
+UChrono64 (28b),Sequence,15,36,13,15,20251,35,20407,0x4fb7,156,0.770332,Very Good,YES
+UChrono64 (28b),Sequence,15,36,13,15,20251,36,20411,0x4fbb,160,0.790084,Very Good,YES
+UChrono64 (28b),Sequence,15,36,13,15,20251,37,20089,0x4e79,162,0.799960,Very Good,YES
+UChrono64 (28b),Sequence,15,36,13,15,20251,38,20071,0x4e67,180,0.888845,Very Good,YES
+UChrono64 (28b),Sequence,15,36,13,15,20251,39,20431,0x4fcf,180,0.888845,Very Good,YES
+UChrono64 (28b),Sequence,15,36,13,15,20251,40,20063,0x4e5f,188,0.928349,Very Good,YES
+UChrono64 (28b),Sequence,15,36,13,15,20251,41,20441,0x4fd9,190,0.938225,Very Good,YES
+UChrono64 (28b),Sequence,15,36,13,15,20251,42,20443,0x4fdb,192,0.948101,Very Good,YES
+UChrono64 (28b),Sequence,15,36,13,15,20251,43,20051,0x4e53,200,0.987606,Very Good,YES
+UChrono64 (28b),Sequence,15,36,13,15,20251,44,20047,0x4e4f,204,1.007358,Good,YES
+UChrono64 (28b),Sequence,15,36,13,15,20251,45,20029,0x4e3d,222,1.096242,Good,YES
+UChrono64 (28b),Sequence,15,36,13,15,20251,46,20477,0x4ffd,226,1.115994,Good,YES
+UChrono64 (28b),Sequence,15,36,13,15,20251,47,20023,0x4e37,228,1.125870,Good,YES
+UChrono64 (28b),Sequence,15,36,13,15,20251,48,20479,0x4fff,228,1.125870,Good,YES
+UChrono64 (28b),Sequence,15,36,13,15,20251,49,20021,0x4e35,230,1.135746,Good,YES
+UChrono64 (28b),Sequence,15,36,13,15,20251,50,20483,0x5003,232,1.145622,Good,YES
+UChrono64ms (20b),Sequence,9,44,11,9,316,1,317,0x13d,1,0.316456,Very Good,YES
+UChrono64ms (20b),Sequence,9,44,11,9,316,2,313,0x139,3,0.949367,Very Good,YES
+UChrono64ms (20b),Sequence,9,44,11,9,316,3,311,0x137,5,1.582278,Good,YES
+UChrono64ms (20b),Sequence,9,44,11,9,316,4,307,0x133,9,2.848101,Fair,NO
+UChrono64ms (20b),Sequence,9,44,11,9,316,5,331,0x14b,15,4.746835,Fair,NO
+UChrono64ms (20b),Sequence,9,44,11,9,316,6,337,0x151,21,6.645570,Poor,NO
+UChrono64ms (20b),Sequence,9,44,11,9,316,7,293,0x125,23,7.278481,Poor,NO
+UChrono64ms (20b),Sequence,9,44,11,9,316,8,347,0x15b,31,9.810127,Poor,NO
+UChrono64ms (20b),Sequence,9,44,11,9,316,9,283,0x11b,33,10.443038,Poor,NO
+UChrono64ms (20b),Sequence,9,44,11,9,316,10,349,0x15d,33,10.443038,Poor,NO
+UChrono64ms (20b),Sequence,9,44,11,9,316,11,281,0x119,35,11.075949,Poor,NO
+UChrono64ms (20b),Sequence,9,44,11,9,316,12,353,0x161,37,11.708861,Poor,NO
+UChrono64ms (20b),Sequence,9,44,11,9,316,13,277,0x115,39,12.341772,Poor,NO
+UChrono64ms (20b),Sequence,9,44,11,9,316,14,359,0x167,43,13.607595,Poor,NO
+UChrono64ms (20b),Sequence,9,44,11,9,316,15,271,0x10f,45,14.240506,Poor,NO
+UChrono64ms (20b),Sequence,9,44,11,9,316,16,269,0x10d,47,14.873418,Poor,NO
+UChrono64ms (20b),Sequence,9,44,11,9,316,17,367,0x16f,51,16.139241,Poor,NO
+UChrono64ms (20b),Sequence,9,44,11,9,316,18,263,0x107,53,16.772152,Poor,NO
+UChrono64ms (20b),Sequence,9,44,11,9,316,19,373,0x175,57,18.037975,Poor,NO
+UChrono64ms (20b),Sequence,9,44,11,9,316,20,257,0x101,59,18.670886,Poor,NO
+UChrono64ms (20b),Sequence,9,44,11,9,316,21,379,0x17b,63,19.936709,Poor,NO
+UChrono64ms (20b),Sequence,9,44,11,9,316,22,251,0xfb,65,20.569620,Poor,NO
+UChrono64ms (20b),Sequence,9,44,11,9,316,23,383,0x17f,67,21.202532,Poor,NO
+UChrono64ms (20b),Sequence,9,44,11,9,316,24,389,0x185,73,23.101266,Poor,NO
+UChrono64ms (20b),Sequence,9,44,11,9,316,25,241,0xf1,75,23.734177,Poor,NO
+UChrono64ms (20b),Sequence,9,44,11,9,316,26,239,0xef,77,24.367089,Poor,NO
+UChrono64ms (20b),Sequence,9,44,11,9,316,27,397,0x18d,81,25.632911,Poor,NO
+UChrono64ms (20b),Sequence,9,44,11,9,316,28,233,0xe9,83,26.265823,Poor,NO
+UChrono64ms (20b),Sequence,9,44,11,9,316,29,401,0x191,85,26.898734,Poor,NO
+UChrono64ms (20b),Sequence,9,44,11,9,316,30,229,0xe5,87,27.531646,Poor,NO
+UChrono64ms (20b),Sequence,9,44,11,9,316,31,227,0xe3,89,28.164557,Poor,NO
+UChrono64ms (20b),Sequence,9,44,11,9,316,32,223,0xdf,93,29.430380,Poor,NO
+UChrono64ms (20b),Sequence,9,44,11,9,316,33,409,0x199,93,29.430380,Poor,NO
+UChrono64ms (20b),Sequence,9,44,11,9,316,34,419,0x1a3,103,32.594937,Poor,NO
+UChrono64ms (20b),Sequence,9,44,11,9,316,35,211,0xd3,105,33.227848,Poor,NO
+UChrono64ms (20b),Sequence,9,44,11,9,316,36,421,0x1a5,105,33.227848,Poor,NO
+UChrono64ms (20b),Sequence,9,44,11,9,316,37,431,0x1af,115,36.392405,Poor,NO
+UChrono64ms (20b),Sequence,9,44,11,9,316,38,199,0xc7,117,37.025316,Poor,NO
+UChrono64ms (20b),Sequence,9,44,11,9,316,39,433,0x1b1,117,37.025316,Poor,NO
+UChrono64ms (20b),Sequence,9,44,11,9,316,40,197,0xc5,119,37.658228,Poor,NO
+UChrono64ms (20b),Sequence,9,44,11,9,316,41,193,0xc1,123,38.924051,Poor,NO
+UChrono64ms (20b),Sequence,9,44,11,9,316,42,439,0x1b7,123,38.924051,Poor,NO
+UChrono64ms (20b),Sequence,9,44,11,9,316,43,191,0xbf,125,39.556962,Poor,NO
+UChrono64ms (20b),Sequence,9,44,11,9,316,44,443,0x1bb,127,40.189873,Poor,NO
+UChrono64ms (20b),Sequence,9,44,11,9,316,45,449,0x1c1,133,42.088608,Poor,NO
+UChrono64ms (20b),Sequence,9,44,11,9,316,46,181,0xb5,135,42.721519,Poor,NO
+UChrono64ms (20b),Sequence,9,44,11,9,316,47,179,0xb3,137,43.354430,Poor,NO
+UChrono64ms (20b),Sequence,9,44,11,9,316,48,457,0x1c9,141,44.620253,Poor,NO
+UChrono64ms (20b),Sequence,9,44,11,9,316,49,173,0xad,143,45.253165,Poor,NO
+UChrono64ms (20b),Sequence,9,44,11,9,316,50,461,0x1cd,145,45.886076,Poor,NO
+UChrono64us (10b),Sequence,9,54,1,9,316,1,317,0x13d,1,0.316456,Very Good,YES
+UChrono64us (10b),Sequence,9,54,1,9,316,2,313,0x139,3,0.949367,Very Good,YES
+UChrono64us (10b),Sequence,9,54,1,9,316,3,311,0x137,5,1.582278,Good,YES
+UChrono64us (10b),Sequence,9,54,1,9,316,4,307,0x133,9,2.848101,Fair,NO
+UChrono64us (10b),Sequence,9,54,1,9,316,5,331,0x14b,15,4.746835,Fair,NO
+UChrono64us (10b),Sequence,9,54,1,9,316,6,337,0x151,21,6.645570,Poor,NO
+UChrono64us (10b),Sequence,9,54,1,9,316,7,293,0x125,23,7.278481,Poor,NO
+UChrono64us (10b),Sequence,9,54,1,9,316,8,347,0x15b,31,9.810127,Poor,NO
+UChrono64us (10b),Sequence,9,54,1,9,316,9,283,0x11b,33,10.443038,Poor,NO
+UChrono64us (10b),Sequence,9,54,1,9,316,10,349,0x15d,33,10.443038,Poor,NO
+UChrono64us (10b),Sequence,9,54,1,9,316,11,281,0x119,35,11.075949,Poor,NO
+UChrono64us (10b),Sequence,9,54,1,9,316,12,353,0x161,37,11.708861,Poor,NO
+UChrono64us (10b),Sequence,9,54,1,9,316,13,277,0x115,39,12.341772,Poor,NO
+UChrono64us (10b),Sequence,9,54,1,9,316,14,359,0x167,43,13.607595,Poor,NO
+UChrono64us (10b),Sequence,9,54,1,9,316,15,271,0x10f,45,14.240506,Poor,NO
+UChrono64us (10b),Sequence,9,54,1,9,316,16,269,0x10d,47,14.873418,Poor,NO
+UChrono64us (10b),Sequence,9,54,1,9,316,17,367,0x16f,51,16.139241,Poor,NO
+UChrono64us (10b),Sequence,9,54,1,9,316,18,263,0x107,53,16.772152,Poor,NO
+UChrono64us (10b),Sequence,9,54,1,9,316,19,373,0x175,57,18.037975,Poor,NO
+UChrono64us (10b),Sequence,9,54,1,9,316,20,257,0x101,59,18.670886,Poor,NO
+UChrono64us (10b),Sequence,9,54,1,9,316,21,379,0x17b,63,19.936709,Poor,NO
+UChrono64us (10b),Sequence,9,54,1,9,316,22,251,0xfb,65,20.569620,Poor,NO
+UChrono64us (10b),Sequence,9,54,1,9,316,23,383,0x17f,67,21.202532,Poor,NO
+UChrono64us (10b),Sequence,9,54,1,9,316,24,389,0x185,73,23.101266,Poor,NO
+UChrono64us (10b),Sequence,9,54,1,9,316,25,241,0xf1,75,23.734177,Poor,NO
+UChrono64us (10b),Sequence,9,54,1,9,316,26,239,0xef,77,24.367089,Poor,NO
+UChrono64us (10b),Sequence,9,54,1,9,316,27,397,0x18d,81,25.632911,Poor,NO
+UChrono64us (10b),Sequence,9,54,1,9,316,28,233,0xe9,83,26.265823,Poor,NO
+UChrono64us (10b),Sequence,9,54,1,9,316,29,401,0x191,85,26.898734,Poor,NO
+UChrono64us (10b),Sequence,9,54,1,9,316,30,229,0xe5,87,27.531646,Poor,NO
+UChrono64us (10b),Sequence,9,54,1,9,316,31,227,0xe3,89,28.164557,Poor,NO
+UChrono64us (10b),Sequence,9,54,1,9,316,32,223,0xdf,93,29.430380,Poor,NO
+UChrono64us (10b),Sequence,9,54,1,9,316,33,409,0x199,93,29.430380,Poor,NO
+UChrono64us (10b),Sequence,9,54,1,9,316,34,419,0x1a3,103,32.594937,Poor,NO
+UChrono64us (10b),Sequence,9,54,1,9,316,35,211,0xd3,105,33.227848,Poor,NO
+UChrono64us (10b),Sequence,9,54,1,9,316,36,421,0x1a5,105,33.227848,Poor,NO
+UChrono64us (10b),Sequence,9,54,1,9,316,37,431,0x1af,115,36.392405,Poor,NO
+UChrono64us (10b),Sequence,9,54,1,9,316,38,199,0xc7,117,37.025316,Poor,NO
+UChrono64us (10b),Sequence,9,54,1,9,316,39,433,0x1b1,117,37.025316,Poor,NO
+UChrono64us (10b),Sequence,9,54,1,9,316,40,197,0xc5,119,37.658228,Poor,NO
+UChrono64us (10b),Sequence,9,54,1,9,316,41,193,0xc1,123,38.924051,Poor,NO
+UChrono64us (10b),Sequence,9,54,1,9,316,42,439,0x1b7,123,38.924051,Poor,NO
+UChrono64us (10b),Sequence,9,54,1,9,316,43,191,0xbf,125,39.556962,Poor,NO
+UChrono64us (10b),Sequence,9,54,1,9,316,44,443,0x1bb,127,40.189873,Poor,NO
+UChrono64us (10b),Sequence,9,54,1,9,316,45,449,0x1c1,133,42.088608,Poor,NO
+UChrono64us (10b),Sequence,9,54,1,9,316,46,181,0xb5,135,42.721519,Poor,NO
+UChrono64us (10b),Sequence,9,54,1,9,316,47,179,0xb3,137,43.354430,Poor,NO
+UChrono64us (10b),Sequence,9,54,1,9,316,48,457,0x1c9,141,44.620253,Poor,NO
+UChrono64us (10b),Sequence,9,54,1,9,316,49,173,0xad,143,45.253165,Poor,NO
+UChrono64us (10b),Sequence,9,54,1,9,316,50,461,0x1cd,145,45.886076,Poor,NO
+Chrono32w (17b),Sequence,7,14,10,7,79,1,79,0x4f,0,0.000000,Perfect,YES
+Chrono32w (17b),Sequence,7,14,10,7,79,2,83,0x53,4,5.063291,Poor,YES
+Chrono32w (17b),Sequence,7,14,10,7,79,3,73,0x49,6,7.594937,Poor,NO
+Chrono32w (17b),Sequence,7,14,10,7,79,4,71,0x47,8,10.126582,Poor,NO
+Chrono32w (17b),Sequence,7,14,10,7,79,5,89,0x59,10,12.658228,Poor,NO
+Chrono32w (17b),Sequence,7,14,10,7,79,6,67,0x43,12,15.189873,Poor,NO
+Chrono32w (17b),Sequence,7,14,10,7,79,7,61,0x3d,18,22.784810,Poor,NO
+Chrono32w (17b),Sequence,7,14,10,7,79,8,97,0x61,18,22.784810,Poor,NO
+Chrono32w (17b),Sequence,7,14,10,7,79,9,59,0x3b,20,25.316456,Poor,NO
+Chrono32w (17b),Sequence,7,14,10,7,79,10,101,0x65,22,27.848101,Poor,NO
+Chrono32w (17b),Sequence,7,14,10,7,79,11,103,0x67,24,30.379747,Poor,NO
+Chrono32w (17b),Sequence,7,14,10,7,79,12,53,0x35,26,32.911392,Poor,NO
+Chrono32w (17b),Sequence,7,14,10,7,79,13,107,0x6b,28,35.443038,Poor,NO
+Chrono32w (17b),Sequence,7,14,10,7,79,14,109,0x6d,30,37.974684,Poor,NO
+Chrono32w (17b),Sequence,7,14,10,7,79,15,47,0x2f,32,40.506329,Poor,NO
+Chrono32w (17b),Sequence,7,14,10,7,79,16,113,0x71,34,43.037975,Poor,NO
+Chrono32w (17b),Sequence,7,14,10,7,79,17,43,0x2b,36,45.569620,Poor,NO
+Chrono32w (17b),Sequence,7,14,10,7,79,18,41,0x29,38,48.101266,Poor,NO
+Chrono32w (17b),Sequence,7,14,10,7,79,19,37,0x25,42,53.164557,Poor,NO
+Chrono32w (17b),Sequence,7,14,10,7,79,20,31,0x1f,48,60.759494,Poor,NO
+Chrono32w (17b),Sequence,7,14,10,7,79,21,127,0x7f,48,60.759494,Poor,NO
+Chrono32w (17b),Sequence,7,14,10,7,79,22,29,0x1d,50,63.291139,Poor,NO
+Chrono32w (17b),Sequence,7,14,10,7,79,23,23,0x17,56,70.886076,Poor,NO
+Chrono32w (17b),Sequence,7,14,10,7,79,24,19,0x13,60,75.949367,Poor,NO
+Chrono32w (17b),Sequence,7,14,10,7,79,25,17,0x11,62,78.481013,Poor,NO
+Chrono32w (17b),Sequence,7,14,10,7,79,26,13,0xd,66,83.544304,Poor,NO
+Chrono32w (17b),Sequence,7,14,10,7,79,27,11,0xb,68,86.075949,Poor,NO
+Chrono32w (17b),Sequence,7,14,10,7,79,28,7,0x7,72,91.139241,Poor,NO
+Chrono32w (17b),Sequence,7,14,10,7,79,29,5,0x5,74,93.670886,Poor,NO
+Chrono32w (17b),Sequence,7,14,10,7,79,30,3,0x3,76,96.202532,Poor,NO
+Chrono32w (17b),Sequence,7,14,10,7,79,31,2,0x2,77,97.468354,Poor,NO
+Chrono32 (13b),Sequence,5,18,8,5,19,1,19,0x13,0,0.000000,Perfect,YES
+Chrono32 (13b),Sequence,5,18,8,5,19,2,17,0x11,2,10.526316,Poor,YES
+Chrono32 (13b),Sequence,5,18,8,5,19,3,23,0x17,4,21.052632,Poor,NO
+Chrono32 (13b),Sequence,5,18,8,5,19,4,13,0xd,6,31.578947,Poor,NO
+Chrono32 (13b),Sequence,5,18,8,5,19,5,11,0xb,8,42.105263,Poor,NO
+Chrono32 (13b),Sequence,5,18,8,5,19,6,29,0x1d,10,52.631579,Poor,NO
+Chrono32 (13b),Sequence,5,18,8,5,19,7,7,0x7,12,63.157895,Poor,NO
+Chrono32 (13b),Sequence,5,18,8,5,19,8,31,0x1f,12,63.157895,Poor,NO
+Chrono32 (13b),Sequence,5,18,8,5,19,9,5,0x5,14,73.684211,Poor,NO
+Chrono32 (13b),Sequence,5,18,8,5,19,10,3,0x3,16,84.210526,Poor,NO
+Chrono32 (13b),Sequence,5,18,8,5,19,11,2,0x2,17,89.473684,Poor,NO
+Chrono32h (10b),Sequence,4,21,6,4,9,1,7,0x7,2,22.222222,Poor,YES
+Chrono32h (10b),Sequence,4,21,6,4,9,2,11,0xb,2,22.222222,Poor,YES
+Chrono32h (10b),Sequence,4,21,6,4,9,3,5,0x5,4,44.444444,Poor,NO
+Chrono32h (10b),Sequence,4,21,6,4,9,4,13,0xd,4,44.444444,Poor,NO
+Chrono32h (10b),Sequence,4,21,6,4,9,5,3,0x3,6,66.666667,Poor,NO
+Chrono32h (10b),Sequence,4,21,6,4,9,6,2,0x2,7,77.777778,Poor,NO
+Chrono32m (4b),Sequence,4,27,0,4,9,1,7,0x7,2,22.222222,Poor,YES
+Chrono32m (4b),Sequence,4,27,0,4,9,2,11,0xb,2,22.222222,Poor,YES
+Chrono32m (4b),Sequence,4,27,0,4,9,3,5,0x5,4,44.444444,Poor,NO
+Chrono32m (4b),Sequence,4,27,0,4,9,4,13,0xd,4,44.444444,Poor,NO
+Chrono32m (4b),Sequence,4,27,0,4,9,5,3,0x3,6,66.666667,Poor,NO
+Chrono32m (4b),Sequence,4,27,0,4,9,6,2,0x2,7,77.777778,Poor,NO
+UChrono32w (18b),Sequence,7,14,11,7,79,1,79,0x4f,0,0.000000,Perfect,YES
+UChrono32w (18b),Sequence,7,14,11,7,79,2,83,0x53,4,5.063291,Poor,YES
+UChrono32w (18b),Sequence,7,14,11,7,79,3,73,0x49,6,7.594937,Poor,NO
+UChrono32w (18b),Sequence,7,14,11,7,79,4,71,0x47,8,10.126582,Poor,NO
+UChrono32w (18b),Sequence,7,14,11,7,79,5,89,0x59,10,12.658228,Poor,NO
+UChrono32w (18b),Sequence,7,14,11,7,79,6,67,0x43,12,15.189873,Poor,NO
+UChrono32w (18b),Sequence,7,14,11,7,79,7,61,0x3d,18,22.784810,Poor,NO
+UChrono32w (18b),Sequence,7,14,11,7,79,8,97,0x61,18,22.784810,Poor,NO
+UChrono32w (18b),Sequence,7,14,11,7,79,9,59,0x3b,20,25.316456,Poor,NO
+UChrono32w (18b),Sequence,7,14,11,7,79,10,101,0x65,22,27.848101,Poor,NO
+UChrono32w (18b),Sequence,7,14,11,7,79,11,103,0x67,24,30.379747,Poor,NO
+UChrono32w (18b),Sequence,7,14,11,7,79,12,53,0x35,26,32.911392,Poor,NO
+UChrono32w (18b),Sequence,7,14,11,7,79,13,107,0x6b,28,35.443038,Poor,NO
+UChrono32w (18b),Sequence,7,14,11,7,79,14,109,0x6d,30,37.974684,Poor,NO
+UChrono32w (18b),Sequence,7,14,11,7,79,15,47,0x2f,32,40.506329,Poor,NO
+UChrono32w (18b),Sequence,7,14,11,7,79,16,113,0x71,34,43.037975,Poor,NO
+UChrono32w (18b),Sequence,7,14,11,7,79,17,43,0x2b,36,45.569620,Poor,NO
+UChrono32w (18b),Sequence,7,14,11,7,79,18,41,0x29,38,48.101266,Poor,NO
+UChrono32w (18b),Sequence,7,14,11,7,79,19,37,0x25,42,53.164557,Poor,NO
+UChrono32w (18b),Sequence,7,14,11,7,79,20,31,0x1f,48,60.759494,Poor,NO
+UChrono32w (18b),Sequence,7,14,11,7,79,21,127,0x7f,48,60.759494,Poor,NO
+UChrono32w (18b),Sequence,7,14,11,7,79,22,29,0x1d,50,63.291139,Poor,NO
+UChrono32w (18b),Sequence,7,14,11,7,79,23,23,0x17,56,70.886076,Poor,NO
+UChrono32w (18b),Sequence,7,14,11,7,79,24,19,0x13,60,75.949367,Poor,NO
+UChrono32w (18b),Sequence,7,14,11,7,79,25,17,0x11,62,78.481013,Poor,NO
+UChrono32w (18b),Sequence,7,14,11,7,79,26,13,0xd,66,83.544304,Poor,NO
+UChrono32w (18b),Sequence,7,14,11,7,79,27,11,0xb,68,86.075949,Poor,NO
+UChrono32w (18b),Sequence,7,14,11,7,79,28,7,0x7,72,91.139241,Poor,NO
+UChrono32w (18b),Sequence,7,14,11,7,79,29,5,0x5,74,93.670886,Poor,NO
+UChrono32w (18b),Sequence,7,14,11,7,79,30,3,0x3,76,96.202532,Poor,NO
+UChrono32w (18b),Sequence,7,14,11,7,79,31,2,0x2,77,97.468354,Poor,NO
+UChrono32 (14b),Sequence,5,18,9,5,19,1,19,0x13,0,0.000000,Perfect,YES
+UChrono32 (14b),Sequence,5,18,9,5,19,2,17,0x11,2,10.526316,Poor,YES
+UChrono32 (14b),Sequence,5,18,9,5,19,3,23,0x17,4,21.052632,Poor,NO
+UChrono32 (14b),Sequence,5,18,9,5,19,4,13,0xd,6,31.578947,Poor,NO
+UChrono32 (14b),Sequence,5,18,9,5,19,5,11,0xb,8,42.105263,Poor,NO
+UChrono32 (14b),Sequence,5,18,9,5,19,6,29,0x1d,10,52.631579,Poor,NO
+UChrono32 (14b),Sequence,5,18,9,5,19,7,7,0x7,12,63.157895,Poor,NO
+UChrono32 (14b),Sequence,5,18,9,5,19,8,31,0x1f,12,63.157895,Poor,NO
+UChrono32 (14b),Sequence,5,18,9,5,19,9,5,0x5,14,73.684211,Poor,NO
+UChrono32 (14b),Sequence,5,18,9,5,19,10,3,0x3,16,84.210526,Poor,NO
+UChrono32 (14b),Sequence,5,18,9,5,19,11,2,0x2,17,89.473684,Poor,NO
+UChrono32h (11b),Sequence,4,21,7,4,9,1,7,0x7,2,22.222222,Poor,YES
+UChrono32h (11b),Sequence,4,21,7,4,9,2,11,0xb,2,22.222222,Poor,YES
+UChrono32h (11b),Sequence,4,21,7,4,9,3,5,0x5,4,44.444444,Poor,NO
+UChrono32h (11b),Sequence,4,21,7,4,9,4,13,0xd,4,44.444444,Poor,NO
+UChrono32h (11b),Sequence,4,21,7,4,9,5,3,0x3,6,66.666667,Poor,NO
+UChrono32h (11b),Sequence,4,21,7,4,9,6,2,0x2,7,77.777778,Poor,NO
+UChrono32m (5b),Sequence,4,27,1,4,9,1,7,0x7,2,22.222222,Poor,YES
+UChrono32m (5b),Sequence,4,27,1,4,9,2,11,0xb,2,22.222222,Poor,YES
+UChrono32m (5b),Sequence,4,27,1,4,9,3,5,0x5,4,44.444444,Poor,NO
+UChrono32m (5b),Sequence,4,27,1,4,9,4,13,0xd,4,44.444444,Poor,NO
+UChrono32m (5b),Sequence,4,27,1,4,9,5,3,0x3,6,66.666667,Poor,NO
+UChrono32m (5b),Sequence,4,27,1,4,9,6,2,0x2,7,77.777778,Poor,NO
+Node_13bit (UChrono64),Node,13,36,13,15,5062,1,5059,0x13c3,3,0.059265,Excellent,YES
+Node_13bit (UChrono64),Node,13,36,13,15,5062,2,5051,0x13bb,11,0.217305,Very Good,YES
+Node_13bit (UChrono64),Node,13,36,13,15,5062,3,5077,0x13d5,15,0.296326,Very Good,YES
+Node_13bit (UChrono64),Node,13,36,13,15,5062,4,5081,0x13d9,19,0.375346,Very Good,YES
+Node_13bit (UChrono64),Node,13,36,13,15,5062,5,5039,0x13af,23,0.454366,Very Good,YES
+Node_13bit (UChrono64),Node,13,36,13,15,5062,6,5087,0x13df,25,0.493876,Very Good,YES
+Node_13bit (UChrono64),Node,13,36,13,15,5062,7,5099,0x13eb,37,0.730936,Very Good,YES
+Node_13bit (UChrono64),Node,13,36,13,15,5062,8,5023,0x139f,39,0.770446,Very Good,YES
+Node_13bit (UChrono64),Node,13,36,13,15,5062,9,5101,0x13ed,39,0.770446,Very Good,YES
+Node_13bit (UChrono64),Node,13,36,13,15,5062,10,5021,0x139d,41,0.809957,Very Good,YES
+Node_13bit (UChrono64),Node,13,36,13,15,5062,11,5107,0x13f3,45,0.888977,Very Good,YES
+Node_13bit (UChrono64),Node,13,36,13,15,5062,12,5011,0x1393,51,1.007507,Good,YES
+Node_13bit (UChrono64),Node,13,36,13,15,5062,13,5113,0x13f9,51,1.007507,Good,YES
+Node_13bit (UChrono64),Node,13,36,13,15,5062,14,5009,0x1391,53,1.047017,Good,YES
+Node_13bit (UChrono64),Node,13,36,13,15,5062,15,5119,0x13ff,57,1.126037,Good,YES
+Node_13bit (UChrono64),Node,13,36,13,15,5062,16,5003,0x138b,59,1.165547,Good,YES
+Node_13bit (UChrono64),Node,13,36,13,15,5062,17,4999,0x1387,63,1.244567,Good,YES
+Node_13bit (UChrono64),Node,13,36,13,15,5062,18,4993,0x1381,69,1.363098,Good,YES
+Node_13bit (UChrono64),Node,13,36,13,15,5062,19,4987,0x137b,75,1.481628,Good,YES
+Node_13bit (UChrono64),Node,13,36,13,15,5062,20,5147,0x141b,85,1.679178,Good,YES
+Node_13bit (UChrono64),Node,13,36,13,15,5062,21,4973,0x136d,89,1.758198,Good,YES
+Node_13bit (UChrono64),Node,13,36,13,15,5062,22,5153,0x1421,91,1.797708,Good,YES
+Node_13bit (UChrono64),Node,13,36,13,15,5062,23,4969,0x1369,93,1.837218,Good,YES
+Node_13bit (UChrono64),Node,13,36,13,15,5062,24,4967,0x1367,95,1.876729,Good,YES
+Node_13bit (UChrono64),Node,13,36,13,15,5062,25,4957,0x135d,105,2.074279,Good,YES
+Node_13bit (UChrono64),Node,13,36,13,15,5062,26,5167,0x142f,105,2.074279,Good,YES
+Node_13bit (UChrono64),Node,13,36,13,15,5062,27,5171,0x1433,109,2.153299,Good,YES
+Node_13bit (UChrono64),Node,13,36,13,15,5062,28,4951,0x1357,111,2.192809,Good,YES
+Node_13bit (UChrono64),Node,13,36,13,15,5062,29,5179,0x143b,117,2.311339,Good,YES
+Node_13bit (UChrono64),Node,13,36,13,15,5062,30,4943,0x134f,119,2.350849,Good,YES
+Node_13bit (UChrono64),Node,13,36,13,15,5062,31,4937,0x1349,125,2.469380,Good,YES
+Node_13bit (UChrono64),Node,13,36,13,15,5062,32,5189,0x1445,127,2.508890,Fair,NO
+Node_13bit (UChrono64),Node,13,36,13,15,5062,33,4933,0x1345,129,2.548400,Fair,NO
+Node_13bit (UChrono64),Node,13,36,13,15,5062,34,4931,0x1343,131,2.587910,Fair,NO
+Node_13bit (UChrono64),Node,13,36,13,15,5062,35,5197,0x144d,135,2.666930,Fair,NO
+Node_13bit (UChrono64),Node,13,36,13,15,5062,36,4919,0x1337,143,2.824970,Fair,NO
+Node_13bit (UChrono64),Node,13,36,13,15,5062,37,5209,0x1459,147,2.903991,Fair,NO
+Node_13bit (UChrono64),Node,13,36,13,15,5062,38,4909,0x132d,153,3.022521,Fair,NO
+Node_13bit (UChrono64),Node,13,36,13,15,5062,39,4903,0x1327,159,3.141051,Fair,NO
+Node_13bit (UChrono64),Node,13,36,13,15,5062,40,5227,0x146b,165,3.259581,Fair,NO
+Node_13bit (UChrono64),Node,13,36,13,15,5062,41,5231,0x146f,169,3.338601,Fair,NO
+Node_13bit (UChrono64),Node,13,36,13,15,5062,42,5233,0x1471,171,3.378111,Fair,NO
+Node_13bit (UChrono64),Node,13,36,13,15,5062,43,4889,0x1319,173,3.417621,Fair,NO
+Node_13bit (UChrono64),Node,13,36,13,15,5062,44,5237,0x1475,175,3.457132,Fair,NO
+Node_13bit (UChrono64),Node,13,36,13,15,5062,45,4877,0x130d,185,3.654682,Fair,NO
+Node_13bit (UChrono64),Node,13,36,13,15,5062,46,4871,0x1307,191,3.773212,Fair,NO
+Node_13bit (UChrono64),Node,13,36,13,15,5062,47,5261,0x148d,199,3.931252,Fair,NO
+Node_13bit (UChrono64),Node,13,36,13,15,5062,48,4861,0x12fd,201,3.970763,Fair,NO
+Node_13bit (UChrono64),Node,13,36,13,15,5062,49,5273,0x1499,211,4.168313,Fair,NO
+Node_13bit (UChrono64),Node,13,36,13,15,5062,50,5279,0x149f,217,4.286843,Fair,NO
+Node_12bit (Chrono64),Node,12,36,12,15,2531,1,2531,0x9e3,0,0.000000,Perfect,YES
+Node_12bit (Chrono64),Node,12,36,12,15,2531,2,2539,0x9eb,8,0.316081,Very Good,YES
+Node_12bit (Chrono64),Node,12,36,12,15,2531,3,2521,0x9d9,10,0.395101,Very Good,YES
+Node_12bit (Chrono64),Node,12,36,12,15,2531,4,2543,0x9ef,12,0.474121,Very Good,YES
+Node_12bit (Chrono64),Node,12,36,12,15,2531,5,2549,0x9f5,18,0.711181,Very Good,YES
+Node_12bit (Chrono64),Node,12,36,12,15,2531,6,2551,0x9f7,20,0.790202,Very Good,YES
+Node_12bit (Chrono64),Node,12,36,12,15,2531,7,2557,0x9fd,26,1.027262,Good,YES
+Node_12bit (Chrono64),Node,12,36,12,15,2531,8,2503,0x9c7,28,1.106282,Good,YES
+Node_12bit (Chrono64),Node,12,36,12,15,2531,9,2579,0xa13,48,1.896484,Good,YES
+Node_12bit (Chrono64),Node,12,36,12,15,2531,10,2477,0x9ad,54,2.133544,Good,YES
+Node_12bit (Chrono64),Node,12,36,12,15,2531,11,2473,0x9a9,58,2.291584,Good,YES
+Node_12bit (Chrono64),Node,12,36,12,15,2531,12,2591,0xa1f,60,2.370605,Good,YES
+Node_12bit (Chrono64),Node,12,36,12,15,2531,13,2593,0xa21,62,2.449625,Good,YES
+Node_12bit (Chrono64),Node,12,36,12,15,2531,14,2467,0x9a3,64,2.528645,Fair,NO
+Node_12bit (Chrono64),Node,12,36,12,15,2531,15,2459,0x99b,72,2.844725,Fair,NO
+Node_12bit (Chrono64),Node,12,36,12,15,2531,16,2609,0xa31,78,3.081786,Fair,NO
+Node_12bit (Chrono64),Node,12,36,12,15,2531,17,2447,0x98f,84,3.318846,Fair,NO
+Node_12bit (Chrono64),Node,12,36,12,15,2531,18,2617,0xa39,86,3.397866,Fair,NO
+Node_12bit (Chrono64),Node,12,36,12,15,2531,19,2441,0x989,90,3.555907,Fair,NO
+Node_12bit (Chrono64),Node,12,36,12,15,2531,20,2621,0xa3d,90,3.555907,Fair,NO
+Node_12bit (Chrono64),Node,12,36,12,15,2531,21,2437,0x985,94,3.713947,Fair,NO
+Node_12bit (Chrono64),Node,12,36,12,15,2531,22,2633,0xa49,102,4.030028,Fair,NO
+Node_12bit (Chrono64),Node,12,36,12,15,2531,23,2423,0x977,108,4.267088,Fair,NO
+Node_12bit (Chrono64),Node,12,36,12,15,2531,24,2417,0x971,114,4.504149,Fair,NO
+Node_12bit (Chrono64),Node,12,36,12,15,2531,25,2647,0xa57,116,4.583169,Fair,NO
+Node_12bit (Chrono64),Node,12,36,12,15,2531,26,2411,0x96b,120,4.741209,Fair,NO
+Node_12bit (Chrono64),Node,12,36,12,15,2531,27,2657,0xa61,126,4.978269,Fair,NO
+Node_12bit (Chrono64),Node,12,36,12,15,2531,28,2659,0xa63,128,5.057290,Poor,NO
+Node_12bit (Chrono64),Node,12,36,12,15,2531,29,2399,0x95f,132,5.215330,Poor,NO
+Node_12bit (Chrono64),Node,12,36,12,15,2531,30,2663,0xa67,132,5.215330,Poor,NO
+Node_12bit (Chrono64),Node,12,36,12,15,2531,31,2393,0x959,138,5.452390,Poor,NO
+Node_12bit (Chrono64),Node,12,36,12,15,2531,32,2671,0xa6f,140,5.531411,Poor,NO
+Node_12bit (Chrono64),Node,12,36,12,15,2531,33,2389,0x955,142,5.610431,Poor,NO
+Node_12bit (Chrono64),Node,12,36,12,15,2531,34,2677,0xa75,146,5.768471,Poor,NO
+Node_12bit (Chrono64),Node,12,36,12,15,2531,35,2383,0x94f,148,5.847491,Poor,NO
+Node_12bit (Chrono64),Node,12,36,12,15,2531,36,2381,0x94d,150,5.926511,Poor,NO
+Node_12bit (Chrono64),Node,12,36,12,15,2531,37,2683,0xa7b,152,6.005531,Poor,NO
+Node_12bit (Chrono64),Node,12,36,12,15,2531,38,2377,0x949,154,6.084552,Poor,NO
+Node_12bit (Chrono64),Node,12,36,12,15,2531,39,2687,0xa7f,156,6.163572,Poor,NO
+Node_12bit (Chrono64),Node,12,36,12,15,2531,40,2689,0xa81,158,6.242592,Poor,NO
+Node_12bit (Chrono64),Node,12,36,12,15,2531,41,2371,0x943,160,6.321612,Poor,NO
+Node_12bit (Chrono64),Node,12,36,12,15,2531,42,2693,0xa85,162,6.400632,Poor,NO
+Node_12bit (Chrono64),Node,12,36,12,15,2531,43,2699,0xa8b,168,6.637693,Poor,NO
+Node_12bit (Chrono64),Node,12,36,12,15,2531,44,2357,0x935,174,6.874753,Poor,NO
+Node_12bit (Chrono64),Node,12,36,12,15,2531,45,2707,0xa93,176,6.953773,Poor,NO
+Node_12bit (Chrono64),Node,12,36,12,15,2531,46,2351,0x92f,180,7.111814,Poor,NO
+Node_12bit (Chrono64),Node,12,36,12,15,2531,47,2711,0xa97,180,7.111814,Poor,NO
+Node_12bit (Chrono64),Node,12,36,12,15,2531,48,2713,0xa99,182,7.190834,Poor,NO
+Node_12bit (Chrono64),Node,12,36,12,15,2531,49,2347,0x92b,184,7.269854,Poor,NO
+Node_12bit (Chrono64),Node,12,36,12,15,2531,50,2719,0xa9f,188,7.427894,Poor,NO
+Node_11bit (UChrono64ms),Node,11,44,11,9,1265,1,1259,0x4eb,6,0.474308,Very Good,YES
+Node_11bit (UChrono64ms),Node,11,44,11,9,1265,2,1277,0x4fd,12,0.948617,Very Good,YES
+Node_11bit (UChrono64ms),Node,11,44,11,9,1265,3,1279,0x4ff,14,1.106719,Good,YES
+Node_11bit (UChrono64ms),Node,11,44,11,9,1265,4,1249,0x4e1,16,1.264822,Good,YES
+Node_11bit (UChrono64ms),Node,11,44,11,9,1265,5,1283,0x503,18,1.422925,Good,YES
+Node_11bit (UChrono64ms),Node,11,44,11,9,1265,6,1289,0x509,24,1.897233,Good,YES
+Node_11bit (UChrono64ms),Node,11,44,11,9,1265,7,1291,0x50b,26,2.055336,Good,YES
+Node_11bit (UChrono64ms),Node,11,44,11,9,1265,8,1237,0x4d5,28,2.213439,Good,YES
+Node_11bit (UChrono64ms),Node,11,44,11,9,1265,9,1297,0x511,32,2.529644,Fair,NO
+Node_11bit (UChrono64ms),Node,11,44,11,9,1265,10,1231,0x4cf,34,2.687747,Fair,NO
+Node_11bit (UChrono64ms),Node,11,44,11,9,1265,11,1229,0x4cd,36,2.845850,Fair,NO
+Node_11bit (UChrono64ms),Node,11,44,11,9,1265,12,1301,0x515,36,2.845850,Fair,NO
+Node_11bit (UChrono64ms),Node,11,44,11,9,1265,13,1303,0x517,38,3.003953,Fair,NO
+Node_11bit (UChrono64ms),Node,11,44,11,9,1265,14,1223,0x4c7,42,3.320158,Fair,NO
+Node_11bit (UChrono64ms),Node,11,44,11,9,1265,15,1307,0x51b,42,3.320158,Fair,NO
+Node_11bit (UChrono64ms),Node,11,44,11,9,1265,16,1217,0x4c1,48,3.794466,Fair,NO
+Node_11bit (UChrono64ms),Node,11,44,11,9,1265,17,1213,0x4bd,52,4.110672,Fair,NO
+Node_11bit (UChrono64ms),Node,11,44,11,9,1265,18,1319,0x527,54,4.268775,Fair,NO
+Node_11bit (UChrono64ms),Node,11,44,11,9,1265,19,1321,0x529,56,4.426877,Fair,NO
+Node_11bit (UChrono64ms),Node,11,44,11,9,1265,20,1327,0x52f,62,4.901186,Fair,NO
+Node_11bit (UChrono64ms),Node,11,44,11,9,1265,21,1201,0x4b1,64,5.059289,Poor,NO
+Node_11bit (UChrono64ms),Node,11,44,11,9,1265,22,1193,0x4a9,72,5.691700,Poor,NO
+Node_11bit (UChrono64ms),Node,11,44,11,9,1265,23,1187,0x4a3,78,6.166008,Poor,NO
+Node_11bit (UChrono64ms),Node,11,44,11,9,1265,24,1181,0x49d,84,6.640316,Poor,NO
+Node_11bit (UChrono64ms),Node,11,44,11,9,1265,25,1171,0x493,94,7.430830,Poor,NO
+Node_11bit (UChrono64ms),Node,11,44,11,9,1265,26,1361,0x551,96,7.588933,Poor,NO
+Node_11bit (UChrono64ms),Node,11,44,11,9,1265,27,1163,0x48b,102,8.063241,Poor,NO
+Node_11bit (UChrono64ms),Node,11,44,11,9,1265,28,1367,0x557,102,8.063241,Poor,NO
+Node_11bit (UChrono64ms),Node,11,44,11,9,1265,29,1373,0x55d,108,8.537549,Poor,NO
+Node_11bit (UChrono64ms),Node,11,44,11,9,1265,30,1153,0x481,112,8.853755,Poor,NO
+Node_11bit (UChrono64ms),Node,11,44,11,9,1265,31,1151,0x47f,114,9.011858,Poor,NO
+Node_11bit (UChrono64ms),Node,11,44,11,9,1265,32,1381,0x565,116,9.169960,Poor,NO
+Node_11bit (UChrono64ms),Node,11,44,11,9,1265,33,1399,0x577,134,10.592885,Poor,NO
+Node_11bit (UChrono64ms),Node,11,44,11,9,1265,34,1129,0x469,136,10.750988,Poor,NO
+Node_11bit (UChrono64ms),Node,11,44,11,9,1265,35,1123,0x463,142,11.225296,Poor,NO
+Node_11bit (UChrono64ms),Node,11,44,11,9,1265,36,1409,0x581,144,11.383399,Poor,NO
+Node_11bit (UChrono64ms),Node,11,44,11,9,1265,37,1117,0x45d,148,11.699605,Poor,NO
+Node_11bit (UChrono64ms),Node,11,44,11,9,1265,38,1109,0x455,156,12.332016,Poor,NO
+Node_11bit (UChrono64ms),Node,11,44,11,9,1265,39,1423,0x58f,158,12.490119,Poor,NO
+Node_11bit (UChrono64ms),Node,11,44,11,9,1265,40,1103,0x44f,162,12.806324,Poor,NO
+Node_11bit (UChrono64ms),Node,11,44,11,9,1265,41,1427,0x593,162,12.806324,Poor,NO
+Node_11bit (UChrono64ms),Node,11,44,11,9,1265,42,1429,0x595,164,12.964427,Poor,NO
+Node_11bit (UChrono64ms),Node,11,44,11,9,1265,43,1097,0x449,168,13.280632,Poor,NO
+Node_11bit (UChrono64ms),Node,11,44,11,9,1265,44,1433,0x599,168,13.280632,Poor,NO
+Node_11bit (UChrono64ms),Node,11,44,11,9,1265,45,1093,0x445,172,13.596838,Poor,NO
+Node_11bit (UChrono64ms),Node,11,44,11,9,1265,46,1091,0x443,174,13.754941,Poor,NO
+Node_11bit (UChrono64ms),Node,11,44,11,9,1265,47,1439,0x59f,174,13.754941,Poor,NO
+Node_11bit (UChrono64ms),Node,11,44,11,9,1265,48,1087,0x43f,178,14.071146,Poor,NO
+Node_11bit (UChrono64ms),Node,11,44,11,9,1265,49,1447,0x5a7,182,14.387352,Poor,NO
+Node_11bit (UChrono64ms),Node,11,44,11,9,1265,50,1451,0x5ab,186,14.703557,Poor,NO
+Node_10bit (Chrono64ms),Node,10,44,10,9,632,1,631,0x277,1,0.158228,Very Good,YES
+Node_10bit (Chrono64ms),Node,10,44,10,9,632,2,641,0x281,9,1.424051,Good,YES
+Node_10bit (Chrono64ms),Node,10,44,10,9,632,3,643,0x283,11,1.740506,Good,YES
+Node_10bit (Chrono64ms),Node,10,44,10,9,632,4,619,0x26b,13,2.056962,Good,YES
+Node_10bit (Chrono64ms),Node,10,44,10,9,632,5,617,0x269,15,2.373418,Good,YES
+Node_10bit (Chrono64ms),Node,10,44,10,9,632,6,647,0x287,15,2.373418,Good,YES
+Node_10bit (Chrono64ms),Node,10,44,10,9,632,7,613,0x265,19,3.006329,Fair,NO
+Node_10bit (Chrono64ms),Node,10,44,10,9,632,8,653,0x28d,21,3.322785,Fair,NO
+Node_10bit (Chrono64ms),Node,10,44,10,9,632,9,607,0x25f,25,3.955696,Fair,NO
+Node_10bit (Chrono64ms),Node,10,44,10,9,632,10,659,0x293,27,4.272152,Fair,NO
+Node_10bit (Chrono64ms),Node,10,44,10,9,632,11,661,0x295,29,4.588608,Fair,NO
+Node_10bit (Chrono64ms),Node,10,44,10,9,632,12,601,0x259,31,4.905063,Fair,NO
+Node_10bit (Chrono64ms),Node,10,44,10,9,632,13,599,0x257,33,5.221519,Poor,NO
+Node_10bit (Chrono64ms),Node,10,44,10,9,632,14,593,0x251,39,6.170886,Poor,NO
+Node_10bit (Chrono64ms),Node,10,44,10,9,632,15,673,0x2a1,41,6.487342,Poor,NO
+Node_10bit (Chrono64ms),Node,10,44,10,9,632,16,587,0x24b,45,7.120253,Poor,NO
+Node_10bit (Chrono64ms),Node,10,44,10,9,632,17,677,0x2a5,45,7.120253,Poor,NO
+Node_10bit (Chrono64ms),Node,10,44,10,9,632,18,683,0x2ab,51,8.069620,Poor,NO
+Node_10bit (Chrono64ms),Node,10,44,10,9,632,19,577,0x241,55,8.702532,Poor,NO
+Node_10bit (Chrono64ms),Node,10,44,10,9,632,20,691,0x2b3,59,9.335443,Poor,NO
+Node_10bit (Chrono64ms),Node,10,44,10,9,632,21,571,0x23b,61,9.651899,Poor,NO
+Node_10bit (Chrono64ms),Node,10,44,10,9,632,22,569,0x239,63,9.968354,Poor,NO
+Node_10bit (Chrono64ms),Node,10,44,10,9,632,23,563,0x233,69,10.917722,Poor,NO
+Node_10bit (Chrono64ms),Node,10,44,10,9,632,24,701,0x2bd,69,10.917722,Poor,NO
+Node_10bit (Chrono64ms),Node,10,44,10,9,632,25,557,0x22d,75,11.867089,Poor,NO
+Node_10bit (Chrono64ms),Node,10,44,10,9,632,26,709,0x2c5,77,12.183544,Poor,NO
+Node_10bit (Chrono64ms),Node,10,44,10,9,632,27,547,0x223,85,13.449367,Poor,NO
+Node_10bit (Chrono64ms),Node,10,44,10,9,632,28,719,0x2cf,87,13.765823,Poor,NO
+Node_10bit (Chrono64ms),Node,10,44,10,9,632,29,541,0x21d,91,14.398734,Poor,NO
+Node_10bit (Chrono64ms),Node,10,44,10,9,632,30,727,0x2d7,95,15.031646,Poor,NO
+Node_10bit (Chrono64ms),Node,10,44,10,9,632,31,733,0x2dd,101,15.981013,Poor,NO
+Node_10bit (Chrono64ms),Node,10,44,10,9,632,32,739,0x2e3,107,16.930380,Poor,NO
+Node_10bit (Chrono64ms),Node,10,44,10,9,632,33,523,0x20b,109,17.246835,Poor,NO
+Node_10bit (Chrono64ms),Node,10,44,10,9,632,34,521,0x209,111,17.563291,Poor,NO
+Node_10bit (Chrono64ms),Node,10,44,10,9,632,35,743,0x2e7,111,17.563291,Poor,NO
+Node_10bit (Chrono64ms),Node,10,44,10,9,632,36,751,0x2ef,119,18.829114,Poor,NO
+Node_10bit (Chrono64ms),Node,10,44,10,9,632,37,509,0x1fd,123,19.462025,Poor,NO
+Node_10bit (Chrono64ms),Node,10,44,10,9,632,38,757,0x2f5,125,19.778481,Poor,NO
+Node_10bit (Chrono64ms),Node,10,44,10,9,632,39,503,0x1f7,129,20.411392,Poor,NO
+Node_10bit (Chrono64ms),Node,10,44,10,9,632,40,761,0x2f9,129,20.411392,Poor,NO
+Node_10bit (Chrono64ms),Node,10,44,10,9,632,41,499,0x1f3,133,21.044304,Poor,NO
+Node_10bit (Chrono64ms),Node,10,44,10,9,632,42,769,0x301,137,21.677215,Poor,NO
+Node_10bit (Chrono64ms),Node,10,44,10,9,632,43,491,0x1eb,141,22.310127,Poor,NO
+Node_10bit (Chrono64ms),Node,10,44,10,9,632,44,773,0x305,141,22.310127,Poor,NO
+Node_10bit (Chrono64ms),Node,10,44,10,9,632,45,487,0x1e7,145,22.943038,Poor,NO
+Node_10bit (Chrono64ms),Node,10,44,10,9,632,46,479,0x1df,153,24.208861,Poor,NO
+Node_10bit (Chrono64ms),Node,10,44,10,9,632,47,787,0x313,155,24.525316,Poor,NO
+Node_10bit (Chrono64ms),Node,10,44,10,9,632,48,467,0x1d3,165,26.107595,Poor,NO
+Node_10bit (Chrono64ms),Node,10,44,10,9,632,49,797,0x31d,165,26.107595,Poor,NO
+Node_10bit (Chrono64ms),Node,10,44,10,9,632,50,463,0x1cf,169,26.740506,Poor,NO
+Node_9bit (UChrono32),Node,9,18,9,5,316,1,317,0x13d,1,0.316456,Very Good,YES
+Node_9bit (UChrono32),Node,9,18,9,5,316,2,313,0x139,3,0.949367,Very Good,YES
+Node_9bit (UChrono32),Node,9,18,9,5,316,3,311,0x137,5,1.582278,Good,YES
+Node_9bit (UChrono32),Node,9,18,9,5,316,4,307,0x133,9,2.848101,Fair,NO
+Node_9bit (UChrono32),Node,9,18,9,5,316,5,331,0x14b,15,4.746835,Fair,NO
+Node_9bit (UChrono32),Node,9,18,9,5,316,6,337,0x151,21,6.645570,Poor,NO
+Node_9bit (UChrono32),Node,9,18,9,5,316,7,293,0x125,23,7.278481,Poor,NO
+Node_9bit (UChrono32),Node,9,18,9,5,316,8,347,0x15b,31,9.810127,Poor,NO
+Node_9bit (UChrono32),Node,9,18,9,5,316,9,283,0x11b,33,10.443038,Poor,NO
+Node_9bit (UChrono32),Node,9,18,9,5,316,10,349,0x15d,33,10.443038,Poor,NO
+Node_9bit (UChrono32),Node,9,18,9,5,316,11,281,0x119,35,11.075949,Poor,NO
+Node_9bit (UChrono32),Node,9,18,9,5,316,12,353,0x161,37,11.708861,Poor,NO
+Node_9bit (UChrono32),Node,9,18,9,5,316,13,277,0x115,39,12.341772,Poor,NO
+Node_9bit (UChrono32),Node,9,18,9,5,316,14,359,0x167,43,13.607595,Poor,NO
+Node_9bit (UChrono32),Node,9,18,9,5,316,15,271,0x10f,45,14.240506,Poor,NO
+Node_9bit (UChrono32),Node,9,18,9,5,316,16,269,0x10d,47,14.873418,Poor,NO
+Node_9bit (UChrono32),Node,9,18,9,5,316,17,367,0x16f,51,16.139241,Poor,NO
+Node_9bit (UChrono32),Node,9,18,9,5,316,18,263,0x107,53,16.772152,Poor,NO
+Node_9bit (UChrono32),Node,9,18,9,5,316,19,373,0x175,57,18.037975,Poor,NO
+Node_9bit (UChrono32),Node,9,18,9,5,316,20,257,0x101,59,18.670886,Poor,NO
+Node_9bit (UChrono32),Node,9,18,9,5,316,21,379,0x17b,63,19.936709,Poor,NO
+Node_9bit (UChrono32),Node,9,18,9,5,316,22,251,0xfb,65,20.569620,Poor,NO
+Node_9bit (UChrono32),Node,9,18,9,5,316,23,383,0x17f,67,21.202532,Poor,NO
+Node_9bit (UChrono32),Node,9,18,9,5,316,24,389,0x185,73,23.101266,Poor,NO
+Node_9bit (UChrono32),Node,9,18,9,5,316,25,241,0xf1,75,23.734177,Poor,NO
+Node_9bit (UChrono32),Node,9,18,9,5,316,26,239,0xef,77,24.367089,Poor,NO
+Node_9bit (UChrono32),Node,9,18,9,5,316,27,397,0x18d,81,25.632911,Poor,NO
+Node_9bit (UChrono32),Node,9,18,9,5,316,28,233,0xe9,83,26.265823,Poor,NO
+Node_9bit (UChrono32),Node,9,18,9,5,316,29,401,0x191,85,26.898734,Poor,NO
+Node_9bit (UChrono32),Node,9,18,9,5,316,30,229,0xe5,87,27.531646,Poor,NO
+Node_9bit (UChrono32),Node,9,18,9,5,316,31,227,0xe3,89,28.164557,Poor,NO
+Node_9bit (UChrono32),Node,9,18,9,5,316,32,223,0xdf,93,29.430380,Poor,NO
+Node_9bit (UChrono32),Node,9,18,9,5,316,33,409,0x199,93,29.430380,Poor,NO
+Node_9bit (UChrono32),Node,9,18,9,5,316,34,419,0x1a3,103,32.594937,Poor,NO
+Node_9bit (UChrono32),Node,9,18,9,5,316,35,211,0xd3,105,33.227848,Poor,NO
+Node_9bit (UChrono32),Node,9,18,9,5,316,36,421,0x1a5,105,33.227848,Poor,NO
+Node_9bit (UChrono32),Node,9,18,9,5,316,37,431,0x1af,115,36.392405,Poor,NO
+Node_9bit (UChrono32),Node,9,18,9,5,316,38,199,0xc7,117,37.025316,Poor,NO
+Node_9bit (UChrono32),Node,9,18,9,5,316,39,433,0x1b1,117,37.025316,Poor,NO
+Node_9bit (UChrono32),Node,9,18,9,5,316,40,197,0xc5,119,37.658228,Poor,NO
+Node_9bit (UChrono32),Node,9,18,9,5,316,41,193,0xc1,123,38.924051,Poor,NO
+Node_9bit (UChrono32),Node,9,18,9,5,316,42,439,0x1b7,123,38.924051,Poor,NO
+Node_9bit (UChrono32),Node,9,18,9,5,316,43,191,0xbf,125,39.556962,Poor,NO
+Node_9bit (UChrono32),Node,9,18,9,5,316,44,443,0x1bb,127,40.189873,Poor,NO
+Node_9bit (UChrono32),Node,9,18,9,5,316,45,449,0x1c1,133,42.088608,Poor,NO
+Node_9bit (UChrono32),Node,9,18,9,5,316,46,181,0xb5,135,42.721519,Poor,NO
+Node_9bit (UChrono32),Node,9,18,9,5,316,47,179,0xb3,137,43.354430,Poor,NO
+Node_9bit (UChrono32),Node,9,18,9,5,316,48,457,0x1c9,141,44.620253,Poor,NO
+Node_9bit (UChrono32),Node,9,18,9,5,316,49,173,0xad,143,45.253165,Poor,NO
+Node_9bit (UChrono32),Node,9,18,9,5,316,50,461,0x1cd,145,45.886076,Poor,NO
+Node_8bit (Chrono32),Node,8,18,8,5,158,1,157,0x9d,1,0.632911,Very Good,YES
+Node_8bit (Chrono32),Node,8,18,8,5,158,2,163,0xa3,5,3.164557,Fair,YES
+Node_8bit (Chrono32),Node,8,18,8,5,158,3,151,0x97,7,4.430380,Fair,NO
+Node_8bit (Chrono32),Node,8,18,8,5,158,4,149,0x95,9,5.696203,Poor,NO
+Node_8bit (Chrono32),Node,8,18,8,5,158,5,167,0xa7,9,5.696203,Poor,NO
+Node_8bit (Chrono32),Node,8,18,8,5,158,6,173,0xad,15,9.493671,Poor,NO
+Node_8bit (Chrono32),Node,8,18,8,5,158,7,139,0x8b,19,12.025316,Poor,NO
+Node_8bit (Chrono32),Node,8,18,8,5,158,8,137,0x89,21,13.291139,Poor,NO
+Node_8bit (Chrono32),Node,8,18,8,5,158,9,179,0xb3,21,13.291139,Poor,NO
+Node_8bit (Chrono32),Node,8,18,8,5,158,10,181,0xb5,23,14.556962,Poor,NO
+Node_8bit (Chrono32),Node,8,18,8,5,158,11,131,0x83,27,17.088608,Poor,NO
+Node_8bit (Chrono32),Node,8,18,8,5,158,12,127,0x7f,31,19.620253,Poor,NO
+Node_8bit (Chrono32),Node,8,18,8,5,158,13,191,0xbf,33,20.886076,Poor,NO
+Node_8bit (Chrono32),Node,8,18,8,5,158,14,193,0xc1,35,22.151899,Poor,NO
+Node_8bit (Chrono32),Node,8,18,8,5,158,15,197,0xc5,39,24.683544,Poor,NO
+Node_8bit (Chrono32),Node,8,18,8,5,158,16,199,0xc7,41,25.949367,Poor,NO
+Node_8bit (Chrono32),Node,8,18,8,5,158,17,113,0x71,45,28.481013,Poor,NO
+Node_8bit (Chrono32),Node,8,18,8,5,158,18,109,0x6d,49,31.012658,Poor,NO
+Node_8bit (Chrono32),Node,8,18,8,5,158,19,107,0x6b,51,32.278481,Poor,NO
+Node_8bit (Chrono32),Node,8,18,8,5,158,20,211,0xd3,53,33.544304,Poor,NO
+Node_8bit (Chrono32),Node,8,18,8,5,158,21,103,0x67,55,34.810127,Poor,NO
+Node_8bit (Chrono32),Node,8,18,8,5,158,22,101,0x65,57,36.075949,Poor,NO
+Node_8bit (Chrono32),Node,8,18,8,5,158,23,97,0x61,61,38.607595,Poor,NO
+Node_8bit (Chrono32),Node,8,18,8,5,158,24,223,0xdf,65,41.139241,Poor,NO
+Node_8bit (Chrono32),Node,8,18,8,5,158,25,89,0x59,69,43.670886,Poor,NO
+Node_8bit (Chrono32),Node,8,18,8,5,158,26,227,0xe3,69,43.670886,Poor,NO
+Node_8bit (Chrono32),Node,8,18,8,5,158,27,229,0xe5,71,44.936709,Poor,NO
+Node_8bit (Chrono32),Node,8,18,8,5,158,28,83,0x53,75,47.468354,Poor,NO
+Node_8bit (Chrono32),Node,8,18,8,5,158,29,233,0xe9,75,47.468354,Poor,NO
+Node_8bit (Chrono32),Node,8,18,8,5,158,30,79,0x4f,79,50.000000,Poor,NO
+Node_8bit (Chrono32),Node,8,18,8,5,158,31,239,0xef,81,51.265823,Poor,NO
+Node_8bit (Chrono32),Node,8,18,8,5,158,32,241,0xf1,83,52.531646,Poor,NO
+Node_8bit (Chrono32),Node,8,18,8,5,158,33,73,0x49,85,53.797468,Poor,NO
+Node_8bit (Chrono32),Node,8,18,8,5,158,34,71,0x47,87,55.063291,Poor,NO
+Node_8bit (Chrono32),Node,8,18,8,5,158,35,67,0x43,91,57.594937,Poor,NO
+Node_8bit (Chrono32),Node,8,18,8,5,158,36,251,0xfb,93,58.860759,Poor,NO
+Node_8bit (Chrono32),Node,8,18,8,5,158,37,61,0x3d,97,61.392405,Poor,NO
+Node_8bit (Chrono32),Node,8,18,8,5,158,38,59,0x3b,99,62.658228,Poor,NO
+Node_8bit (Chrono32),Node,8,18,8,5,158,39,53,0x35,105,66.455696,Poor,NO
+Node_8bit (Chrono32),Node,8,18,8,5,158,40,47,0x2f,111,70.253165,Poor,NO
+Node_8bit (Chrono32),Node,8,18,8,5,158,41,43,0x2b,115,72.784810,Poor,NO
+Node_8bit (Chrono32),Node,8,18,8,5,158,42,41,0x29,117,74.050633,Poor,NO
+Node_8bit (Chrono32),Node,8,18,8,5,158,43,37,0x25,121,76.582278,Poor,NO
+Node_8bit (Chrono32),Node,8,18,8,5,158,44,31,0x1f,127,80.379747,Poor,NO
+Node_8bit (Chrono32),Node,8,18,8,5,158,45,29,0x1d,129,81.645570,Poor,NO
+Node_8bit (Chrono32),Node,8,18,8,5,158,46,23,0x17,135,85.443038,Poor,NO
+Node_8bit (Chrono32),Node,8,18,8,5,158,47,19,0x13,139,87.974684,Poor,NO
+Node_8bit (Chrono32),Node,8,18,8,5,158,48,17,0x11,141,89.240506,Poor,NO
+Node_8bit (Chrono32),Node,8,18,8,5,158,49,13,0xd,145,91.772152,Poor,NO
+Node_8bit (Chrono32),Node,8,18,8,5,158,50,11,0xb,147,93.037975,Poor,NO
+Node_7bit (UChrono32h),Node,7,21,7,4,79,1,79,0x4f,0,0.000000,Perfect,YES
+Node_7bit (UChrono32h),Node,7,21,7,4,79,2,83,0x53,4,5.063291,Poor,YES
+Node_7bit (UChrono32h),Node,7,21,7,4,79,3,73,0x49,6,7.594937,Poor,NO
+Node_7bit (UChrono32h),Node,7,21,7,4,79,4,71,0x47,8,10.126582,Poor,NO
+Node_7bit (UChrono32h),Node,7,21,7,4,79,5,89,0x59,10,12.658228,Poor,NO
+Node_7bit (UChrono32h),Node,7,21,7,4,79,6,67,0x43,12,15.189873,Poor,NO
+Node_7bit (UChrono32h),Node,7,21,7,4,79,7,61,0x3d,18,22.784810,Poor,NO
+Node_7bit (UChrono32h),Node,7,21,7,4,79,8,97,0x61,18,22.784810,Poor,NO
+Node_7bit (UChrono32h),Node,7,21,7,4,79,9,59,0x3b,20,25.316456,Poor,NO
+Node_7bit (UChrono32h),Node,7,21,7,4,79,10,101,0x65,22,27.848101,Poor,NO
+Node_7bit (UChrono32h),Node,7,21,7,4,79,11,103,0x67,24,30.379747,Poor,NO
+Node_7bit (UChrono32h),Node,7,21,7,4,79,12,53,0x35,26,32.911392,Poor,NO
+Node_7bit (UChrono32h),Node,7,21,7,4,79,13,107,0x6b,28,35.443038,Poor,NO
+Node_7bit (UChrono32h),Node,7,21,7,4,79,14,109,0x6d,30,37.974684,Poor,NO
+Node_7bit (UChrono32h),Node,7,21,7,4,79,15,47,0x2f,32,40.506329,Poor,NO
+Node_7bit (UChrono32h),Node,7,21,7,4,79,16,113,0x71,34,43.037975,Poor,NO
+Node_7bit (UChrono32h),Node,7,21,7,4,79,17,43,0x2b,36,45.569620,Poor,NO
+Node_7bit (UChrono32h),Node,7,21,7,4,79,18,41,0x29,38,48.101266,Poor,NO
+Node_7bit (UChrono32h),Node,7,21,7,4,79,19,37,0x25,42,53.164557,Poor,NO
+Node_7bit (UChrono32h),Node,7,21,7,4,79,20,31,0x1f,48,60.759494,Poor,NO
+Node_7bit (UChrono32h),Node,7,21,7,4,79,21,127,0x7f,48,60.759494,Poor,NO
+Node_7bit (UChrono32h),Node,7,21,7,4,79,22,29,0x1d,50,63.291139,Poor,NO
+Node_7bit (UChrono32h),Node,7,21,7,4,79,23,23,0x17,56,70.886076,Poor,NO
+Node_7bit (UChrono32h),Node,7,21,7,4,79,24,19,0x13,60,75.949367,Poor,NO
+Node_7bit (UChrono32h),Node,7,21,7,4,79,25,17,0x11,62,78.481013,Poor,NO
+Node_7bit (UChrono32h),Node,7,21,7,4,79,26,13,0xd,66,83.544304,Poor,NO
+Node_7bit (UChrono32h),Node,7,21,7,4,79,27,11,0xb,68,86.075949,Poor,NO
+Node_7bit (UChrono32h),Node,7,21,7,4,79,28,7,0x7,72,91.139241,Poor,NO
+Node_7bit (UChrono32h),Node,7,21,7,4,79,29,5,0x5,74,93.670886,Poor,NO
+Node_7bit (UChrono32h),Node,7,21,7,4,79,30,3,0x3,76,96.202532,Poor,NO
+Node_7bit (UChrono32h),Node,7,21,7,4,79,31,2,0x2,77,97.468354,Poor,NO
+Node_6bit (Chrono32h),Node,6,21,6,4,39,1,37,0x25,2,5.128205,Poor,YES
+Node_6bit (Chrono32h),Node,6,21,6,4,39,2,41,0x29,2,5.128205,Poor,YES
+Node_6bit (Chrono32h),Node,6,21,6,4,39,3,43,0x2b,4,10.256410,Poor,NO
+Node_6bit (Chrono32h),Node,6,21,6,4,39,4,31,0x1f,8,20.512821,Poor,NO
+Node_6bit (Chrono32h),Node,6,21,6,4,39,5,47,0x2f,8,20.512821,Poor,NO
+Node_6bit (Chrono32h),Node,6,21,6,4,39,6,29,0x1d,10,25.641026,Poor,NO
+Node_6bit (Chrono32h),Node,6,21,6,4,39,7,53,0x35,14,35.897436,Poor,NO
+Node_6bit (Chrono32h),Node,6,21,6,4,39,8,23,0x17,16,41.025641,Poor,NO
+Node_6bit (Chrono32h),Node,6,21,6,4,39,9,19,0x13,20,51.282051,Poor,NO
+Node_6bit (Chrono32h),Node,6,21,6,4,39,10,59,0x3b,20,51.282051,Poor,NO
+Node_6bit (Chrono32h),Node,6,21,6,4,39,11,17,0x11,22,56.410256,Poor,NO
+Node_6bit (Chrono32h),Node,6,21,6,4,39,12,61,0x3d,22,56.410256,Poor,NO
+Node_6bit (Chrono32h),Node,6,21,6,4,39,13,13,0xd,26,66.666667,Poor,NO
+Node_6bit (Chrono32h),Node,6,21,6,4,39,14,11,0xb,28,71.794872,Poor,NO
+Node_6bit (Chrono32h),Node,6,21,6,4,39,15,7,0x7,32,82.051282,Poor,NO
+Node_6bit (Chrono32h),Node,6,21,6,4,39,16,5,0x5,34,87.179487,Poor,NO
+Node_6bit (Chrono32h),Node,6,21,6,4,39,17,3,0x3,36,92.307692,Poor,NO
+Node_6bit (Chrono32h),Node,6,21,6,4,39,18,2,0x2,37,94.871795,Poor,NO
