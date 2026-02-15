@@ -1,132 +1,195 @@
-# Chrono-ID: Next-Generation K-Sortable Identifiers
+# ChronoID: Sortable × Uncoordinated × Compact
 
-`Chrono-ID` is a suite of **K-Sortable identifiers** designed using "Trade-off Engineering." It provides the **uncoordinated safety** of UUIDv7 with the **storage efficiency** of 64-bit integers and the **unlimited throughput** of Snowflake IDs.
+ChronoID is a high-performance distributed identifier framework that solves the **ID Generation Trilemma** — the fundamental impossibility of achieving **Sortability**, **Uncoordinated Scaling**, and **Storage Efficiency** simultaneously with existing standards.
+
+| Property              |        UUID v7        |   Twitter Snowflake   |         **ChronoID**         |
+| :-------------------- | :-------------------: | :-------------------: | :--------------------------: |
+| **Sortable**          |      ✅ ms-order      |      ✅ ms-order      | ✅ Configurable (µs → month) |
+| **Uncoordinated**     |       ✅ Random       | ❌ Requires Zookeeper | ✅ Mode A: zero coordination |
+| **Storage Efficient** | ❌ 128-bit (16 bytes) |  ✅ 64-bit (8 bytes)  |   ✅ **64-bit or 32-bit**    |
 
 > [!IMPORTANT]
-> **Foundation Architecture:** Chrono-ID is built on the **"Dynamic Persona" model**. This architecture utilizes prime-based permutations and stateful rotation to provide infinite burst throughput and significantly higher collision resistance than standard ULID or Snowflake implementations.
+> **How?** ChronoID uses a **Rotating Persona** architecture with **Weyl-Golden self-healing** — leveraging the Birthday Paradox not as a risk factor, but as a calculated safety shield.
 >
-> Read the full mathematical proof: [**MATHEMATICAL_PROOF.md**](./proof/MATHEMATICAL_PROOF.md).
+> 📄 [**Formal Proof**](./proof/proof.md) · 📋 [**Summary**](./proof/summary.md) · 🏆 [**Champion Comparison**](./proof/champion.md)
+
+> [!TIP]
+> **Novel Innovation: `chrono32y` — The Tenant ID Problem, Solved.** Tenant IDs appear as Foreign Keys in _every_ child table of a SaaS app. UUID costs 16 bytes per FK × millions of rows = gigabytes wasted. `chrono32y` fits in a **native 32-bit `INT`** (4 bytes), saves **12 bytes per FK**, and encodes as a **7-char Crockford Base32** string (e.g., `8Z5Y03`) for human-readable display. No other ID system offers this.
 
 ---
 
-## 🏗 Visual Architecture (Chrono64ms)
+## 🏗 Architecture
 
-Unlike traditional IDs that use raw random bits, Chrono-ID divides entropy into an obfuscated **Node ID** and a permuted **Sequence**.
+### ID Structure
 
 ```text
- 0      1                                          44 45          54 55          63
-+------+---------------------------------------------+--------------+--------------+
-| Sign |     Timestamp (44 bits - Milliseconds)      |  Node (10b)  |  Seq (9b)    |
-| (0)  |       (Epoch 1970 - Valid to 2527)          | (Obfuscated) | (Permuted)   |
-+------+---------------------------------------------+--------------+--------------+
-                                                      \____________  ____________/
-                                                                   \/
-                                                   "The Persona" (Stateful Entropy)
+ MSB                                                                    LSB
++--------+--------------------------------------------+-----------+-----------+
+|  Sign  |     Timestamp (variant-specific precision) | Node ID   | Sequence  |
+|  (0/1) |     (µs, ms, sec, min, hour, day... year)  | (mixed)   | (mixed)   |
++--------+--------------------------------------------+-----------+-----------+
+          \___________  ___________/                    \________  ________/
+                      \/                                         \/
+              Time-Ordered Prefix                     "The Persona" (Entropy Suffix)
+                                                    Weyl-Golden obfuscated
 ```
 
-### The "Persona" Transformation
-Every generator maintains a state vector $\sigma$ consisting of a Node ID, specific Prime Baskets, and an XOR Salt. The final ID is assembled using:
-- **Node Obfuscation:** $f_N(id) = (id \times P_{node}) \pmod{M_N}$
-- **Sequence Permutation:** $f_S(c) = ((c \times P_{seq}) \pmod{M_S}) \oplus \chi_{salt}$
+**Why Node + Sequence split?** A flat random suffix treats all collisions identically. The split enables **different defenses** per collision type:
+
+- **Node collisions** → Weyl-Golden divergence (different multipliers force separation at $T+1$)
+- **Sequence collisions** → impossible within one generator (monotonic counter)
+- **Both colliding** → persona rotation resamples $N$ independently of $S$
+
+The split also enables **Mode C's embedded routing** — Node bits encode a physical shard.
+
+### Signed vs. Unsigned
+
+| Prefix    | MSB       | Use When                                                                 |
+| :-------- | :-------- | :----------------------------------------------------------------------- |
+| `chrono`  | Always 0  | PostgreSQL, Java, Go (prevents negative `bigint` / `long`)               |
+| `uchrono` | Available | Rust, C++, MySQL, Solidity (extra bit → **Node field**, +41% safe nodes) |
 
 ---
 
-## 🚀 Key Feature: Burst Rotation (The "Emergency Valve")
+## ⚡ Three Operational Modes
 
-Standard Snowflake implementations block or sleep if the sequence limit is reached. **Chrono-ID never blocks.**
+ChronoID morphs between three architectural patterns without database migration:
 
-If a traffic spike exhausts the sequence counter within a single time window:
-1. The generator instantly **rotates its Persona** (picks a new random Node ID, Prime, and Salt).
-2. The sequence resets, and generation continues immediately in the same time-slice.
-3. This effectively unlocks the Node bits to act as overflow sequence bits, allowing throughput of **100M+ IDs/second** on a single node.
+### Mode A: Autonomous Persona (Stateless)
+
+**Best For:** Serverless (Lambda), Edge, IoT, Offline-First Mobile.
+
+- Zero coordination — nodes require no knowledge of each other
+- **Self-Healing:** If two nodes collide at time $T$, Weyl-Golden divergence forces their IDs apart at $T+1$ with **98.4% probability**
+- **Rotation:** Every 60 seconds, re-rolls Node ID, Salt, and Multiplier via CSPRNG
+- **Burst:** On sequence overflow → immediate persona re-roll (never stalls)
+- **Clock Skew:** Backward jump → treated as burst event, triggers re-roll
+
+### Mode B: Instance-Native (Stateful)
+
+**Best For:** PostgreSQL/MySQL Primary Keys, High-Frequency Ingestion.
+
+- Ties Node bits to a static Instance ID; uses `nextval` for the sequence
+- **B-Tree Optimized:** Strictly monotonically increasing → always appends to the right leaf
+- **Rotation:** Every 10 minutes via Weyl-Step (`Node = (Node + C) % Max`)
+- **Burst:** On sequence overflow → immediate Weyl-Step rotation (never stalls)
+- **Why it wins:** Raw speed of `AUTO_INCREMENT` but globally unique and mergeable
+
+### Mode C: Managed Registry (Topology-Aware)
+
+**Best For:** Sharded Clusters, Multi-Region, Microservices.
+
+- Node bits assigned by Registry (Redis / Etcd) — represent physical Shards or Tenants
+- **Embedded Routing:** `Target = (ID >> b_S) & NodeMask` — a single bit-shift, no lookup table
+- **Burst:** Spin-waits for next tick (Node cannot change — it encodes routing identity)
+- **Why it wins:** Replaces Snowflake with 3.5× longer lifespan and no Zookeeper SPOF
 
 ---
 
-## 📊 Master Capacity & Safety Table
+## 📊 Variant Reference
 
-This table assumes **Uncoordinated (Random) Mode**, prioritizing maximum collision resistance (Prime Error $< 2.5\%$ and minimum 2 baskets are picked).
+### `chrono64` / `uchrono64` — Primary Keys (Mode A Safe)
 
-| Variant         | Bits | Time Bits | Node Bits | **Node Baskets** | Seq Bits | **Seq Baskets** | **Uncoordinated Risk / Entropy** | **Time Safety** | **Burst Throughput** | **Cluster Safety** |
-| :-------------- | :--- | :-------- | :-------- | :--------------- | :------- | :-------------- | :------------------------------- | :-------------- | :------------------- | :----------------- |
-| **UChrono64**   | 64   | 36        | 13        | 31               | 15       | 50              | **~13.6 Quadrillion**            | ~2,177 Years    | 268 Million / s      | ✅ **Safe**        |
-| **Chrono64**    | 63   | 36        | 12        | 13               | 15       | 50              | **~2.8 Quadrillion**             | ~2,177 Years    | 134 Million / s      | ✅ **Safe**        |
-| **UChrono64ms** | 64   | 44        | 11        | 8                | 9        | 3               | **~12.8 Billion**                | ~557 Years      | 1 Million / ms       | ✅ **Safe**        |
-| **Chrono64ms**  | 63   | 44        | 10        | 6                | 9        | 3               | **~4.8 Billion**                 | ~557 Years      | 524,288 / ms         | ✅ **Safe**        |
-| **UChrono64us** | 64   | 54        | 1         | 1 (Fixed)        | 9        | 3               | **~1.5 Million**                 | ~571 Years      | 1,024 / µs           | ⚠️ **Conditional** |
-| **Chrono64us**  | 63   | 54        | 0         | 1 (Fixed)        | 9        | 3               | **~786,432**                     | ~571 Years      | 512 / µs             | ⚠️ **Conditional** |
-| **UChrono32w**  | 32   | 14        | 11        | 8                | 7        | 2               | **~536 Million**                 | ~314 Years      | 262,144 / week       | ✅ **Safe**        |
-| **Chrono32w**   | 31   | 14        | 10        | 6                | 7        | 2               | **~201 Million**                 | ~314 Years      | 131,072 / week       | ✅ **Safe**        |
-| **UChrono32**   | 32   | 18        | 9         | 3                | 5        | 2               | **~3.1 Million**                 | ~717 Years      | 16,384 / day         | ⚠️ **Conditional** |
-| **Chrono32**    | 31   | 18        | 8         | 2                | 5        | 2               | **~524,288**                     | ~717 Years      | 8,192 / day          | ⚠️ **Conditional** |
-| **UChrono32h**  | 32   | 21        | 7         | 2                | 4        | 2               | **~131,072**                     | ~239 Years      | 2,048 / hour         | ⚠️ **Conditional** |
-| **Chrono32h**   | 31   | 21        | 6         | 2                | 4        | 2               | **~65,536**                      | ~239 Years      | 1,024 / hour         | ❌ **Unsafe**      |
-| **UChrono32m**  | 32   | 27        | 1         | 1 (Fixed)        | 4        | 2               | **~1,024**                       | ~255 Years      | 32 / min             | ❌ **Unsafe**      |
-| **Chrono32m**   | 31   | 27        | 0         | 1 (Fixed)        | 4        | 2               | **~512**                         | ~255 Years      | 16 / min             | ❌ **Unsafe**      |
+| Variant | Precision | Bits (T/N/S) | Expiry | Safe Nodes (1-in-1M) | Use Case                |
+| :------ | :-------- | :----------: | :----: | :------------------: | :---------------------- |
+| **mo**  | Month     |   12/26/26   |  2361  |         94k          | Global SaaS / Billing   |
+| **s**   | Second    |   33/16/15   |  2292  |        **65**        | **Standard DB Keys** ⭐ |
+| **ds**  | Decisec   |   36/15/13   |  2237  |         732          | High-Freq App Logs      |
+| **ms**  | ms        |   43/11/10   |  2298  |  64 (Mode B/C only)  | Real-time Systems       |
+| **us**  | µs        |    53/6/5    |  2305  |  2 (Mode B/C only)   | Kernel Events           |
 
----
+> **Default:** `chrono64s` — 1-second precision, 65 safe nodes (1-in-1M), native `bigint`, 250+ year lifespan.
 
-## 🛡️ Safety Classifications
+### `chrono32` / `uchrono32` — Compact Keys
 
-### ✅ Safe (Cluster Ready)
-*Variants: UChrono64, Chrono64, UChrono64ms, Chrono64ms, UChrono32w.*
-Designed for large, uncoordinated clusters (Serverless, Kubernetes). Random Node ID assignment is safe with near-zero collision risk.
+| Variant | Precision | Bits (T/N/S) | Expiry | Safe Nodes (1-in-1k) | Use Case             |
+| :------ | :-------- | :----------: | :----: | :------------------: | :------------------- |
+| **y**   | Year      |   8/13/11    |  2276  |       **183**        | Tenant / Member IDs  |
+| **mo**  | Month     |   12/11/10   |  2361  |          64          | Subscription Billing |
+| **bs**  | Bi-Sec    |    32/0/0    |  2292  |         None         | 32-bit Sort Index    |
 
-### ⚠️ Conditional (Small Clusters / Single Writer)
-*Variants: Chrono64us, UChrono32, UChrono32h.*
-Safe for single-writer systems or small clusters (2-10 nodes). For larger deployments, you **must** assign fixed Node IDs via configuration.
-
-### ❌ Unsafe (Coordinated Only)
-*Variants: Chrono32h, UChrono32m, Chrono32m.*
-These have very low entropy. They are designed for single-node use cases (e.g., local session IDs). Distributed use requires a central coordinator.
+> [!NOTE]
+> **`chrono32y` — The Novel Tenant ID Innovation.**
+> Every SaaS app references `tenant_id` in every child table. UUID costs **16 bytes per FK** — `chrono32y` costs **4 bytes**. At 1 billion rows, that's **~12 GB saved**.
+>
+> - **Year Precision:** Timestamp updates once per year → 24 bits for entropy (~16.7M tenants/year unsigned)
+> - **Obfuscated:** Appears random (e.g., `9402115`), hiding growth rates from competitors
+> - **Human-Readable:** Encodes as **7-char Crockford Base32** (e.g., `8Z5Y03`) — URL-safe, dictation-friendly
+> - **Native INT:** 1-cycle JOINs, best-in-class index performance
 
 ---
 
 ## 🆚 Competitive Comparison
 
-| Feature | **Chrono-ID** | UUIDv7 | Snowflake (Twitter) |
-| :--- | :--- | :--- | :--- |
-| **Storage Size** | **8 Bytes** (Int64) | 16 Bytes (Binary) | 8 Bytes (Int64) |
-| **Coordination** | **None (Self-Healing)** | None | **Required** (Zookeeper/Etcd) |
-| **Burst Capacity** | **Infinite (Rotation)** | N/A | **Capped** (Blocking) |
-| **Public Safety** | **Obfuscated** | Readable | Exposed Counter |
-| **Native DB Type** | `BIGINT` | `UUID` | `BIGINT` |
+### vs. Legacy Standards
+
+| Feature            | UUID v7             | Snowflake           | AUTO_INCREMENT  | **ChronoID**              |
+| :----------------- | :------------------ | :------------------ | :-------------- | :------------------------ |
+| **Storage**        | ❌ 128-bit          | ✅ 64-bit           | ✅ 32/64-bit    | ✅ **64 + 32-bit tier**   |
+| **Uncoordinated**  | ✅ Random           | ❌ Zookeeper        | ❌ Local only   | ✅ **Mode A: zero coord** |
+| **Self-Healing**   | ❌ Silent duplicate | ❌ Silent duplicate | ❌ Error        | ✅ **98.4% divergence**   |
+| **Shard Routing**  | ❌ Lookup           | ❌ Lookup           | ❌ Not possible | ✅ **Mode C: embedded**   |
+| **FK Compression** | ❌ 16 bytes/ref     | ❌ 8 bytes          | ✅ 4 bytes      | ✅ **chrono32y: 4 bytes** |
+| **Lifespan**       | ✅ Long             | ⚠️ ~69 years        | ✅ Long         | ✅ **250+ years**         |
+
+### vs. Modern Contenders
+
+| Feature          | ULID        | KSUID       | TSID        | Cuid2       | **ChronoID**          |
+| :--------------- | :---------- | :---------- | :---------- | :---------- | :-------------------- |
+| **Storage**      | ❌ 16 bytes | ❌ 20 bytes | ✅ 8 bytes  | ❌ 16 bytes | ✅ **8 bytes (or 4)** |
+| **Native INT**   | ❌ No       | ❌ No       | ✅ `bigint` | ❌ No       | ✅ **`bigint`/`int`** |
+| **Self-Healing** | ❌ None     | ❌ None     | ❌ None     | ❌ None     | ✅ **98.4% diverge**  |
+| **Polymorphic**  | ❌ Fixed    | ❌ Fixed    | ❌ Fixed    | ❌ Fixed    | ✅ **3 modes**        |
+| **FK Tier**      | ❌ 16 bytes | ❌ 20 bytes | ❌ 8 bytes  | ❌ 16 bytes | ✅ **chrono32y: 4B**  |
 
 ---
 
-## 💡 Best Practices
+## 💡 Novel Innovations (No Prior Art)
 
-### 1. **Generator Lifecycle (Singleton Pattern)**
-Because Chrono-ID is now **stateful** (it maintains a "Persona" and a sequence counter), you should **not** instantiate a new generator for every ID.
-- **Recommendation:** Create a single, long-lived instance of the generator for your application process and reuse it.
-- **Why:** Re-instantiating every time forces unnecessary re-calculation of primes and salts, and risks sequence collisions if the system clock has low resolution.
-
-### 2. **Handling Sequentiality vs. Guessability**
-Chrono-ID is "Topology Hiding." This means that while IDs are K-sortable (they increase over time), they are **not numerically sequential** (ID `N+1` is not the next ID).
-- **Security:** This prevents "ID Scraping" (where a competitor guesses your total order volume by incrementing an ID).
-- **Important:** These are still time-prefixed. If an attacker knows a resource was created at exactly `12:00:01`, they can narrow down the potential ID range. For sensitive session tokens, always use a full 128-bit CSPRNG.
-
-### 3. **Database Indexing & Sharding**
-- **Clustered Indexes:** Always use Chrono-ID as your `PRIMARY KEY`. The time-leading nature ensures that the B-Tree index is "Append-Only," preventing expensive page splits and fragmentation.
-- **Locality:** Since the first 36-44 bits are time, IDs created in the same time window stay physically close in the database, dramatically speeding up range queries (e.g., `WHERE id > Chrono64::from_date('2024-01-01')`).
-
-### 4. **Clock Drift Management**
-Like all time-based IDs, Chrono-ID assumes a monotonic clock.
-- **Backward Drift:** If your system clock moves backward (e.g., via NTP sync), most implementations will throw a `ClockDriftError`.
-- **Recommendation:** Use a "Wait-on-Clock" policy or ensure your server uses a "slew" based time sync rather than "stepping" the clock.
+| Innovation                  | What's New                                                                     |
+| :-------------------------- | :----------------------------------------------------------------------------- |
+| **Self-Healing Collisions** | First ID system with active collision recovery (98.4% divergence at next tick) |
+| **Polymorphic Modes**       | 3 architectures, 1 column type — switch without migration                      |
+| **µs → Month Precision**    | Trade time granularity for entropy — 12 variants on one spectrum               |
+| **Never-Stall Bursts**      | Sequence overflow triggers rotation, not blocking                              |
+| **`chrono32y` Tenant ID**   | Purpose-built 32-bit FK — saves 12 bytes/row vs UUID                           |
+| **Birthday Shield**         | Persona rotation resets collision probability — paradox as feature             |
 
 ---
 
-## 🛠 Project Status & Roadmap
+## 📚 Best Practices
 
-**Current Status:** Under active initial development. We are implementing the first production-ready libraries based on the mathematical specification.
+### Generator Lifecycle (Singleton Pattern)
 
-- [x] **Mathematical Foundation:** Completed.
-- [ ] **Python:** Under construction (Stateful generator).
-- [ ] **JS / TypeScript:** Under construction (Node.js & Browser).
-- [ ] **C++:** Under construction (Header-only with Prime Baskets).
-- [ ] **Database Extensions:** Implementing native logic for Postgres and SQLite.
+ChronoID generators are **stateful** (they maintain a Persona and sequence counter). Create a **single, long-lived instance** per process and reuse it. Re-instantiating forces unnecessary CSPRNG re-rolls and risks sequence collisions.
+
+### Database Indexing
+
+Always use ChronoID as your `PRIMARY KEY`. The time-leading bits ensure the B-Tree index is **append-only**, preventing page splits. IDs created in the same window stay physically close, dramatically speeding up range queries.
+
+### Clock Skew
+
+ChronoID handles clock skew automatically via persona rotation (Mode A) or monotonic sequences (Mode B/C). **No manual clock management needed.** Sortability may be briefly disrupted, but uniqueness is always preserved.
+
+### Security
+
+ChronoID IDs are **obfuscated** (Weyl-Golden mixing) but **not cryptographically secure**. Don't use them as secret tokens or API keys. For those, use a CSPRNG directly.
+
+---
+
+## 🛠 Project Status
+
+| Component               | Status               |
+| :---------------------- | :------------------- |
+| Mathematical Foundation | ✅ Complete          |
+| Python                  | 🚧 Under development |
+| JavaScript / TypeScript | 🚧 Under development |
+| C++                     | 🚧 Under development |
+| PostgreSQL Extension    | 🚧 Under development |
+| SQLite Extension        | 🚧 Under development |
 
 ---
 
 ## ⚖ License
-MIT License. Feel free to use and contribute!
+
+MIT License. See [LICENSE](./LICENSE).
