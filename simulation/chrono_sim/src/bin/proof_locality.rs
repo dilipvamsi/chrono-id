@@ -19,8 +19,8 @@ use std::error::Error;
 fn main() -> Result<(), Box<dyn Error>> {
     println!("🧪 Scenario 17: Database Locality Proof (SQLite)\n");
 
-    let n = 500_000;
-    println!("   Inserting {} records into physical B-Tree indices...", n);
+    let n = 1_000_000;
+    println!("   Inserting {} records into physical B-Tree indices... [Scale: 1,000,000 Rows]", n);
 
     // --- ChronoID Setup (INTEGER PRIMARY KEY) ---
     let path_chrono = "chrono_locality.db";

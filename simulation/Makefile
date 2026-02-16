@@ -1,6 +1,6 @@
-.PHONY: all s123 s4 s5 s6 s7 s8 s9 s10 s11 s12 s13 s14 s15 s16 s17 s18 s19 s20 s21 s22 s23 s24 clean
+.PHONY: all s123 s4 s5 s6 s7 s8 s9 s10 s11 s12 s13 s14 s15 s16 s17 s18 s19 s20 s21 s22 s23 s24 s25 s26 clean
 
-all: s123 s4 s5 s6 s7 s8 s9 s10 s11 s12 s13 s14 s15 s16 s17 s18 s19 s20 s21 s22 s23 s24
+all: s123 s4 s5 s6 s7 s8 s9 s10 s11 s12 s13 s14 s15 s16 s17 s18 s19 s20 s21 s22 s23 s24 s25 s26
 
 # Scenarios 1-3: Main Proofs (Perfect Storm, Entropy, Burst)
 s123:
@@ -96,6 +96,11 @@ s20:
 s21:
 	@echo "\n🚀 Running Scenario 21 (Variant Mix)..."
 	@cd chrono_sim && cargo run --quiet --release --bin proof_variant_mix
+
+# Scenario 22: Causal Jitter (Clock Skew)
+s22:
+	@echo "\n🚀 Running Scenario 22 (Causal Jitter)..."
+	@cd chrono_sim && cargo run --quiet --release --bin proof_causal_jitter
 
 # Scenario 23: Boundary Value Analysis
 s23:

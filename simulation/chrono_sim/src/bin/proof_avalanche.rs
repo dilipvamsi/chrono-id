@@ -21,7 +21,7 @@ fn main() {
     println!("   Measuring the 'Avalanche Effect': Changing 1 input bit should flip ~50% of output bits.");
 
     let mut total_bits_flipped = 0;
-    let iterations = 1000;
+    let iterations = 1_000_000;
     let bits = 32;
     let salt = 0xDEADBEEF;
     let p_idx = 7;

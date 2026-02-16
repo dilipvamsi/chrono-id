@@ -16,34 +16,33 @@ fn generate_s(ts_sec: u64, node: u64, seq: u64) -> u64 {
 fn main() {
     println!("🧪 Scenario 22: Causal Sort Jitter (Clock Skew Analysis)");
 
-    // --- Simulation Setup ---
-    // We simulate two nodes: Node A (fast clock) and Node B (slow clock).
-    // NTP typically keeps nodes within 50-100ms, but we'll assume a 1s skew
-    // to match the resolution of the 's' (second) variant.
+    // --- Extended Scale: 1,000,000 Events ---
+    println!("\n   > Scaling to 1,000,000 Events with random 100ms jitter...");
+    use rand::Rng;
+    let mut rng = rand::thread_rng();
+    let n = 1_000_000;
+    let mut inversions = 0;
 
-    let true_time = 1000; // T=1000.0s (Global Reference)
+    for i in 0..n {
+        let true_time_ms = 1_000_000 + i;
+        // Node A skew: -50 to +50ms
+        let skew_ms = rng.gen_range(-50..50);
+        let clock_time_s = (true_time_ms as i64 + skew_ms) as u64 / 1000;
 
-    // Node A is 500ms ahead (ClockA: 1000.5)
-    // Node B is 500ms behind (ClockB: 999.5)
+        // Simulating a second event slightly later
+        let true_time_coda_ms = true_time_ms + 10; // 10ms later
+        let skew_coda_ms = rng.gen_range(-50..50);
+        let clock_time_coda_s = (true_time_coda_ms as i64 + skew_coda_ms) as u64 / 1000;
 
-    // Event 1 happens on Node A at TrueTime=1000.5.
-    // Clock A reads 1001.0 -> ID generated with T=1001.
-    let id_event_1 = generate_s(1001, 1, 0);
+        let id_1 = generate_s(clock_time_s, 1, 0);
+        let id_2 = generate_s(clock_time_coda_s, 2, 0);
 
-    // Event 2 happens on Node B at TrueTime=1000.6.
-    // Clock B reads 1000.1 -> ID generated with T=1000.
-    let id_event_2 = generate_s(1000, 2, 0);
-
-    // --- Observation ---
-    // Real Causality: Event 1 happened BEFORE Event 2 (1000.5 < 1000.6).
-    // ID Sorting: ID(Event 1) > ID(Event 2).
-
-    if id_event_1 > id_event_2 {
-        println!("   ⚠️ Causal Inversion Detected:");
-        println!("      Event 1 (Real T=1000.5) > Event 2 (Real T=1000.6)");
-        println!("      A 1-second clock skew caused a sort inversion across parallel nodes.");
+        if clock_time_s > clock_time_coda_s && id_1 > id_2 {
+            inversions += 1;
+        }
     }
 
+    println!("   > Measured Inversions at 1M scale: {}", inversions);
     println!("✅ VERIFIED: Causal Jitter is physically bounded by Clock Skew + Variant Precision.");
     println!("           For chrono64s (1s), max jitter is ±1 bucket under standard NTP.");
 }

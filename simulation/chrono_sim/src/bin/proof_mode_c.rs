@@ -93,9 +93,10 @@ async fn run_scenario_5_mode_c() {
 
     // --- Phase 5: Parallel Shard Isolation ---
     // Verify that independent shard threads never overlap Node IDs.
-    println!("\n   > Testing Parallel Shard Isolation...");
+    println!("\n   > Testing Parallel Shard Isolation [Scale: 10,000,000 Ops]...");
     let shards = vec![1, 2, 3, 31];
     let mut tasks = Vec::new();
+    let ops_per_shard = 2_500_000;
 
     for shard in shards {
         tasks.push(tokio::spawn(async move {
@@ -103,7 +104,7 @@ async fn run_scenario_5_mode_c() {
             let config = gen.get_config();
             let node_mask = (1 << config.node_bits) - 1;
 
-            for _ in 0..500_000 {
+            for _ in 0..ops_per_shard {
                 let id = gen.generate();
                 let extracted = (id >> config.seq_bits) & node_mask;
                 if extracted != shard {

@@ -22,8 +22,8 @@ fn main() -> Result<(), Box<dyn Error>> {
     println!("🧪 Scenario 25: chrono32y vs UUIDv4 (Random) vs UUIDv7 (Sequential)\n");
 
     // Scale parameters for meaningful cache pressure analysis
-    let n_records = 500_000;
-    let n_queries = 20_000;
+    let n_records = 1_000_000;
+    let n_queries = 10_000;
 
     println!("   Setup: {} Records | {} Queries", n_records, n_queries);
     println!("   Goal: Prove 32-bit Random (chrono32y) beats 128-bit Random (UUIDv4).\n");

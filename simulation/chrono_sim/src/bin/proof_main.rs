@@ -26,12 +26,51 @@ async fn main() {
 }
 
 /// Scenario 1: The "Perfect Storm"
-/// Simulates 10,000 independent nodes starting with IDENTICAL state.
-/// We prove that they diverge immediately upon the first persona rotation.
+/// Simulates 2-node Hero Case for narrative clarity, followed by 10,000 node stress test.
 async fn run_scenario_1_self_healing() {
-    println!("\n🧪 Scenario 1: Self-Healing (The Perfect Storm)");
-    println!("   Simulating 10,000 nodes starting with IDENTICAL NodeID/Salt at T=0.");
+    println!("\n🧪 Scenario 1: Self-Healing (The Perfect Storm) [Scale: 10,000 Nodes, 1 Forced Hero Case]");
 
+    // --- Step 1: The 2-Node Hero Case ---
+    let shared_node_id = 99;
+    let shared_salt = 0xAAAA_BBBB_CCCC_DDDD;
+    let persona_idx = 42; // Same multiplier basket
+
+    let p = Persona {
+        node_id: shared_node_id,
+        salt: shared_salt,
+        multiplier_idx: persona_idx,
+    };
+
+    let mut node_a = Generator::new_with_persona(p, 0);
+    let mut node_b = Generator::new_with_persona(p, 0);
+
+    // Collision at T=100
+    let id_a_t0 = node_a.generate_at(100);
+    let id_b_t0 = node_b.generate_at(100);
+
+    println!("   > Node A (T=100): {:x}", id_a_t0);
+    println!("   > Node B (T=100): {:x}", id_b_t0);
+
+    if id_a_t0 == id_b_t0 {
+        println!("   🚨 FORCED COLLISION VERIFIED (Initial Sync Failure)");
+    }
+
+    // Uncoordinated DIVERGENCE at T=101 (Next Tick)
+    // Rotation is triggered by internal CSPRNG or Persona shift
+    node_a.rotate_persona();
+    node_b.rotate_persona();
+
+    let id_a_t1 = node_a.generate_at(101);
+    let id_b_t1 = node_b.generate_at(101);
+
+    println!("   > Node A (T=101): {:x}", id_a_t1);
+    println!("   > Node B (T=101): {:x}", id_b_t1);
+
+    if id_a_t1 != id_b_t1 {
+        println!("   ✨ ACTIVE DIVERGENCE: Nodes self-healed to unique personas.");
+    }
+
+    println!("\n   > Stress Test: Simulating 10,000 nodes starting with IDENTICAL NodeID/Salt at T=0.");
     let n_nodes = 10_000;
     let shared_node_id = 12345;
     let shared_salt = 0xDEADBEEF;
@@ -39,7 +78,6 @@ async fn run_scenario_1_self_healing() {
     let results = Arc::new(Mutex::new(Vec::with_capacity(n_nodes)));
     let mut handles = Vec::with_capacity(n_nodes);
 
-    println!("   > Spawning {} concurrent generation tasks...", n_nodes);
     let pb = ProgressBar::new(n_nodes as u64);
 
     for _ in 0..n_nodes {
@@ -49,8 +87,6 @@ async fn run_scenario_1_self_healing() {
         handles.push(tokio::spawn(async move {
             let mut rng = rand::thread_rng();
 
-            // Each node independently picks its first multiplier persona.
-            // This is the core 'Anti-Gravity' mechanism: random divergence in shared space.
             let p = Persona {
                 node_id: shared_node_id,
                 salt: shared_salt,
@@ -58,11 +94,7 @@ async fn run_scenario_1_self_healing() {
             };
 
             let mut gen = Generator::new_with_persona(p, 0);
-
-            // Generate first ID at T=100
             let id_t0 = gen.generate_at(100);
-
-            // Force rotation and generate next ID at T=160
             gen.rotate_persona();
             let id_t1 = gen.generate_at(160);
 
@@ -77,20 +109,14 @@ async fn run_scenario_1_self_healing() {
     }
     pb.finish();
 
-    // Analyze Cross-Node Collisions
     let data = results.lock().unwrap();
-    let mut unique_t0 = HashSet::new();
     let mut unique_t1 = HashSet::new();
 
-    for (t0, t1) in data.iter() {
-        unique_t0.insert(*t0);
+    for (_, t1) in data.iter() {
         unique_t1.insert(*t1);
     }
 
-    let collisions_t0 = n_nodes - unique_t0.len();
     let collisions_t1 = n_nodes - unique_t1.len();
-
-    println!("   > T=0 (Initial State): {} collisions / {} nodes", collisions_t0, n_nodes);
     println!("   > T+60s (Self-Healed): {} collisions / {} nodes", collisions_t1, n_nodes);
 
     if collisions_t1 == 0 {
@@ -101,9 +127,8 @@ async fn run_scenario_1_self_healing() {
 }
 
 /// Scenario 2: Entropy Distribution
-/// Verifies that the internal mixer generates 1M IDs without a single local collision.
 async fn run_scenario_2_entropy() {
-    println!("\n🧪 Scenario 2: Entropy & Birthday Limits");
+    println!("\n🧪 Scenario 2: Entropy & Birthday Limits [Scale: 1,000,000 IDs]");
     let n_ids = 1_000_000;
     println!("   Generating {} IDs from a single node...", n_ids);
 
@@ -129,24 +154,22 @@ async fn run_scenario_2_entropy() {
     }
 }
 
-/// Scenario 3: Burst Throughput
-/// Verifies uniqueness when the sequence overflows within a single time bucket.
+/// Scenario 3: Burst Capacity
 async fn run_scenario_3_burst() {
-    println!("\n🧪 Scenario 3: Burst Throughput & Non-Blocking Persona Rotation");
+    println!("\n🧪 Scenario 3: Burst Throughput [Scale: 4,096 IDs/ms]");
     println!("   Simulating heavy burst that triggers multiplier rotation...");
 
     let mut gen = Generator::new();
-    let burst_size = 1000;
+    let burst_size = 4096;
     let mut unique_ids = HashSet::new();
 
-    // Simulate a very shallow sequence limit to trigger rotation frequently
-    let sim_limit = 10;
-
+    // Sequence limit is 32,768 for 's' variant.
+    // We force rotation to prove uniqueness across transitions.
     for i in 0..burst_size {
         let id = gen.generate();
         unique_ids.insert(id);
 
-        if i > 0 && i % sim_limit == 0 {
+        if i > 0 && i % 1000 == 0 {
             gen.rotate_persona();
         }
     }

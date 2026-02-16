@@ -26,28 +26,28 @@ fn main() {
     println!("🧪 Scenario 18: SQL Logic Parity Proof\n");
     println!("   Verifying that the documented SQL mix logic matches production Rust...");
 
-    // Test parameters (using 's' variant 15-bit entropy)
-    let test_bits = 15;
-    let test_salt = 0xABCD;
-    let test_val = 5555;
-    let test_p_idx = 42;
+    println!("\n   > Fuzzing 10,000 random bit-patterns...");
+    use rand::Rng;
+    let mut rng = rand::thread_rng();
+    for i in 0..10_000 {
+        let f_bits = rng.gen_range(1..32);
+        let f_salt = rng.gen();
+        let f_val = rng.gen();
+        let f_p_idx = rng.gen_range(0..64);
 
-    // Calculate using documented SQL logic
-    let res_sql = uchrono_mix_sql_logic(test_val, test_bits, test_p_idx, test_salt);
+        let res_sql = uchrono_mix_sql_logic(f_val, f_bits, f_p_idx, f_salt);
+        let p = generator::Persona {
+            node_id: 1,
+            salt: f_salt,
+            multiplier_idx: f_p_idx as usize,
+        };
+        let gen = generator::Generator::new_with_persona(p, 0);
+        let res_rust = gen.mix(f_val, f_bits);
 
-    // Calculate using production Rust Persona/Generator
-    let p = generator::Persona {
-        node_id: 1,
-        salt: test_salt,
-        multiplier_idx: test_p_idx as usize,
-    };
-    let gen = generator::Generator::new_with_persona(p, 0);
-    let res_rust = gen.mix(test_val, test_bits);
+        if res_sql != res_rust {
+            panic!("Fuzz Failure at iteration {}! SQL: {}, Rust: {}", i, res_sql, res_rust);
+        }
+    }
 
-    println!("   > SQL Logic Result:  {}", res_sql);
-    println!("   > Rust Impl Result:  {}", res_rust);
-
-    assert_eq!(res_sql, res_rust, "CRITICAL: SQL Spec and Rust Implementation DISCREPANCY!");
-
-    println!("\n✅ VERDICT: SQL Snippet is mathematically bit-identical to the Rust implementation.");
+    println!("\n✅ VERDICT: SQL Snippet is mathematically bit-identical to the Rust implementation (10,000 matches).");
 }

@@ -1,6 +1,7 @@
 # python
 __pycache__
 venv/
+simulation/viz_venv
 implementations/python/.coverage
 
 # rust

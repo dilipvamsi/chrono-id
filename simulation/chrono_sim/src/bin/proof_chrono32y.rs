@@ -31,10 +31,10 @@ async fn run_scenario_4_chrono32y() {
         return;
     }
 
-    // --- Test 2: Safe Zone (1,000 Tenants) ---
-    // Risk target: 0.1%. Collisions should be extremely rare.
-    println!("   > Testing Safe Zone (N=1,000)...");
-    let n_safe = 1000;
+    // --- Test 2: Extended Scale (1,000,000 Tenants) ---
+    // Risk target: 0.1% at k=2072, but we test 1M to show density.
+    println!("   > Testing Extended Scale (N=1,000,000)...");
+    let n_safe = 1_000_000;
     let mut set = HashSet::with_capacity(n_safe);
     let mut cols_safe = 0;
     for _ in 0..n_safe {
@@ -44,30 +44,11 @@ async fn run_scenario_4_chrono32y() {
     }
     println!("   > Generated {} IDs: {} Collisions", n_safe, cols_safe);
 
-    // --- Test 3: Risk Zone (10,000 Tenants) ---
-    // Risk target: ~0.3%. Collisions are expected to start appearing.
-    println!("   > Testing Risk Zone (N=10,000)...");
-    let n_risk = 10_000;
-    let mut set_risk = HashSet::with_capacity(n_risk);
-    let mut cols_risk = 0;
-    for _ in 0..n_risk {
-        if !set_risk.insert(generator::generate_chrono32y()) {
-            cols_risk += 1;
-        }
-    }
-    println!("   > Generated {} IDs: {} Collisions", n_risk, cols_risk);
-
     // --- Validation ---
-    if cols_safe == 0 {
-        println!("✅ SUCCESS: Zero collisions in safe zone.");
+    if cols_safe > 0 {
+        let rate = (cols_safe as f64 / n_safe as f64) * 100.0;
+        println!("✅ SUCCESS: Birthday collisions observed at 1M scale ({:.4}%).", rate);
     } else {
-        println!("⚠️ NOTE: Collision in safe zone (unlucky but statistically possible).");
-    }
-
-    if cols_risk > 0 {
-        println!("✅ SUCCESS: Expected Birthday collisions observed (Entropy working).");
-    } else {
-        println!("⚠️ NOTE: No collisions in risk zone (statistically lucky).");
+        println!("⚠️ NOTE: No collisions at 1M scale (statistically lucky).");
     }
 }
-

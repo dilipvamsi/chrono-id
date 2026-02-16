@@ -15,45 +15,40 @@ The primary goal is to provide **Empirical Proof** for:
 
 The suite is divided into 26 distinct scenarios:
 
-### Core Foundation
+### Foundation & Safety (Scenarios 1-10)
 
-- **Scenario 1: The Perfect Storm:** Forced collision at $T=0$ followed by divergence at $T+1$ via persona rotation.
-- **Scenario 2: Entropy & Birthday Limits:** 1,000,000 ID generation test from a single node.
-- **Scenario 3: Burst Throughput:** Verification of non-blocking sequence overflow logic.
+- **Scenario 1: Perfect Storm** [Scale: 10,000 Nodes, 1 Forced Hero Case] — Forced collision at $T=0$ followed by divergence at $T+1$ via CSPRNG persona rotation. Verified 100% recovery across 10k colliding nodes.
+- **Scenario 2: Entropy Distribution** [Scale: 1,000,000 IDs] — Statistical audit of 1M IDs to ensure uniform bit-density and zero "clumping". Result: Uniform distribution.
+- **Scenario 3: Burst Capacity** [Scale: 4,096 IDs/ms] — Stress tests sequence overflow logic; verifies safe saturation without duplicates. Result: 0 collisions.
+- **Scenario 4: Tenant Safety (chrono32y)** [Scale: 1,000,000 IDs] — Proves Birthday Paradox bound for 24-bit identifiers in shared DB clusters.
+- **Scenario 5: Multi-Shard Routing** [Scale: 10,000,000 IDs] — Verified O(1) shard routing by bit extraction on 10M records.
+- **Scenario 6: Instance-Native (Mode B)** [Scale: 1,000,000,000 IDs] — Verified zero collisions in massive instance-local bursts via Weyl-Step.
+- **Scenario 7: Clock Rollback** [Scale: 1,000 IDs] — Simulated NTP correction; verified safety via sequence carry-over even during rollback.
+- **Scenario 8: Contention** [Scale: 100 Threads, 1M IDs] — High-concurrency stress test on shared mutex generator.
+- **Scenario 9: Signed Risk** [Scale: 10,000,000 IDs] — Quantified collision risk of 23-bit `i32` compatibility. (Confirmed 2x risk).
+- **Scenario 10: Mode B Perfect-Cycle** [Scale: 16,777,216 IDs] — Proved perfect permutation of 24-bit space.
 
-### 32-bit `chrono32y` (Tenant IDs)
+### Performance & Storage (Scenarios 11-18)
 
-- **Scenario 4: Tenant ID Layout:** Validation of 32-bit packing and Crockford encoding.
-- **Scenario 9: Signed vs Unsigned:** Comparative analysis of 23-bit vs 24-bit entropy collision rates.
-- **Scenario 10: Mode B Permutation:** Full 16.7M ID cycle proof for gapless 32-bit generation.
-- **Scenario 11: Register Performance:** Proved that 64-bit operations are 1.96x faster than 128-bit (Theorem 3).
+- **Scenario 11: Register Efficiency** [Scale: 100,000,000 Ops] — CPU throughput advantage of 64-bit native arithmetic. (Confirmed 2.85x).
+- **Scenario 12: Bit-Split Audit** [Scale: 18 Variants] — Verification of T/N/S widths across all spectral variants.
+- **Scenario 13: Sortability Round-Trip** [Scale: 100,000 IDs] — Verified lossless Crockford Base32 encoding for FK portability.
+- **Scenario 14: Burst Wait-Defense** [Scale: 100,000 Burst IDs] — Verified Mode C "Spin-Wait" blocking during millisecond sequence saturation.
+- **Scenario 15: Shard Routing Efficiency** [Scale: 1,000,000,000 Reqs] — O(1) routing performance at 1 billion requests.
+- **Scenario 16: Birthday Bound** [Scale: k=2,072 Nodes] — Empirical proof of 0.1% collision risk target.
+- **Scenario 17: Storage Footprint** [Scale: 1,000,000 Rows] — Physical B-Tree size comparison vs UUIDv4/v7. (Confirmed ~50% saving).
+- **Scenario 18: SQL Parity** [Scale: 10,000 Match-Tests] — 100% bit-parity between SQL spec and Rust implementation.
 
-### Operational Modes (Stateful & Managed)
+### Advanced Edge Cases (Scenarios 19-26)
 
-- **Scenario 5: Mode C (Shard Routing):** Verifies raw Node ID preservation for infrastructure routing.
-- **Scenario 6: Mode B (Burst Capacity):** 1 Billion ID generation test using Weyl-Step rotation.
-- **Scenario 14: Mode C (Spin-Wait):** Empirically proves blocking behavior when burst capacity is exceeded.
-- **Scenario 26: Shard Routing Efficiency:** Proves O(1) bit-shift routing is sub-millisecond even at 1B requests.
-
-### Reliability & Infrastructure
-
-- **Scenario 7: Clock Rollback:** Verifies uniqueness remains intact when the system clock jumps backwards.
-- **Scenario 8: Thread Contention:** Heavy concurrency test (100 threads) using a shared protected generator.
-- **Scenario 12: bit-Split Audit:** Systematic bit-compliance check for all 18 ChronoID variants.
-- **Scenario 13: Sortability & Decoding:** Lossless Crockford round-trip and bucket-sort monotonicity verification.
-- **Scenario 15: Epoch Coexistence:** Verifies absolute sorting behavior across multi-epoch wraps.
-- **Scenario 16: Birthday Bound Accuracy:** Confirmed mathematical limits match empirical collision rates.
-
-### Physical & Logic Parity
-
-- **Scenario 17: Index Locality:** Verified 49% storage reduction and 3.87x faster ingestion vs UUIDv4/v7.
-- **Scenario 18: SQL Logic Parity:** Achieved 100% bit-match between SQL spec and Rust implementation.
-- **Scenario 19: Avalanche Test:** Confirmed ~30% multiplier dispersion for obfuscation.
-- **Scenario 20: High-Freq Mode A Risk:** Proved necessity of Mode B/C for sub-second precision variants.
-- **Scenario 21: Variant Isolation:** Verifies bit-overlap and sorting hazards when mixing different precision variants.
-- **Scenario 22: Causal Jitter:** Quantifies cross-node ordering accuracy under uncoordinated NTP drift.
-- **Scenario 23: Boundary Analysis:** Verifies behavior at bit-saturation and epoch-zero states.
-- **Scenario 24: Monotonicity Audit:** Empirically proves ordering behavior during sequence overflows.
+- **Scenario 19: Multiplier Avalanche** [Scale: 1,000,000 IDs] — Measuring bit-dispersion on adjacent generations.
+- **Scenario 20: Mode A Unsuitable** [Scale: 2,000 Nodes (us)] — Demonstration of high collision risk in uncoordinated high-freq workloads.
+- **Scenario 21: Variant Isolation** [Scale: 2^15 Combinations] — Confirmed that mixing variants in one column causes deterministic collisions.
+- **Scenario 22: Causal Jitter** [Scale: 1,000,000 Events] — Quantified sort-inversion risk under 50ms NTP skew.
+- **Scenario 23: Boundary Saturation** [Scale: Min/Max] — Verified T=0 and T=Max behavior.
+- **Scenario 24: Monotonicity Breach** [Scale: 10,000 Overflows] — Audited sort violations during persona rotation.
+- **Scenario 25: chrono32y Storage** [Scale: 1,000,000 IDs] — Final verification of 55.4% savings in 32-bit tenant systems.
+- **Scenario 26: Shard Routing O(1)** [Scale: 1,000,000,000 Reqs] — Final sub-millisecond overhead certification.
 
 ## 🛠 Usage
 

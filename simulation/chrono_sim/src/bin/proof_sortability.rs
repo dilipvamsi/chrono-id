@@ -44,13 +44,15 @@ fn main() {
 
     let mut rng = rand::thread_rng();
     use rand::Rng;
-    for _ in 0..1000 {
+    let n_fuzz = 100_000;
+    println!("   > Fuzzing {} random values for round-trip consistency...", n_fuzz);
+    for _ in 0..n_fuzz {
         let id: u32 = rng.gen();
         let enc = generator::encode_crockford(id);
         let dec = decode_crockford(&enc);
         assert_eq!(id, dec, "Crockford decode failed for {}", id);
     }
-    println!("   > Fuzzed 1000 random values: All Passed.\n");
+    println!("   ✅ SUCCESS: All 100,000 fuzzed values passed.\n");
 
     // --- Sub-Test 2: Time-Bucket Sortability ---
     // Proves that IDs generated in later time buckets always compare as LARGER.

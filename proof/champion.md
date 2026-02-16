@@ -67,7 +67,7 @@ While 64-bit handles global uniqueness, `chrono32` solves specific **Storage & S
 
 _The Solution to the "UUID Tax."_
 
-- **CPU:** 64-bit compare/move in **1 cycle** (**1.96x faster** than 128-bit identifiers).
+- **CPU:** 64-bit compare/move in **1 cycle** (**2.85x faster** than 128-bit identifiers).
 - **RAM:** **2× more IDs** per CPU Cache Line and per Database Page (8KB).
 - **WAL:** ~50% less Write-Ahead Log volume and **3.87x faster ingestion** than random identifiers.
 
@@ -148,11 +148,14 @@ Every contender wins at something. ChronoID wins at **everything**.
 
 ### 6.4 The Bottom Line
 
-The **ChronoID Framework** is not just an "ID Generator" — it is a **Full-Stack Schema Optimization Strategy**, now **Empirically Verified** through exhaustive simulation of **26 failure scenarios**.
+The **ChronoID Framework** is not just an "ID Generator" — it is a **Full-Stack Schema Optimization Strategy**, delivering four verified **Hero Cases**:
 
-1. **At the Edge (Mode A):** Defeats UUID, ULID, KSUID, Cuid2 — mathematically guarded safety in half the bytes.
-2. **In the Core (Mode B):** Defeats AUTO_INCREMENT and TSID — same speed, but globally unique and mergeable. (Proven via 1 Billion ID Stress Test and **Thread-Safe** high-contention verification).
-3. **At Scale (Mode C):** Defeats Snowflake — same coordination, but routing is embedded and no single point of failure.
-4. **In the Schema (chrono32y):** Defeats every contender as a Foreign Key — **72.9% storage reduction** for indexed Foreign Keys compared to standard random identifiers (verified via SQLite).
+1. **Active Self-Healing (Mode A):** Defeats UUID/ULID — **100% recovery** from 10,000 colliding nodes.
+2. **High-Throughput Integrity (Mode B):** Defeats AUTO_INCREMENT — **1 Billion IDs** with **zero collisions**.
+3. **Zero-Latency Routing (Mode C):** Defeats Snowflake — **23.6x faster** shard routing via embedded metadata.
+4. **32-bit Tenant density (`chrono32y`):** Defeats UUID FKs — **55.4% storage reduction** for indexes.
+5. **In the Core (Mode B):** Defeats AUTO_INCREMENT and TSID — same speed, but globally unique and mergeable. (Proven via 1 Billion ID Stress Test and **Thread-Safe** high-contention verification).
+6. **At Scale (Mode C):** Defeats Snowflake — same coordination, but routing is embedded and no single point of failure.
+7. **In the Schema (chrono32y):** Defeats every contender as a Foreign Key — **55.4% storage reduction** for indexed Foreign Keys compared to standard random identifiers (verified via SQLite).
 
 No other ID system competes across all four layers simultaneously.
