@@ -705,7 +705,7 @@ _Comparing total index size for 100 Million rows._
 - **ChronoID**: Achieves the absolute physical limit of 64-bit B-Tree density, ~50% smaller than UUID variants.
   ![Graph C: Storage Footprint](../simulation/plots/storage_footprint.png)
 
-#### Graph D: Multi-Tenant Foreign Key Density
+#### Graph D: Multi-Tenant Density (Full 16.7M IDs in Mode B)
 
 _Density for multi-tenant identifiers using 32-bit uchrono32y._
 

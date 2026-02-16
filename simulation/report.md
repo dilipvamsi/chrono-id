@@ -106,7 +106,7 @@ Comparing the total index size for 100 Million rows.
 
 ![Storage Footprint Graph (Graph C)](plots/storage_footprint.png)
 
-#### Graph D: Multi-Tenant Foreign Key Density
+#### Graph D: Multi-Tenant Density (Full 16.7M IDs in Mode B)
 
 Comparing total index size for its maximum capacity of **16,777,216 rows** using the 32-bit `uchrono32y` identifier.
 

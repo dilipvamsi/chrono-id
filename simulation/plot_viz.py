@@ -62,7 +62,7 @@ def plot_storage_tenant():
     plt.figure(figsize=(10, 6))
     bars = plt.bar(df['type'], df['size_mb'], color=['red', 'orange', 'green'])
 
-    plt.title('Empirical Graph D: Multi-Tenant Foreign Key Density')
+    plt.title('Empirical Graph D: Multi-Tenant Density (Full 16.7M IDs in Mode B)')
     plt.ylabel('Index Memory Footprint (MB)')
     plt.grid(axis='y', ls="-", alpha=0.3)
 
@@ -93,6 +93,7 @@ def plot_routing_efficiency():
     plt.title('Empirical Graph E: Shard Routing Execution Cost')
     plt.xlabel('Routing Request Volume (Deterministic Suffix)')
     plt.ylabel('CPU Processing Time (ms) - Log Scale')
+    plt.xticks(x, scales)
     plt.yscale('log')
     plt.legend()
     plt.grid(axis='y', ls="-", alpha=0.3)
