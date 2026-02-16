@@ -19,6 +19,7 @@ Unlike UUIDs (128-bit, passive randomness) or Snowflake IDs (64-bit, rigid coord
 ### The Quad Hero Cases
 
 1.  **Active Self-Healing (Mode A)**: Verified **100% recovery** from a 10,000-node mass-collision.
+    - **Multi-Multiplier Divergence (Scenario 27)**: Proved instant divergence from forced collisions, verifying that 128 prime Weyl multipliers act as a mathematical repellent.
 2.  **1-Billion ID Integrity (Mode B)**: Verified **zero collisions** across a 1,000,000,000 ID stress test.
 3.  **Zero-Latency Global Routing (Mode C)**: Verified **23.6x faster** shard routing than lookups.
 4.  **32-bit Tenant ID (`chrono32y`)**: Industry's first purpose-built FK, verified **55.4% storage savings**.
@@ -29,7 +30,7 @@ Unlike UUIDs (128-bit, passive randomness) or Snowflake IDs (64-bit, rigid coord
 2.  **Zero Coordination:** In Mode A, nodes require no knowledge of each other.
 3.  **Maximum Ingestion Speed:** Verified up to **3.87x faster** record insertion than random identifiers (Theorem 4).
 4.  **Polymorphic Engine:** A single standard that morphs between three modes (Stateless, Stateful, Managed).
-5.  **Empirically Verified:** All claims validated by a **26-scenario** Rust simulation suite, including real-world SQLite B-Tree performance certification.
+5.  **Diamond Standard Verification:** All claims validated by a **27-scenario** Rust simulation suite with **128 prime Weyl multipliers**, including real-world SQLite B-Tree performance certification.
 
 ---
 

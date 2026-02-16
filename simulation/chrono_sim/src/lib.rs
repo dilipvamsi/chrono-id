@@ -14,6 +14,7 @@
 //! - **Compatibility:** Bit-compliance with signed-integer constraints.
 
 pub mod generator;
+pub mod weyl;
 
 /// Formal implementation of a standard Snowflake ID for benchmarking.
 /// Layout: [1 Reserved] [41 Timestamp (ms)] [10 Machine ID] [12 Sequence]

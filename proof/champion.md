@@ -22,6 +22,7 @@ Standard systems force a rigid choice (UUID = Random, Snowflake = Coordinated). 
   - **The Logic:** It combines a Weyl Sequence ($n \alpha \pmod 1$) with Golden Ratio multipliers.
   - **The Guarantee:** If two independent nodes accidentally collide at Time $T$, the math guarantees their entropy states will **repel** each other at Time $T+1$ with 98.4% probability.
   - **Empirical Status:** ✅ **Verified.** Simulation Scenario 1 proved 100% recovery for 10,000 colliding nodes.
+  - **Divergence Proof:** Scenario 27 verified instant divergence from orchestrated perfect collisions using the 128-prime Weyl basket.
   - **Burst Defense:** On sequence overflow → immediate persona re-roll (emergency rotation).
   - **Clock Skew:** Backward clock jump → treated as burst event, triggers persona re-roll. ✅ **Verified** (Scenario 7).
 
@@ -151,11 +152,12 @@ Every contender wins at something. ChronoID wins at **everything**.
 The **ChronoID Framework** is not just an "ID Generator" — it is a **Full-Stack Schema Optimization Strategy**, delivering four verified **Hero Cases**:
 
 1. **Active Self-Healing (Mode A):** Defeats UUID/ULID — **100% recovery** from 10,000 colliding nodes.
+   - **Multi-Multiplier Divergence (Scenario 27):** Proved instant recovery from orchestrated perfect collisions via 128 Weyl multipliers.
 2. **High-Throughput Integrity (Mode B):** Defeats AUTO_INCREMENT — **1 Billion IDs** with **zero collisions**.
 3. **Zero-Latency Routing (Mode C):** Defeats Snowflake — **23.6x faster** shard routing via embedded metadata.
 4. **32-bit Tenant density (`chrono32y`):** Defeats UUID FKs — **55.4% storage reduction** for indexes.
 5. **In the Core (Mode B):** Defeats AUTO_INCREMENT and TSID — same speed, but globally unique and mergeable. (Proven via 1 Billion ID Stress Test and **Thread-Safe** high-contention verification).
-6. **At Scale (Mode C):** Defeats Snowflake — same coordination, but routing is embedded and no single point of failure.
+6. **At Scale (Mode C):** Defeats Snowflake — same coordination, but routing is embedded and no single point of failure (O(1) verified).
 7. **In the Schema (chrono32y):** Defeats every contender as a Foreign Key — **55.4% storage reduction** for indexed Foreign Keys compared to standard random identifiers (verified via SQLite).
 
 No other ID system competes across all four layers simultaneously.

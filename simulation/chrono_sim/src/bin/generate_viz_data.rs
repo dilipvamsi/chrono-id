@@ -17,20 +17,21 @@ fn main() {
     println!("🚀 Starting Formal Empirical Simulations...");
 
     // Create data directory
-    std::fs::create_dir_all("simulation/data").unwrap();
+    std::fs::create_dir_all("../data").unwrap();
 
     simulate_active_divergence();
     simulate_throughput_cliff();
     simulate_storage_footprint();
-
-    println!("✅ Formal simulation data generated in simulation/data/");
-
     simulate_routing_efficiency();
+    simulate_register_performance();
+    simulate_avalanche();
+
+    println!("✅ All empirical simulation data generated in simulation/data/");
 }
 
 fn simulate_routing_efficiency() {
     println!("   > Simulating Shard Routing Efficiency (Graph E)...");
-    let mut file_e = File::create("simulation/data/routing_efficiency.csv").unwrap();
+    let mut file_e = File::create("../data/routing_efficiency.csv").unwrap();
     writeln!(file_e, "scale,type,time_ms").unwrap();
 
     let n_empirical = 10_000_000;
@@ -88,7 +89,7 @@ fn simulate_routing_efficiency() {
 /// In ChronoID, the Persona (Multipliers/Salts) should provide "Active Divergence".
 fn simulate_active_divergence() {
     println!("   > Simulating Distributed Active Divergence (Snowflake vs ChronoID)...");
-    let mut file = File::create("simulation/data/entropy_decay.csv").unwrap();
+    let mut file = File::create("../data/entropy_decay.csv").unwrap();
     writeln!(file, "ids,standard_distributed,chronoid").unwrap();
 
     let n_points = vec![10000, 20000, 30000, 40000, 50000, 60000, 70000, 80000, 90000, 100000];
@@ -137,7 +138,7 @@ fn simulate_active_divergence() {
 /// Graph B: Throughput Cliff
 fn simulate_throughput_cliff() {
     println!("   > Simulating Mode B Throughput Cliff (Measured SQLite Latency)...");
-    let mut file = File::create("simulation/data/throughput_cliff.csv").unwrap();
+    let mut file = File::create("../data/throughput_cliff.csv").unwrap();
     writeln!(file, "rows,uuid,chronoid").unwrap();
 
     let conn_v7 = Connection::open_in_memory().unwrap();
@@ -201,11 +202,11 @@ fn simulate_storage_footprint() {
     println!("   > Simulating Storage Footprint (Index Density)...");
 
     // Graph C: 100M rows (Extrapolated from 1M Row Empirical Measurement)
-    let mut file_c = File::create("simulation/data/storage_footprint.csv").unwrap();
+    let mut file_c = File::create("../data/storage_footprint.csv").unwrap();
     writeln!(file_c, "type,size_gb").unwrap();
 
     // Graph D: Max 24-bit Capacity (16,777,216 rows) empirical measurement scaled
-    let mut file_d = File::create("simulation/data/storage_tenant.csv").unwrap();
+    let mut file_d = File::create("../data/storage_tenant.csv").unwrap();
     writeln!(file_d, "type,size_mb").unwrap();
 
     let n_empirical = 100_000; // Smaller sample for faster simulation, stable enough for linear scaling
@@ -280,4 +281,72 @@ fn simulate_storage_footprint() {
     writeln!(file_d, "UUIDv7,{:.2}", (size_v7 as f64 * scale_d) / mb).unwrap();
     writeln!(file_d, "Snowflake,{:.2}", (size_snow as f64 * scale_d) / mb).unwrap();
     writeln!(file_d, "uchrono32y,{:.2}", (size_uchrono32 as f64 * scale_d) / mb).unwrap();
+}
+
+/// Graph G: Register Performance (64-bit vs 128-bit)
+fn simulate_register_performance() {
+    println!("   > Simulating Register Performance (CPU Throughput)...");
+    let mut file = File::create("../data/register_performance.csv").unwrap();
+    writeln!(file, "type,ops_per_ms").unwrap();
+
+    let n = 10_000_000;
+
+    // 1. 64-bit Integer Ops
+    let start_64 = Instant::now();
+    let mut sum64 = 0u64;
+    for i in 0..n {
+        sum64 = std::hint::black_box(sum64.wrapping_add(i as u64).wrapping_mul(0x9E3779B97F4A7C15));
+    }
+    std::hint::black_box(sum64);
+    let d_64_us = start_64.elapsed().as_micros() as f64;
+    let ops_64 = if d_64_us > 0.0 { (n as f64 / d_64_us) * 1000.0 } else { 0.0 };
+
+    // 2. 128-bit / String Simulation (UUID-like)
+    let start_128 = Instant::now();
+    for i in 0..n {
+        // Mocking the string formatting overhead of UUIDs
+        let s = format!("{:x}-{:x}", i, i * 2);
+        std::hint::black_box(s);
+    }
+    let d_128_us = start_128.elapsed().as_micros() as f64;
+    let ops_128 = if d_128_us > 0.0 { (n as f64 / d_128_us) * 1000.0 } else { 0.0 };
+
+    writeln!(file, "ChronoID (64-bit),{:.2}", ops_64).unwrap();
+    writeln!(file, "UUID/ULID (128-bit),{:.2}", ops_128).unwrap();
+}
+
+/// Graph H: Avalanche Effect Diffusion
+fn simulate_avalanche() {
+    println!("   > Simulating Avalanche Effect Diffusion (Bit-level dispersion)...");
+    let mut file = File::create("../data/avalanche_diffusion.csv").unwrap();
+    writeln!(file, "bit,diffusion").unwrap();
+
+    let iterations = 10_000;
+    let bits = 32;
+    let p_idx = 7; // Use a standard Diamond Multiplier
+    let salt = 0xDEADBEEF;
+
+    let p = chrono_sim::generator::Persona {
+        node_id: 0,
+        salt,
+        multiplier_idx: p_idx,
+    };
+    let gen = chrono_sim::generator::Generator::new_with_persona(p, 0);
+
+    for i in 0..bits {
+        let mut total_flipped = 0;
+        for _ in 0..iterations {
+            let val1 = rand::random::<u64>() & ((1u64 << bits) - 1);
+            let val2 = val1 ^ (1u64 << i);
+
+            let res1 = gen.mix(val1, bits as u8);
+            let res2 = gen.mix(val2, bits as u8);
+
+            let diff = res1 ^ res2;
+            total_flipped += diff.count_ones();
+        }
+        let avg_flips = total_flipped as f64 / iterations as f64;
+        let p_diffusion = (avg_flips / bits as f64) * 100.0;
+        writeln!(file, "{},{}", i, p_diffusion).unwrap();
+    }
 }

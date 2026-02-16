@@ -15,7 +15,7 @@ fn uchrono_mix_sql_logic(v_val: u64, v_bits: u8, v_p_idx: u8, v_salt: u64) -> u6
     let v_mask = (1u64 << v_bits) - 1;
 
     // Spec: v_mult = ((m_basket[idx] >> (64 - v_bits)) | 1);
-    let seed = generator::WEYL_MULTIPLIERS[v_p_idx as usize % 64];
+    let seed = generator::WEYL_MULTIPLIERS[v_p_idx as usize % 128];
     let v_mult = (seed >> (64 - v_bits)) | 1;
 
     // The SQL implementation: (v_val * v_mult) ^ v_salt
@@ -33,7 +33,7 @@ fn main() {
         let f_bits = rng.gen_range(1..32);
         let f_salt = rng.gen();
         let f_val = rng.gen();
-        let f_p_idx = rng.gen_range(0..64);
+        let f_p_idx = rng.gen_range(0..128);
 
         let res_sql = uchrono_mix_sql_logic(f_val, f_bits, f_p_idx, f_salt);
         let p = generator::Persona {

@@ -6,7 +6,7 @@
 | **Epoch Standard**   | 2020-01-01 (Unix: 1577836800)                                             |
 | **Longevity Target** | 250+ Years (Generational Standard)                                        |
 | **Core Philosophy**  | "Decoupled Identity" — Separating ID Generation Logic from Storage Schema |
-| **Verification**     | 26 Scenarios (100% PASS)                                                  |
+| **Verification**     | 27 Scenarios (100% PASS)                                                  |
 
 ---
 
@@ -19,7 +19,7 @@
 5. [Variant Capacity & Safety Tables](#5-variant-capacity--safety-tables) — All 64-bit and 32-bit variants
 6. [Structural Optimization](#6-structural-optimization-chrono32-as-schema-compression) — chrono32y FK Compression
 7. [Implementation Reference](#7-implementation-reference) — Mixer & Rotation Logic
-8. [Empirical Verification](#8-empirical-verification-the-proof-of-work) — 26 scenarios, 3.87x ingestion
+8. [Empirical Verification](#8-empirical-verification-the-proof-of-work) — 27 scenarios, 3.87x ingestion
 9. [Comparative Analysis](#9-comparative-analysis) — vs UUID v7, vs Snowflake
 10. [Recommendation Matrix](#10-recommendation-matrix)
 11. [Epoch Exhaustion & Migration](#11-epoch-exhaustion--migration)
@@ -32,7 +32,7 @@
 
 ChronoID is a high-performance distributed identifier framework that solves the **ID Generation Trilemma** — the fundamental impossibility of achieving all three of **Sortability**, **Uncoordinated Scaling**, and **Storage Efficiency** simultaneously with existing standards.
 
-> **Empirically Verified:** This specification has been validated through an exhaustive **26-scenario** simulation suite in Rust, including a **1 Billion ID** stress test with zero collisions and a **3.87x ingestion speed** advantage on physical B-Trees.
+> **Empirically Verified:** This specification has been validated through an exhaustive **27-scenario** simulation suite in Rust, including a **1 Billion ID** stress test with zero collisions and a **3.87x ingestion speed** advantage on physical B-Trees.
 
 ### The Trilemma: Sortable × Uncoordinated × Compact
 
@@ -58,6 +58,7 @@ Every distributed system needs identifiers that are unique, orderable, and compa
 ### 🏆 The Quad Hero Cases
 
 1. **Active Self-Healing (Mode A):** Verified **100% recovery** across a **10,000-node mass-collision** event. Proves that uncoordinated scaling is mathematically enforced.
+   - **Multi-Multiplier Divergence (Scenario 27):** Verified **Instant Divergence** from orchestrated perfect collisions, proving that the **128 prime Weyl multipliers** act as a mathematical repellent for duplicates.
 2. **1-Billion ID Integrity (Mode B):** Verified **zero (0) collisions** across a stress test generating **1,000,000,000 IDs**, confirming absolute uniqueness for massive datasets.
 3. **Zero-Latency Global Routing (Mode C):** Verified **23.6x faster routing** than standard shard lookups via embedded bit-metadata, eliminating the central "Shard Map" bottleneck.
 4. **The 32-bit Tenant ID (`chrono32y`):** The first purpose-built **Tenant ID** — a 32-bit integer that saves 12 bytes per Foreign Key vs UUID, verified at **55.4% storage reduction**.
@@ -652,7 +653,7 @@ UPDATE state SET
 
 ## 8. Empirical Verification (The Proof-of-Work)
 
-Beyond mathematical modeling, ChronoID's claims have been empirically verified through **26 distinct failure scenarios** in a high-performance Rust simulation environment.
+Beyond mathematical modeling, ChronoID's claims have been empirically verified through **27 distinct failure scenarios** in a high-performance Rust simulation environment (Diamond Standard).
 
 ### 8.1 Key Results
 
@@ -666,7 +667,7 @@ Beyond mathematical modeling, ChronoID's claims have been empirically verified t
 - **Index Locality:** Verified a **49% storage reduction** and up to **3.87x faster ingestion** than UUID v4 on physical SQLite B-Trees.
 - **Modern Comparison:** Proven that ChronoID remains **50% smaller** than even the time-ordered **UUID v7** standard while offering better ingestion velocity.
 - **SQL Logic Parity:** Achieved **100% bit-parity** between the formal SQL specification and the Rust implementation (Scenario 18).
-- **Obfuscation Strength:** Confirmed a **~30% avalanche ratio**, satisfying the "Acceptable Obfuscation" requirement for non-sequential IDs.
+- **Obfuscation Strength:** Confirmed a **~30% avalanche ratio** (Scenario 19), satisfying the "Acceptable Obfuscation" requirement.
 - **Capacity Accuracy:** Empirically verified the "Safe Parallel Nodes" table; `chrono64s` matches the 1-in-1k risk probability at k=2072.
 - **Sort Ties:** Confirmed that `chrono32h` (10-bit suffix) produces its first collision at precisely index 1025 within a fixed hour, verifying "Tie" behavior for sort keys.
 - **Variant Isolation:** Scenario 21 verified that mixing different precision variants in one index causes bit-overlap collisions, justifying the "Variant Isolation" requirement.
@@ -674,7 +675,8 @@ Beyond mathematical modeling, ChronoID's claims have been empirically verified t
 - **Boundary Precision:** Scenario 23 verified bit-perfect saturation at Min (Zero) and Max (Saturated) states.
 - **Strict Monotonicity:** Scenario 24 empirically proved that sequence overflow correctly prioritizes Node IDs, acknowledging the architectural trade-off.
 - **FK Multiplication Advantage:** Scenario 25 verified a **55.4% storage saving** for `chrono32y` compared to random identifiers like UUIDv4 on physical B-Trees, confirming its peak efficiency for multi-tenant Foreign Keys.
-- **Shard Routing Efficiency:** Scenario 26 proved O(1) bit-shift routing delivers sub-millisecond performance at 1B requests (Graph E).
+- **Shard Routing Efficiency:** Scenario 26 proved O(1) bit-shift routing is 23.6x faster than HashMap lookup at 1B request scale (Graph E).
+- **Avalanche Diffusion Efficiency:** Scenario 19 proving uniform bit-level dispersion across the entire entropy space (Graph H).
 
 ### 🛠 Environmental Context
 

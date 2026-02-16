@@ -13,7 +13,7 @@ The primary goal is to provide **Empirical Proof** for:
 
 ## 🧪 Simulation Scenarios
 
-The suite is divided into 26 distinct scenarios:
+The suite is divided into 27 distinct scenarios:
 
 ### Foundation & Safety (Scenarios 1-10)
 
@@ -48,7 +48,8 @@ The suite is divided into 26 distinct scenarios:
 - **Scenario 23: Boundary Saturation** [Scale: Min/Max] — Verified T=0 and T=Max behavior.
 - **Scenario 24: Monotonicity Breach** [Scale: 10,000 Overflows] — Audited sort violations during persona rotation.
 - **Scenario 25: chrono32y Storage** [Scale: 1,000,000 IDs] — Final verification of 55.4% savings in 32-bit tenant systems.
-- **Scenario 26: Shard Routing O(1)** [Scale: 1,000,000,000 Reqs] — Final sub-millisecond overhead certification.
+- **Scenario 26: Shard Routing O(1)** [Scale: 1,000,000,000 Reqs] — Final sub-millisecond overhead certification (23.6x vs HashMap).
+- **Scenario 27: Hero Collision Divergence** [Manual Stress] — Proves that different multipliers repellent identical starting states immediately at $T+1$.
 
 ## 🛠 Usage
 

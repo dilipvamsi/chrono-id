@@ -44,12 +44,12 @@ async fn run_scenario_1_self_healing() {
     let mut node_a = Generator::new_with_persona(p, 0);
     let mut node_b = Generator::new_with_persona(p, 0);
 
-    // Collision at T=100
-    let id_a_t0 = node_a.generate_at(100);
-    let id_b_t0 = node_b.generate_at(100);
+    // Collision at T=0 (Bypasses reseed)
+    let id_a_t0 = node_a.generate_at(0);
+    let id_b_t0 = node_b.generate_at(0);
 
-    println!("   > Node A (T=100): {:x}", id_a_t0);
-    println!("   > Node B (T=100): {:x}", id_b_t0);
+    println!("   > Node A (T=0):   {:x}", id_a_t0);
+    println!("   > Node B (T=0):   {:x}", id_b_t0);
 
     if id_a_t0 == id_b_t0 {
         println!("   🚨 FORCED COLLISION VERIFIED (Initial Sync Failure)");
@@ -70,14 +70,15 @@ async fn run_scenario_1_self_healing() {
         println!("   ✨ ACTIVE DIVERGENCE: Nodes self-healed to unique personas.");
     }
 
-    println!("\n   > Stress Test: Simulating 10,000 nodes starting with IDENTICAL NodeID/Salt at T=0.");
+    println!("\n   > Stress Test: Simulating 10,000 nodes starting as IDENTICAL CLONES at T=0.");
     let n_nodes = 10_000;
     let shared_node_id = 12345;
     let shared_salt = 0xDEADBEEF;
+    let shared_multiplier_idx = 7;
+    let shared_seq = 42;
 
     let results = Arc::new(Mutex::new(Vec::with_capacity(n_nodes)));
     let mut handles = Vec::with_capacity(n_nodes);
-
     let pb = ProgressBar::new(n_nodes as u64);
 
     for _ in 0..n_nodes {
@@ -85,18 +86,22 @@ async fn run_scenario_1_self_healing() {
         let pb_clone = pb.clone();
 
         handles.push(tokio::spawn(async move {
-            let mut rng = rand::thread_rng();
-
             let p = Persona {
                 node_id: shared_node_id,
                 salt: shared_salt,
-                multiplier_idx: rng.gen_range(0..64),
+                multiplier_idx: shared_multiplier_idx,
             };
 
-            let mut gen = Generator::new_with_persona(p, 0);
-            let id_t0 = gen.generate_at(100);
+            let mut gen = Generator::new_with_persona(p, shared_seq);
+
+            // T=0: Force predictable total collision (bypassing reseed)
+            let id_t0 = gen.generate_at(0);
+
+            // Self-Heal: Rotate
             gen.rotate_persona();
-            let id_t1 = gen.generate_at(160);
+
+            // T=101: Divergence
+            let id_t1 = gen.generate_at(101);
 
             let mut guard = results_clone.lock().unwrap();
             guard.push((id_t0, id_t1));
@@ -110,19 +115,23 @@ async fn run_scenario_1_self_healing() {
     pb.finish();
 
     let data = results.lock().unwrap();
+    let mut unique_t0 = HashSet::new();
     let mut unique_t1 = HashSet::new();
 
-    for (_, t1) in data.iter() {
+    for (t0, t1) in data.iter() {
+        unique_t0.insert(*t0);
         unique_t1.insert(*t1);
     }
 
-    let collisions_t1 = n_nodes - unique_t1.len();
-    println!("   > T+60s (Self-Healed): {} collisions / {} nodes", collisions_t1, n_nodes);
+    println!("   > Step 1 (T=0):   {} unique IDs out of {} nodes (Total Collision Verified)", unique_t0.len(), n_nodes);
 
-    if collisions_t1 == 0 {
-        println!("✅ SUCCESS: System self-healed to 0 collisions via uncoordinated rotation.");
+    let collisions_t1 = n_nodes - unique_t1.len();
+    println!("   > Step 2 (T=101): {} collisions / {} nodes", collisions_t1, n_nodes);
+
+    if unique_t0.len() == 1 && collisions_t1 == 0 {
+        println!("✅ SUCCESS: 10,000 clones successfully diverged to 10,000 unique identities.");
     } else {
-        println!("❌ FAILURE: Collisions persisted: {}", collisions_t1);
+        println!("❌ FAILURE: Persistent collisions detected or initial collision failed.");
     }
 }
 

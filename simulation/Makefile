@@ -1,6 +1,6 @@
-.PHONY: all s123 s4 s5 s6 s7 s8 s9 s10 s11 s12 s13 s14 s15 s16 s17 s18 s19 s20 s21 s22 s23 s24 s25 s26 clean
+.PHONY: all s123 s4 s5 s6 s7 s8 s9 s10 s11 s12 s13 s14 s15 s16 s17 s18 s19 s20 s21 s22 s23 s24 s25 s26 s27 clean
 
-all: s123 s4 s5 s6 s7 s8 s9 s10 s11 s12 s13 s14 s15 s16 s17 s18 s19 s20 s21 s22 s23 s24 s25 s26
+all: s123 s4 s5 s6 s7 s8 s9 s10 s11 s12 s13 s14 s15 s16 s17 s18 s19 s20 s21 s22 s23 s24 s25 s26 s27
 
 # Scenarios 1-3: Main Proofs (Perfect Storm, Entropy, Burst)
 s123:
@@ -128,8 +128,6 @@ s26:
 viz-data:
 	@echo "\n🚀 Generating Deep Simulation Data for Plots..."
 	@cd chrono_sim && cargo run --quiet --release --bin generate_viz_data
-	@mkdir -p data
-	@cp chrono_sim/simulation/data/*.csv data/
 
 # Render Plots (PNG)
 viz-plot:
@@ -153,3 +151,7 @@ unsigned_safety:
 clean:
 	@cd chrono_sim && cargo clean
 	rm -rf data plots viz_venv
+
+s27: ## Scenario 27: Hero Collision Divergence
+	@echo "🧪 Running Scenario 27: Hero Collision Divergence..."
+	@cd chrono_sim && cargo run --release --bin proof_hero_collision

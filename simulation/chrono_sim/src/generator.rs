@@ -17,26 +17,7 @@ use std::time::{SystemTime, UNIX_EPOCH};
 
 // --- Constants ---
 
-/// 64 pre-computed Weyl-Golden multipliers (odd, coprime to 2^64).
-/// These ensure maximum period and high avalanche effect when mixing bits.
-pub const WEYL_MULTIPLIERS: [u64; 64] = [
-    0x9E3779B97F4A7C15, 0xBF58476D1CE4E5B9, 0x94D049BB133111EB, 0xC6A4A7935BD1E995,
-    0x5F3254B62D931215, 0x36B729410F187519, 0x6E037A8C84518715, 0xF5692B89A3E7C915,
-    0xA2D08E7B6C4F1B95, 0xE7B92A4D8F3C5195, 0x184C6E5B3A9D7F15, 0x4F0B87A9C2E3D615,
-    0x87CD3D8F5B1A4D15, 0xBE8EE374E5616315, 0x2414F8CAE7F91515, 0x5AD69EA070408C15,
-    0x91984475F8870315, 0xC859E94B80CDF915, 0xFF1B8F2109156F15, 0x35D335F6915C6515,
-    0x6C94DBCC19A3DB15, 0xA35681A1A1EB5115, 0xDA1827772A32C715, 0x10D9CD4CAB7A3D15,
-    0x479B732233C1B315, 0x7E5D18F7BC092915, 0xB51EBEDD444FA515, 0xEBE064B2CC971B15,
-    0x22A20A8854DDE115, 0x5963B05DDD255715, 0x90255633656CCD15, 0xC6E6FC08EDB44315,
-    0xFDA8A1DE75FBB915, 0x346A47B3FE432F15, 0x6B2BEDA9868AA515, 0xA1ED937F0ED21B15,
-    0xD8AF395497199115, 0x0F70DF2A1F610715, 0x4632850FA7A87D15, 0x7CF42AE530EFE315,
-    0xB3B5D0BAD9375915, 0xEA777690617ECC15, 0x21391C65E9C64215, 0x57FAB23B720DB815,
-    0x8EBC5810FA552E15, 0xC57DFDE6829CA415, 0xFC3FA3BC0AE41A15, 0x33014991932B9015,
-    0x69C2EEE71B730615, 0xA08494BCA3BA7C15, 0xD7463A922C01F215, 0x0E07E067B4496815,
-    0x44C9863D3C90DE15, 0x7B8B2C12C4D85415, 0xB24CD1E84D1FCC15, 0xE90E77BDD5674215,
-    0x1FC01D935DADB815, 0x5681C368E5F52E15, 0x8D43693E6E3CA415, 0xC4050F13F6841A15,
-    0xFAC6B4E97ECB9015, 0x31885ABF07130615, 0x684A00948F5A7C15, 0x9F0BA66A17A1F215,
-];
+pub use crate::weyl::WEYL_MULTIPLIERS;
 
 // Mode A: Chrono64s (Second Precision) Bit Split Constants
 pub const TIME_BITS: u8 = 33;
@@ -71,7 +52,7 @@ impl Persona {
         Self {
             node_id: rng.gen::<u64>() & NODE_MASK,
             salt: rng.gen(),
-            multiplier_idx: rng.gen_range(0..64),
+            multiplier_idx: rng.gen_range(0..WEYL_MULTIPLIERS.len()),
         }
     }
 }
@@ -185,7 +166,7 @@ impl Generator {
         let p = Persona {
             node_id: shard_id,
             salt: rng.gen(),
-            multiplier_idx: rng.gen_range(0..64),
+            multiplier_idx: rng.gen_range(0..WEYL_MULTIPLIERS.len()),
         };
         Self {
             persona: p,
@@ -205,7 +186,7 @@ impl Generator {
         let p = Persona {
             node_id: shard_id,
             salt: rng.gen(),
-            multiplier_idx: rng.gen_range(0..64),
+            multiplier_idx: rng.gen_range(0..WEYL_MULTIPLIERS.len()),
         };
         Self {
             persona: p,
@@ -356,7 +337,7 @@ impl Generator {
     pub fn rotate_salt_only(&mut self) {
         let mut rng = rand::thread_rng();
         self.persona.salt = rng.gen();
-        self.persona.multiplier_idx = rng.gen_range(0..64);
+        self.persona.multiplier_idx = rng.gen_range(0..WEYL_MULTIPLIERS.len());
     }
 }
 

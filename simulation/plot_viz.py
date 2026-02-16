@@ -106,6 +106,42 @@ def plot_routing_efficiency():
     plt.savefig('plots/routing_efficiency.png')
     print("✅ Saved plots/routing_efficiency.png")
 
+def plot_register_performance():
+    df = pd.read_csv('data/register_performance.csv')
+    plt.figure(figsize=(10, 6))
+    bars = plt.bar(df['type'], df['ops_per_ms'], color=['blue', 'grey'])
+    
+    plt.title('Empirical Graph G: CPU Throughput (Integer vs String)')
+    plt.ylabel('Operations per Millisecond')
+    plt.grid(axis='y', ls="-", alpha=0.3)
+    
+    # Add data labels
+    for bar in bars:
+        yval = bar.get_height()
+        plt.text(bar.get_x() + bar.get_width()/2, yval + 10, f'{int(yval):,} ops/ms', ha='center', va='bottom', fontweight='bold')
+
+    plt.savefig('plots/register_performance.png')
+    print("✅ Saved plots/register_performance.png")
+
+def plot_avalanche():
+    df = pd.read_csv('data/avalanche_diffusion.csv')
+    plt.figure(figsize=(10, 6))
+    plt.bar(df['bit'], df['diffusion'], color='teal', alpha=0.7)
+    
+    plt.title('Empirical Graph H: Avalanche Diffusion Efficiency')
+    plt.xlabel('Input Bit Position (Entropy/Sequence)')
+    plt.ylabel('Diffusion Probability (%)')
+    plt.ylim(0, 100)
+    plt.grid(axis='y', ls="-", alpha=0.3)
+    
+    # Reference lines
+    plt.axhline(y=50, color='red', linestyle='--', label='Ideal (50%)')
+    plt.axhline(y=30, color='orange', linestyle='--', label='Target (30%)')
+    plt.legend()
+
+    plt.savefig('plots/avalanche_diffusion.png')
+    print("✅ Saved plots/avalanche_diffusion.png")
+
 if __name__ == "__main__":
     if not os.path.exists('plots'):
         os.makedirs('plots')
@@ -114,3 +150,5 @@ if __name__ == "__main__":
     plot_storage_footprint()
     plot_storage_tenant()
     plot_routing_efficiency()
+    plot_register_performance()
+    plot_avalanche()
