@@ -148,7 +148,7 @@ Every contender wins at something. ChronoID wins at **everything**.
 
 ### 6.4 The Bottom Line
 
-The **ChronoID Framework** is not just an "ID Generator" — it is a **Full-Stack Schema Optimization Strategy**, now **Empirically Verified** through exhaustive simulation of **25 failure scenarios**.
+The **ChronoID Framework** is not just an "ID Generator" — it is a **Full-Stack Schema Optimization Strategy**, now **Empirically Verified** through exhaustive simulation of **26 failure scenarios**.
 
 1. **At the Edge (Mode A):** Defeats UUID, ULID, KSUID, Cuid2 — mathematically guarded safety in half the bytes.
 2. **In the Core (Mode B):** Defeats AUTO_INCREMENT and TSID — same speed, but globally unique and mergeable. (Proven via 1 Billion ID Stress Test and **Thread-Safe** high-contention verification).

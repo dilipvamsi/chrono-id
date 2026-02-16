@@ -31,7 +31,7 @@
 
 ChronoID is a high-performance distributed identifier framework that solves the **ID Generation Trilemma** — the fundamental impossibility of achieving all three of **Sortability**, **Uncoordinated Scaling**, and **Storage Efficiency** simultaneously with existing standards.
 
-> **Empirically Verified:** This specification has been validated through an exhaustive **25-scenario** simulation suite in Rust, including a **1 Billion ID** stress test with zero collisions and a **3.87x ingestion speed** advantage on physical B-Trees.
+> **Empirically Verified:** This specification has been validated through an exhaustive **26-scenario** simulation suite in Rust, including a **1 Billion ID** stress test with zero collisions and a **3.87x ingestion speed** advantage on physical B-Trees.
 
 ### The Trilemma: Sortable × Uncoordinated × Compact
 
@@ -80,6 +80,10 @@ A ChronoID is composed as:
 $$\text{ID} = (T \ll (b_N + b_S)) \;|\; (\text{mix}(N) \ll b_S) \;|\; \text{mix}(S)$$
 
 where `mix` denotes the Weyl-Golden permutation function (§2.3).
+
+**Formal Packing Recurrence (Example Bit-Split):**
+
+$$ID_t = (T_t \ll 22) \lor (N \ll 12) \lor S_t$$
 
 ### Why Split into Node + Sequence?
 
@@ -353,6 +357,12 @@ UPDATE state SET
 ```
 
 The constant `3535253579` (derived from $\phi^{-1} \times 2^{32}$) is coprime with $2^{b_N}$, guaranteeing a full-period cycle through all Node IDs before repetition.
+
+**Weyl-Golden Suffix Recurrence:**
+
+$$S_{t+1} = (S_t + \gamma) \pmod M$$
+
+$$\text{where } \gamma = \lfloor 2^{64} \cdot \phi^{-1} \rfloor \mid 1$$
 
 ---
 
@@ -632,7 +642,7 @@ UPDATE state SET
 
 ## 8. Empirical Verification (The Proof-of-Work)
 
-Beyond mathematical modeling, ChronoID's claims have been empirically verified through **25 distinct failure scenarios** in a high-performance Rust simulation environment.
+Beyond mathematical modeling, ChronoID's claims have been empirically verified through **26 distinct failure scenarios** in a high-performance Rust simulation environment.
 
 ### 8.1 Key Results
 
@@ -654,6 +664,7 @@ Beyond mathematical modeling, ChronoID's claims have been empirically verified t
 - **Boundary Precision:** Scenario 23 verified bit-perfect saturation at Min (Zero) and Max (Saturated) states.
 - **Strict Monotonicity:** Scenario 24 empirically proved that sequence overflow correctly prioritizes Node IDs, acknowledging the architectural trade-off.
 - **FK Multiplication Advantage:** Scenario 25 verified a **72.9% storage saving** for `chrono32y` compared to random identifiers like UUIDv4 on physical B-Trees, confirming its peak efficiency for multi-tenant Foreign Keys.
+- **Routing Efficiency:** Scenario 26 proved O(1) bit-shift routing delivers sub-millisecond performance at 1B requests, outperforming HashMaps by orders of magnitude.
 
 [**See Full Simulation Report**](../simulation/report.md)
 

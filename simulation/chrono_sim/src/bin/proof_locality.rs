@@ -27,21 +27,21 @@ fn main() -> Result<(), Box<dyn Error>> {
     let _ = fs::remove_file(path_chrono);
     let conn_chrono = Connection::open(path_chrono)?;
     conn_chrono.execute("PRAGMA page_size = 4096", [])?;
-    conn_chrono.execute("CREATE TABLE records (id INTEGER PRIMARY KEY, data TEXT)", [])?;
+    conn_chrono.execute("CREATE TABLE records (id INTEGER PRIMARY KEY, data TEXT) WITHOUT ROWID", [])?;
 
     // --- UUID v4 Setup (BLOB PRIMARY KEY, Random) ---
     let path_uuid4 = "uuid4_locality.db";
     let _ = fs::remove_file(path_uuid4);
     let conn_uuid4 = Connection::open(path_uuid4)?;
     conn_uuid4.execute("PRAGMA page_size = 4096", [])?;
-    conn_uuid4.execute("CREATE TABLE records (id BLOB PRIMARY KEY, data TEXT)", [])?;
+    conn_uuid4.execute("CREATE TABLE records (id BLOB PRIMARY KEY, data TEXT) WITHOUT ROWID", [])?;
 
     // --- UUID v7 Setup (BLOB PRIMARY KEY, Sequential) ---
     let path_uuid7 = "uuid7_locality.db";
     let _ = fs::remove_file(path_uuid7);
     let conn_uuid7 = Connection::open(path_uuid7)?;
     conn_uuid7.execute("PRAGMA page_size = 4096", [])?;
-    conn_uuid7.execute("CREATE TABLE records (id BLOB PRIMARY KEY, data TEXT)", [])?;
+    conn_uuid7.execute("CREATE TABLE records (id BLOB PRIMARY KEY, data TEXT) WITHOUT ROWID", [])?;
 
     // --- Phase 1: ChronoID Ingestion ---
     let mut gen = generator::Generator::new();
@@ -50,7 +50,7 @@ fn main() -> Result<(), Box<dyn Error>> {
     let mut stmt = conn_chrono.prepare("INSERT INTO records (id, data) VALUES (?, ?)")?;
     for i in 0..n {
         let id = gen.generate_at(i as u64 / 1000); // 1ms buckets
-        stmt.execute(rusqlite::params![id as i64, "some dummy payload data"])?;
+        stmt.execute(rusqlite::params![id as i64, ""])?;
     }
     conn_chrono.execute("COMMIT", [])?;
     let time_chrono = start_chrono.elapsed();
@@ -61,7 +61,7 @@ fn main() -> Result<(), Box<dyn Error>> {
     let mut stmt = conn_uuid4.prepare("INSERT INTO records (id, data) VALUES (?, ?)")?;
     for _ in 0..n {
         let u = Uuid::new_v4();
-        stmt.execute(rusqlite::params![u.as_bytes(), "some dummy payload data"])?;
+        stmt.execute(rusqlite::params![u.as_bytes(), ""])?;
     }
     conn_uuid4.execute("COMMIT", [])?;
     let time_uuid4 = start_uuid4.elapsed();
@@ -72,7 +72,7 @@ fn main() -> Result<(), Box<dyn Error>> {
     let mut stmt = conn_uuid7.prepare("INSERT INTO records (id, data) VALUES (?, ?)")?;
     for _ in 0..n {
         let u = Uuid::now_v7();
-        stmt.execute(rusqlite::params![u.as_bytes(), "some dummy payload data"])?;
+        stmt.execute(rusqlite::params![u.as_bytes(), ""])?;
     }
     conn_uuid7.execute("COMMIT", [])?;
     let time_uuid7 = start_uuid7.elapsed();

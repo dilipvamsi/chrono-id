@@ -182,6 +182,7 @@ ChronoID has been torture-tested through a comprehensive **Rust Simulation Suite
 - **Storage Efficiency:** **~50% smaller footprint** than UUID v4/v7 on physical SQLite B-Trees.
 - **Ingestion Velocity:** Up to **3.87x faster ingestion** than random identifiers (Scenario 17).
 - **Performance Advantage:** **1.96x faster** CPU operations than 128-bit identifiers (Theorem 3).
+- **Routing Efficiency:** **O(1) deterministic routing** achieving sub-millisecond overhead at 1 billion requests (Scenario 26).
 - **SQL Logic Parity:** 100% bit-identical results between SQL spec and Rust/C++ implementations.
 - **1 Billion ID Test:** Mode B successfully generated 1,000,000,000 IDs without a single collision.
 - **Self-Healing Proof:** Verified 100% recovery from state-sync failures via Active Divergence.

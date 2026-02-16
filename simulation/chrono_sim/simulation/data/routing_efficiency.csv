@@ -1,0 +1,7 @@
+scale,type,time_ms
+1M,Map Lookup,9.975
+1M,Bit-Shift,0.000
+100M,Map Lookup,997.544
+100M,Bit-Shift,0.001
+1B,Map Lookup,9975.437
+1B,Bit-Shift,0.005

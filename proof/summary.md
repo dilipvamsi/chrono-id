@@ -22,7 +22,7 @@ Unlike UUIDs (128-bit, passive randomness) or Snowflake IDs (64-bit, rigid coord
 2.  **Zero Coordination:** In Mode A, nodes require no knowledge of each other.
 3.  **Maximum Ingestion Speed:** Verified up to **3.87x faster** record insertion than random identifiers (Theorem 4).
 4.  **Polymorphic Engine:** A single standard that morphs between three modes (Stateless, Stateful, Managed).
-5.  **Empirically Verified:** All claims validated by a **25-scenario** Rust simulation suite, including real-world SQLite B-Tree performance certification.
+5.  **Empirically Verified:** All claims validated by a **26-scenario** Rust simulation suite, including real-world SQLite B-Tree performance certification.
 
 ---
 

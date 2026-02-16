@@ -112,9 +112,39 @@ s25:
 	@echo "\n🚀 Running Scenario 25 (chrono32y Performance)..."
 	@cd chrono_sim && cargo run --quiet --release --bin proof_chrono32y_performance
 
+# Scenario 26: Shard Routing Efficiency
+s26:
+	@echo "\n🚀 Running Scenario 26 (Routing Efficiency)..."
+	@cd chrono_sim && cargo run --quiet --release --bin proof_routing_efficiency
+
+# --- Visualizations ---
+
+# Generate Simulation Data (CSV)
+viz-data:
+	@echo "\n🚀 Generating Deep Simulation Data for Plots..."
+	@cd chrono_sim && cargo run --quiet --release --bin generate_viz_data
+	@mkdir -p data
+	@cp chrono_sim/simulation/data/*.csv data/
+
+# Render Plots (PNG)
+viz-plot:
+	@echo "\n🚀 Rendering Empirical Graphs..."
+	@mkdir -p plots
+	@if [ ! -d "viz_venv" ]; then \
+		echo "Creating virtual environment..."; \
+		python3 -m venv viz_venv; \
+		. viz_venv/bin/activate && pip install --quiet matplotlib pandas; \
+	fi
+	@. viz_venv/bin/activate && python3 plot_viz.py
+
+# Full Visualization Workflow
+viz: viz-data viz-plot
+	@echo "\n✅ Visualizations generated in simulation/plots/"
+
 # Extra: Unsigned Safety (Year 255)
 unsigned_safety:
 	@cd chrono_sim && cargo run --quiet --release --bin proof_unsigned_safety
 
 clean:
 	@cd chrono_sim && cargo clean
+	rm -rf data plots viz_venv

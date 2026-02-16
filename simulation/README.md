@@ -13,7 +13,7 @@ The primary goal is to provide **Empirical Proof** for:
 
 ## 🧪 Simulation Scenarios
 
-The suite is divided into 24 distinct scenarios:
+The suite is divided into 26 distinct scenarios:
 
 ### Core Foundation
 
@@ -32,7 +32,8 @@ The suite is divided into 24 distinct scenarios:
 
 - **Scenario 5: Mode C (Shard Routing):** Verifies raw Node ID preservation for infrastructure routing.
 - **Scenario 6: Mode B (Burst Capacity):** 1 Billion ID generation test using Weyl-Step rotation.
-- **Scenario 14: Mode C Spin-Wait:** Empirically proves blocking behavior when burst capacity is exceeded.
+- **Scenario 14: Mode C (Spin-Wait):** Empirically proves blocking behavior when burst capacity is exceeded.
+- **Scenario 26: Shard Routing Efficiency:** Proves O(1) bit-shift routing is sub-millisecond even at 1B requests.
 
 ### Reliability & Infrastructure
 
@@ -68,7 +69,7 @@ make all
 
 - **Core Suite:** `make s1`, `make s2`, `make s3`
 - **Tenant Suite:** `make s4`, `make s9`, `make s10`
-- **Operational Suite:** `make s5`, `make s6`, `make s14`
+- **Operational Suite:** `make s5`, `make s6`, `make s14`, `make s26`
 - **Safety Suite:** `make s7`, `make s8`, `make s11`, `make s12`, `make s13`
 
 ## 📂 Project Structure

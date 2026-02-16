@@ -33,14 +33,14 @@ fn main() -> Result<(), Box<dyn Error>> {
     let _ = fs::remove_file(path_32);
     let conn_32 = Connection::open(path_32)?;
     conn_32.execute("PRAGMA synchronous = OFF", [])?;
-    conn_32.execute("CREATE TABLE r (id INTEGER PRIMARY KEY, data TEXT)", [])?;
+    conn_32.execute("CREATE TABLE r (id INTEGER PRIMARY KEY, data TEXT) WITHOUT ROWID", [])?;
     conn_32.execute("BEGIN TRANSACTION", [])?;
     let seq = AtomicU64::new(0);
     {
         let mut stmt = conn_32.prepare("INSERT INTO r (id, data) VALUES (?, ?)")?;
         for _ in 0..n_records {
             let id = generator::generate_chrono32y_mode_b(&seq);
-            stmt.execute(rusqlite::params![id as i32, "data"])?;
+            stmt.execute(rusqlite::params![id as i32, ""])?;
         }
     }
     conn_32.execute("COMMIT", [])?;
@@ -50,13 +50,13 @@ fn main() -> Result<(), Box<dyn Error>> {
     let _ = fs::remove_file(path_v4);
     let conn_v4 = Connection::open(path_v4)?;
     conn_v4.execute("PRAGMA synchronous = OFF", [])?;
-    conn_v4.execute("CREATE TABLE r (id BLOB PRIMARY KEY, data TEXT)", [])?;
+    conn_v4.execute("CREATE TABLE r (id BLOB PRIMARY KEY, data TEXT) WITHOUT ROWID", [])?;
     conn_v4.execute("BEGIN TRANSACTION", [])?;
     {
         let mut stmt = conn_v4.prepare("INSERT INTO r (id, data) VALUES (?, ?)")?;
         for _ in 0..n_records {
             let id = Uuid::new_v4();
-            stmt.execute(rusqlite::params![id.as_bytes(), "data"])?;
+            stmt.execute(rusqlite::params![id.as_bytes(), ""])?;
         }
     }
     conn_v4.execute("COMMIT", [])?;
@@ -66,13 +66,13 @@ fn main() -> Result<(), Box<dyn Error>> {
     let _ = fs::remove_file(path_v7);
     let conn_v7 = Connection::open(path_v7)?;
     conn_v7.execute("PRAGMA synchronous = OFF", [])?;
-    conn_v7.execute("CREATE TABLE r (id BLOB PRIMARY KEY, data TEXT)", [])?;
+    conn_v7.execute("CREATE TABLE r (id BLOB PRIMARY KEY, data TEXT) WITHOUT ROWID", [])?;
     conn_v7.execute("BEGIN TRANSACTION", [])?;
     {
         let mut stmt = conn_v7.prepare("INSERT INTO r (id, data) VALUES (?, ?)")?;
         for _ in 0..n_records {
             let id = Uuid::now_v7();
-            stmt.execute(rusqlite::params![id.as_bytes(), "data"])?;
+            stmt.execute(rusqlite::params![id.as_bytes(), ""])?;
         }
     }
     conn_v7.execute("COMMIT", [])?;
