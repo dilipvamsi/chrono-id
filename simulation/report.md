@@ -1,6 +1,20 @@
 # ChronoID Simulation Report
 
-Final verification results for the 25 failure scenarios and architectural claims.
+Final verification results for the 26 failure scenarios and architectural claims.
+
+---
+
+## 🛠 Environmental Context
+
+Verification simulations were performed on the following system to establish a performance baseline:
+
+- **OS**: Manjaro Linux (Kernel 6.12.68)
+- **CPU**: Intel(R) Core(TM) i7-8750H @ 2.20GHz (6 Cores / 12 Threads)
+- **RAM**: 32 GB DDR4
+- **Storage**: NVMe SSD (Physical B-Tree Host)
+- **Compiler**: Rust 1.75+ (LTO Enabled)
+
+---
 
 ## Summary Scorecard
 

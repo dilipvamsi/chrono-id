@@ -6,6 +6,19 @@
 | **Epoch Standard**   | 2020-01-01 (Unix: 1577836800)                                             |
 | **Longevity Target** | 250+ Years (Generational Standard)                                        |
 | **Core Philosophy**  | "Decoupled Identity" — Separating ID Generation Logic from Storage Schema |
+| **Verification**     | 26 Scenarios (100% PASS)                                                  |
+
+---
+
+## 🛠 Environmental Context
+
+Verification simulations were performed on the following system to establish a performance baseline:
+
+- **OS**: Manjaro Linux (Kernel 6.12.68)
+- **CPU**: Intel(R) Core(TM) i7-8750H @ 2.20GHz (6 Cores / 12 Threads)
+- **RAM**: 32 GB DDR4
+- **Storage**: NVMe SSD (Physical B-Tree Host)
+- **Compiler**: Rust 1.75+ (LTO Enabled)
 
 ---
 
@@ -664,7 +677,46 @@ Beyond mathematical modeling, ChronoID's claims have been empirically verified t
 - **Boundary Precision:** Scenario 23 verified bit-perfect saturation at Min (Zero) and Max (Saturated) states.
 - **Strict Monotonicity:** Scenario 24 empirically proved that sequence overflow correctly prioritizes Node IDs, acknowledging the architectural trade-off.
 - **FK Multiplication Advantage:** Scenario 25 verified a **72.9% storage saving** for `chrono32y` compared to random identifiers like UUIDv4 on physical B-Trees, confirming its peak efficiency for multi-tenant Foreign Keys.
-- **Routing Efficiency:** Scenario 26 proved O(1) bit-shift routing delivers sub-millisecond performance at 1B requests, outperforming HashMaps by orders of magnitude.
+- **Shard Routing Efficiency:** Scenario 26 proved O(1) bit-shift routing delivers sub-millisecond performance at 1B requests (Graph E).
+
+### 💹 Empirical Visual Evidence
+
+To formalize the proof, we ran a deep empirical simulation comparing ChronoID against industry standards (**Snowflake** and **UUIDv7**).
+
+#### Graph A: Entropy Decay / Active Divergence (Distributed)
+
+_Simulates uncoordinated distributed nodes sharing a limited pool of Machine IDs._
+
+- **ChronoID (Mode A)**: Self-heals through bit-level divergence, maintaining zero collisions.
+  ![Graph A: Entropy Decay](../simulation/plots/entropy_decay.png)
+
+#### Graph B: Throughput Cliff (Ingestion Latency)
+
+_Measures the performance of cumulative B-Tree additions._
+
+- **ChronoID (Mode B)**: Maintains stable, low latency (~170ms/batch) even as the database grows, while alternatives fragment.
+  ![Graph B: Throughput Cliff](../simulation/plots/throughput_cliff.png)
+
+#### Graph C: Storage Footprint (Index Density)
+
+_Comparing total index size for 100 Million rows._
+
+- **ChronoID**: Achieves the absolute physical limit of 64-bit B-Tree density, ~50% smaller than UUID variants.
+  ![Graph C: Storage Footprint](../simulation/plots/storage_footprint.png)
+
+#### Graph D: Storage Tenant (Foreign Key Precision)
+
+_Density for multi-tenant identifiers using 32-bit uchrono32y._
+
+- **uchrono32y**: Saves 12 bytes per Foreign Key, delivering a **72.9% storage reduction** for indexed relations.
+  ![Graph D: Storage Tenant](../simulation/plots/storage_tenant.png)
+
+#### Graph E: Shard Routing Efficiency (O(1) vs O(Map))
+
+_Comparing deterministic bit-shift routing against HashMap lookup across scales up to 1B requests._
+
+- **ChronoID**: Constant-time O(1) routing that remains sub-millisecond (0.005ms) at 1B scale.
+  ![Graph E: Shard Routing](../simulation/plots/routing_efficiency.png)
 
 [**See Full Simulation Report**](../simulation/report.md)
 
@@ -698,7 +750,7 @@ _`chrono64s` is the recommended **default** for general-purpose database keys._
 | Feature           | **Mode A** (Stateless) | **Mode B** (Stateful) | **Mode C** (Managed)    | **Chrono32y** (Tenant) |
 | :---------------- | :--------------------- | :-------------------- | :---------------------- | :--------------------- |
 | **Primary Value** | **Active Healing**     | **Write Speed**       | **Zero-Lookup Routing** | **FK Compression**     |
-| **Replaces**      | UUIDv4 / Random        | Auto-Increment        | Twitter Snowflake       | UUID / ShortID         |
+| **Replaces**      | UUIDv4 / Random        | Auto-Increment        | Shard Registry          | UUID / ShortID         |
 | **Ideal For**     | Lambda / IoT           | SQL Primary Key       | Sharded Cluster         | SaaS Org ID            |
 | **Dependency**    | Math Only              | Local DB Seq          | Central Registry        | None                   |
 | **Storage Cost**  | 64-bit                 | 64-bit                | 64-bit                  | **32-bit**             |
