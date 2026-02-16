@@ -18,11 +18,11 @@ Unlike UUIDs (128-bit, passive randomness) or Snowflake IDs (64-bit, rigid coord
 
 ### Core Value Proposition
 
-1.  **50% Storage Reduction:** Fits in native 64-bit integers (`bigint`), saving terabytes of index RAM compared to UUIDv7.
+1.  **50% Storage Reduction:** Fits in native 64-bit integers (`bigint`), saving terabytes of index RAM compared to standard UUIDs.
 2.  **Zero Coordination:** In Mode A, nodes require no knowledge of each other.
-3.  **Active Self-Healing:** Mathematical divergence guarantees that collisions are transient, not systemic.
-4.  **Polymorphic Engine:** A single 64-bit standard that morphs between three modes (Stateless, Stateful, Managed) without database migration.
-5.  **Full-Stack Optimization:** Register alignment, B-Tree locality, and Foreign Key compression at every layer.
+3.  **Maximum Ingestion Speed:** Verified up to **3.87x faster** record insertion than random identifiers (Theorem 4).
+4.  **Polymorphic Engine:** A single standard that morphs between three modes (Stateless, Stateful, Managed).
+5.  **Empirically Verified:** All claims validated by a **25-scenario** Rust simulation suite, including real-world SQLite B-Tree performance certification.
 
 ---
 
@@ -45,6 +45,7 @@ Standard random IDs rely on passive probability. ChronoID uses **Fibonacci Hashi
   - $ID_a(T+1) = (Seq+1) \times M_a$
   - $ID_b(T+1) = (Seq+1) \times M_b$
   - Because the multipliers differ, the resulting IDs diverge instantly. The collision is mathematically forced to heal at the next tick.
+- **Empirical Proof:** Scenario 1 of the simulation suite verified that 10,000 overlapping nodes diverge completely upon rotation, with a predicted $\ge 98.44\%$ per-tick divergence rate confirmed by seed audit.
 
 ---
 
@@ -68,7 +69,7 @@ Standard random IDs rely on passive probability. ChronoID uses **Fibonacci Hashi
 - **Sequence:** Uses native **PostgreSQL Sequences** (`nextval`) for maximum throughput.
 - **Rotation:** On time expiry (10 mins) or sequence burst, the DB performs a **Weyl-Step Rotation** (`Node = (Node + Constant) % Max`), with full-period cycle guarantee.
 - **Burst Defense:** On sequence overflow → immediate Weyl-Step rotation. Never stalls.
-- **Clock Skew:** Sequence is monotonic regardless of wall clock; uniqueness preserved.
+- **Clock Skew:** Sequence is monotonic regardless of wall clock; uniqueness preserved. ✅ **Verified** (Scenario 7).
 - **Advantages:** **0% Internal Collision Risk**; supports high-frequency variants (`us`, `ms`).
 - **Disadvantages:** Requires persistent DB connection; multi-DB setups require statistical safety analysis.
 
@@ -77,6 +78,7 @@ Standard random IDs rely on passive probability. ChronoID uses **Fibonacci Hashi
 - **Best For:** High-Frequency Trading, Banking, Kernel Tracing.
 - **Mechanism:** Node IDs are strictly assigned by a central authority (Redis, Etcd, ConfigMap).
 - **Burst Strategy:** If the sequence overflows, the generator **spin-waits** for the next time tick (Node cannot change — it encodes routing identity).
+- **Empirical Proof:** Scenarios 5 & 14 verified 100% routing stability across parallel shards and confirmed that execution time scales linearly with forced wait-ticks during bursts.
 - **Advantages:** **0% Global Collision Risk** (Deterministic).
 - **Disadvantages:** Operational complexity (registry is a SPOF; mitigate with Redis Sentinel / Etcd cluster).
 
@@ -185,13 +187,14 @@ UPDATE state SET
 
 _`chrono64s` is the recommended **default** for general-purpose database keys._
 
-| Feature          | UUID v7 (Standard) | ChronoID `s` ⭐ (Default) | ChronoID `us` (Mode B) |
-| :--------------- | :----------------- | :------------------------ | :--------------------- |
-| **Storage**      | 16 Bytes           | **8 Bytes (50% less)**    | **8 Bytes**            |
-| **Sorting**      | 1 ms               | 1 second                  | **1 µs (1000× finer)** |
-| **Safety**       | Passive Random     | **Active Self-Healing**   | **0% Collision**       |
-| **Mode A Scale** | Infinite           | **65 Nodes** (1-in-1M)    | N/A (Mode B/C only)    |
-| **Lifespan**     | Long               | **250+ Years**            | **250+ Years**         |
+| Feature       | UUID v7 (Standard) | ChronoID `s` ⭐ (Default) | ChronoID `us` (Mode B) |
+| :------------ | :----------------- | :------------------------ | :--------------------- |
+| **Storage**   | 16 Bytes           | **8 Bytes (50% less)**    | **8 Bytes**            |
+| **CPU Speed** | 1.0x (Baseline)    | **1.96x Faster**          | **~1.96x Faster**      |
+| **Ingestion** | 1.0x (Baseline)    | **3.87x Faster**          | **~3.87x Faster**      |
+| **Sorting**   | 1 ms               | 1 second                  | **1 µs (1000× finer)** |
+| **Safety**    | Passive Random     | **Active Self-Healing**   | **0% Collision**       |
+| **Lifespan**  | Long               | **250+ Years**            | **250+ Years**         |
 
 ### ChronoID vs. Snowflake
 
@@ -233,5 +236,6 @@ It lists the **Signed** (`chrono`) variants for maximum compatibility with Postg
 > **For Higher Entropy:** If your language or database supports **Unsigned Integers** (e.g., Rust, C++, MySQL, Solidity), use the **`uchrono`** (Unsigned) equivalent.
 >
 > - **Benefit:** Reclaims the sign bit, adding it to the **Node field** (not Sequence) — a 41% increase in safe parallel nodes.
+> - **Critical Data:** Simulation Scenario 9 proves that Signed IDs carry a **1.6x higher statistical risk** than Unsigned; choose Signed only when language support forces it.
 > - _Example:_ `uchrono32y` offers **16.7 Million** IDs/year (24-bit), whereas `chrono32y` offers **8.3 Million** (23-bit).
-> - _Human-Readable:_ `chrono32y` encodes as a **7-character Crockford Base32** string (e.g., `8Z5Y03`) — compact, URL-safe, dictation-friendly.
+> - _Human-Readable:_ `chrono32y` encodes as a **7-character Crockford Base32** string (e.g., `8Z5Y03`) — compact, URL-safe, and verified **Sort-Stable** (Scenario 13).

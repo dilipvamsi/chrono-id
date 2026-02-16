@@ -1,0 +1,11 @@
+[package]
+name = "chrono_sim"
+version = "0.1.0"
+edition = "2021"
+
+[dependencies]
+indicatif = "0.17.8"
+rand = "0.8.5"
+tokio = { version = "1.37.0", features = ["full"] }
+rusqlite = { version = "0.31.0", features = ["bundled"] }
+uuid = { version = "1.8.0", features = ["v4", "v7"] }

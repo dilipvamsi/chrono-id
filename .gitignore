@@ -3,6 +3,8 @@ __pycache__
 venv/
 implementations/python/.coverage
 
+# rust
+simulation/chrono_sim/target
 
 # cpp
 implementations/cpp/build
