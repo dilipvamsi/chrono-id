@@ -24,7 +24,7 @@ fn main() {
     simulate_storage_footprint();
 
     println!("✅ Formal simulation data generated in simulation/data/");
-    
+
     simulate_routing_efficiency();
 }
 
@@ -37,7 +37,7 @@ fn simulate_routing_efficiency() {
     let mut ids = Vec::with_capacity(n_empirical);
     for i in 0..n_empirical {
         let ts = 1600000000 + (i as u64 / 1000);
-        let shard = (i % 4096) as u64; 
+        let shard = (i % 4096) as u64;
         let seq = (i % 32768) as u64;
         let id = (ts << 24) | (shard << 12) | seq;
         ids.push(id);
@@ -72,7 +72,7 @@ fn simulate_routing_efficiency() {
     // 2. Extrapolate to 1M, 100M, 1B
     let scales = vec![1_000_000.0, 100_000_000.0, 1_000_000_000.0];
     let names = vec!["1M", "100M", "1B"];
-    
+
     for (i, &scale) in scales.iter().enumerate() {
         let factor = scale / n_empirical as f64;
         writeln!(file_e, "{},Map Lookup,{:.3}", names[i], d_map_10m * factor).unwrap();

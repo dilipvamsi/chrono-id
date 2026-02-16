@@ -10,18 +10,6 @@
 
 ---
 
-## 🛠 Environmental Context
-
-Verification simulations were performed on the following system to establish a performance baseline:
-
-- **OS**: Manjaro Linux (Kernel 6.12.68)
-- **CPU**: Intel(R) Core(TM) i7-8750H @ 2.20GHz (6 Cores / 12 Threads)
-- **RAM**: 32 GB DDR4
-- **Storage**: NVMe SSD (Physical B-Tree Host)
-- **Compiler**: Rust 1.75+ (LTO Enabled)
-
----
-
 ## Table of Contents
 
 1. [Definitions & Notation](#1-definitions--notation) — ID Structure, Node/Sequence Split, Signed vs Unsigned
@@ -190,7 +178,10 @@ Setting $P = p$ and solving for $n$ yields the approximation. ChronoID **resets*
 
 ### 2.3 Theorem 2: Weyl-Golden Active Self-Healing (Divergence Guarantee)
 
-**Statement.** If two generators $A$ and $B$ accidentally produce the same suffix at time $T$ (i.e., $\text{ID}_A(T) = \text{ID}_B(T)$), then with probability $\geq 1 - \frac{1}{64}$, their next IDs will diverge:
+**Statement.** If two generators $A$ and $B$ accidentally produce the same suffix at time $T$:
+$$\text{ID}_A(T) = \text{ID}_B(T)$$
+Then with probability $\geq 1 - \frac{1}{64}$, their next IDs will diverge:
+$$\text{ID}_A(T+1) \neq \text{ID}_B(T+1)$$
 
 $$\text{ID}_A(T+1) \neq \text{ID}_B(T+1)$$
 
@@ -679,39 +670,49 @@ Beyond mathematical modeling, ChronoID's claims have been empirically verified t
 - **FK Multiplication Advantage:** Scenario 25 verified a **72.9% storage saving** for `chrono32y` compared to random identifiers like UUIDv4 on physical B-Trees, confirming its peak efficiency for multi-tenant Foreign Keys.
 - **Shard Routing Efficiency:** Scenario 26 proved O(1) bit-shift routing delivers sub-millisecond performance at 1B requests (Graph E).
 
+### 🛠 Environmental Context
+
+Verification simulations were performed on the following system to establish a "Trust Anchor" for the performance data presented below:
+
+- **OS**: Manjaro Linux (Kernel 6.12.68)
+- **CPU**: Intel(R) Core(TM) i7-8750H @ 2.20GHz (6 Cores / 12 Threads)
+- **RAM**: 32 GB DDR4
+- **Storage**: NVMe SSD (Physical B-Tree Host)
+- **Compiler**: Rust 1.75+ (LTO Enabled)
+
 ### 💹 Empirical Visual Evidence
 
 To formalize the proof, we ran a deep empirical simulation comparing ChronoID against industry standards (**Snowflake** and **UUIDv7**).
 
-#### Graph A: Entropy Decay / Active Divergence (Distributed)
+#### Graph A: Collision Resistance vs Scale (Distributed)
 
 _Simulates uncoordinated distributed nodes sharing a limited pool of Machine IDs._
 
 - **ChronoID (Mode A)**: Self-heals through bit-level divergence, maintaining zero collisions.
   ![Graph A: Entropy Decay](../simulation/plots/entropy_decay.png)
 
-#### Graph B: Throughput Cliff (Ingestion Latency)
+#### Graph B: Ingestion Velocity & B-Tree Fragmentation
 
 _Measures the performance of cumulative B-Tree additions._
 
 - **ChronoID (Mode B)**: Maintains stable, low latency (~170ms/batch) even as the database grows, while alternatives fragment.
   ![Graph B: Throughput Cliff](../simulation/plots/throughput_cliff.png)
 
-#### Graph C: Storage Footprint (Index Density)
+#### Graph C: Physical Index Footprint (100M Scale)
 
 _Comparing total index size for 100 Million rows._
 
 - **ChronoID**: Achieves the absolute physical limit of 64-bit B-Tree density, ~50% smaller than UUID variants.
   ![Graph C: Storage Footprint](../simulation/plots/storage_footprint.png)
 
-#### Graph D: Storage Tenant (Foreign Key Precision)
+#### Graph D: Multi-Tenant Foreign Key Density
 
 _Density for multi-tenant identifiers using 32-bit uchrono32y._
 
 - **uchrono32y**: Saves 12 bytes per Foreign Key, delivering a **72.9% storage reduction** for indexed relations.
   ![Graph D: Storage Tenant](../simulation/plots/storage_tenant.png)
 
-#### Graph E: Shard Routing Efficiency (O(1) vs O(Map))
+#### Graph E: Shard Routing Execution Cost
 
 _Comparing deterministic bit-shift routing against HashMap lookup across scales up to 1B requests._
 

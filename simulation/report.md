@@ -77,7 +77,7 @@ Empirical tests on `chrono64s` confirmed that the mathematical birthday bounds a
 
 To formalize the proof, we ran a deep empirical simulation comparing ChronoID against industry standards (**Snowflake** and **UUIDv7**).
 
-#### Graph A: Entropy Decay / Active Divergence (Distributed)
+#### Graph A: Collision Resistance vs Scale (Distributed)
 
 This graph simulates uncoordinated distributed nodes sharing a limited pool of Machine IDs.
 
@@ -86,7 +86,7 @@ This graph simulates uncoordinated distributed nodes sharing a limited pool of M
 
 ![Entropy Decay Graph (Mode A)](plots/entropy_decay.png)
 
-#### Graph B: Throughput Cliff (Ingestion Latency)
+#### Graph B: Ingestion Velocity & B-Tree Fragmentation
 
 This graph measures the performance of cumulative B-Tree additions.
 
@@ -96,7 +96,7 @@ This graph measures the performance of cumulative B-Tree additions.
 ![Throughput Cliff Graph (Mode B)](plots/throughput_cliff.png)
 _Chart B: ChronoID maintains constant insert latency via right-leaf appends, while UUIDv7 approaches a "Throughput Cliff" as the index fragments._
 
-#### Graph C: Storage Footprint (Index Density)
+#### Graph C: Physical Index Footprint (100M Scale)
 
 Comparing the total index size for 100 Million rows.
 
@@ -106,7 +106,7 @@ Comparing the total index size for 100 Million rows.
 
 ![Storage Footprint Graph (Graph C)](plots/storage_footprint.png)
 
-#### Graph D: Storage Tenant (Max 24-bit Capacity, Mode B)
+#### Graph D: Multi-Tenant Foreign Key Density
 
 Comparing total index size for its maximum capacity of **16,777,216 rows** using the 32-bit `uchrono32y` identifier.
 
@@ -117,7 +117,7 @@ Comparing total index size for its maximum capacity of **16,777,216 rows** using
 > [!NOTE]
 > **Understanding the "B-Tree Tax"**: While `uchrono32y` is physically 50% smaller (32-bit) than Snowflake (64-bit), the _Total Index Size_ is not exactly half. This is because every database record includes constant overhead: B-Tree page headers (100 bytes/page), cell headers, and row pointers. ChronoID minimizes the **Key Footprint** to the absolute physical limit of the hardware, delivering the highest possible density achievable on a standard B-Tree.
 
-#### Graph E: Shard Routing Efficiency (O(1) vs O(Map))
+#### Graph E: Shard Routing Execution Cost
 
 Comparing deterministic bit-shift routing against traditional HashMap lookup across 1M, 100M, and 1B request scales.
 
