@@ -1,7 +1,7 @@
 /// # ChronoID Scenario 12: Global Bit Split Audit
 ///
 /// This proof systematically verifies the bit-widths and signed/unsigned constraints
-/// for all 18 variants defined in the ChronoID specification (Section 5).
+/// for all 16 variants defined in the ChronoID specification (Section 5).
 ///
 /// ## Verification Rules:
 /// 1. **Total Width:** Sum of T+N+S bits must match the target width (32 or 64 bits).
@@ -341,31 +341,17 @@ fn main() {
             signed: true,
         },
         Variant {
-            name: "uchrono32m_sort",
+            name: "uchrono32m",
             bits_t: 28,
             bits_n: 2,
             bits_s: 2,
             signed: false,
         },
         Variant {
-            name: "chrono32m_sort",
+            name: "chrono32m",
             bits_t: 28,
             bits_n: 1,
             bits_s: 2,
-            signed: true,
-        },
-        Variant {
-            name: "uchrono32bs",
-            bits_t: 32,
-            bits_n: 0,
-            bits_s: 0,
-            signed: false,
-        },
-        Variant {
-            name: "chrono32bs",
-            bits_t: 31,
-            bits_n: 0,
-            bits_s: 0,
             signed: true,
         },
     ];

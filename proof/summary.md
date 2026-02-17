@@ -149,12 +149,11 @@ _Can be used as distributed Primary Keys in Mode A._
 
 _Collisions are "Ties". Use for Partitioning or Mode B/C._
 
-| Variant | Precision   | Bits (T/N/S) | Expiry | Suffix Entropy | **Safe Nodes** | Sort Utility           |
-| :------ | :---------- | :----------: | :----: | :------------: | :------------: | :--------------------- |
-| **h**   | Hour        |    22/5/5    |  2498  |    10 bits     |     **1**      | Single-Node Shift Sort |
-| **tm**  | 10-Min      |    24/4/4    |  2339  |     8 bits     |   **Manual**   | Batch Partitioning     |
-| **m**   | Minute      |    28/2/2    |  2530  |     4 bits     |   **Single**   | Local App Sorting      |
-| **bs**  | Bi-Sec (2s) |    32/0/0    |  2292  |     0 bits     |    **None**    | **32-bit Sort Index**  |
+| Variant | Precision | Bits (T/N/S) | Expiry | Suffix Entropy | **Safe Nodes** | Sort Utility           |
+| :------ | :-------- | :----------: | :----: | :------------: | :------------: | :--------------------- |
+| **h**   | Hour      |    22/5/5    |  2498  |    10 bits     |     **1**      | Single-Node Shift Sort |
+| **tm**  | 10-Min    |    24/4/4    |  2339  |     8 bits     |   **Manual**   | Batch Partitioning     |
+| **m**   | Minute    |    28/2/2    |  2530  |     4 bits     |   **Single**   | Local App Sorting      |
 
 ---
 

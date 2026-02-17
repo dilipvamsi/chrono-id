@@ -14,12 +14,11 @@ export enum Precision {
   H = 6,
   TM = 7,
   M = 8,
-  BS = 9,
-  S = 10,
-  DS = 11,
-  CS = 12,
-  MS = 13,
-  US = 14,
+  S = 9,
+  DS = 10,
+  CS = 11,
+  MS = 12,
+  US = 13,
 }
 
 export class ChronoError extends Error {}
@@ -167,10 +166,6 @@ export class Chrono32tm extends Chrono32Base {}
 /** Minute precision: ~510 years (Expiry 2530). */
 export class UChrono32m extends Chrono32Base {}
 export class Chrono32m extends Chrono32Base {}
-
-/** Bi-Second (2s) precision: ~136 years (Expiry 2156). Extra bit in uchrono32bs goes to NodeID. */
-export class UChrono32bs extends Chrono32Base {}
-export class Chrono32bs extends Chrono32Base {}
 
 // --- 64-bit Family (Epoch 2020) ---
 

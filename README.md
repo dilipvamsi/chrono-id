@@ -139,7 +139,6 @@ python3 weyl/weyl-lang-gen.py js implementation/weyl_constants.js
 | :------ | :-------- | :----------: | :----: | :------------------: | :------------------- |
 | **y**   | Year      |   8/13/11    |  2276  |       **183**        | Tenant / Member IDs  |
 | **mo**  | Month     |   12/11/10   |  2361  |          64          | Subscription Billing |
-| **bs**  | Bi-Sec    |    32/0/0    |  2292  |         None         | 32-bit Sort Index    |
 
 > [!NOTE]
 > **`chrono32y` — The Novel Tenant ID Innovation.**

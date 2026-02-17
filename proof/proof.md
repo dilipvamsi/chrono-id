@@ -536,12 +536,11 @@ _Can be used as distributed Primary Keys in Mode A._
 
 _Collisions are "Ties". Use for Partitioning or Mode B/C._
 
-| Variant | Precision   | Bits (T/N/S) | Expiry | Suffix Entropy | **Safe Nodes** | Sort Utility           |
-| :------ | :---------- | :----------: | :----: | :------------: | :------------: | :--------------------- |
-| **h**   | Hour        |    22/5/5    |  2498  |    10 bits     |     **1**      | Single-Node Shift Sort |
-| **tm**  | 10-Min      |    24/4/4    |  2339  |     8 bits     |   **Manual**   | Batch Partitioning     |
-| **m**   | Minute      |    28/2/2    |  2530  |     4 bits     |   **Single**   | Local App Sorting      |
-| **bs**  | Bi-Sec (2s) |    31/1/0    |  2156  |     1 bit      |    **None**    | **32-bit Sort Index**  |
+| Variant | Precision | Bits (T/N/S) | Expiry | Suffix Entropy | **Safe Nodes** | Sort Utility           |
+| :------ | :-------- | :----------: | :----: | :------------: | :------------: | :--------------------- |
+| **h**   | Hour      |    22/5/5    |  2498  |    10 bits     |     **1**      | Single-Node Shift Sort |
+| **tm**  | 10-Min    |    24/4/4    |  2339  |     8 bits     |   **Manual**   | Batch Partitioning     |
+| **m**   | Minute    |    28/2/2    |  2530  |     4 bits     |   **Single**   | Local App Sorting      |
 
 **Design Philosophy.** The Sort-Key variants invert ChronoID's usual priority. Instead of maximizing suffix entropy for multi-node uniqueness, they **maximize timestamp bits** for the finest possible time ordering within 32 bits. The Node and Sequence fields shrink (or vanish entirely in `bs`), meaning collisions between nodes are expected — but treated as **"ties"**, not errors.
 
@@ -553,7 +552,7 @@ _Collisions are "Ties". Use for Partitioning or Mode B/C._
 
 3. **Single-Node Append Logs.** The `chrono32h` (hour precision, 10-bit suffix) suits single-server workloads where IDs only need to be unique within one instance — application logs, local event streams, or embedded device telemetry. The 10-bit suffix allows up to 1,024 IDs per hour before ties.
 
-4. **Pure Timestamp Index (`bs`).** The `chrono32bs` variant allocates all 32 bits to the timestamp with zero suffix. It's not an identifier at all — it's a **32-bit monotonic clock value** with 2-second granularity. Use it as a compact replacement for Unix timestamps in sort-only columns where uniqueness is handled by a separate primary key.
+4. **Local App Sorting.** The `chrono32m` (minute precision) maximizes timestamp bits to provide the most granular time-ordering possible within 32 bits for single-instance applications where multi-node collision is not a concern.
 
 ---
 

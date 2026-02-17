@@ -6,18 +6,6 @@
             "iso": "2023-05-20T10:30:00.123456Z",
             "variants": [
                 {
-                    "name": "chrono32bs",
-                    "node_id": 291,
-                    "seq": 0,
-                    "node_idx": 0,
-                    "node_salt": 1110,
-                    "seq_idx": 50,
-                    "seq_salt": 801,
-                    "seq_offset": 0,
-                    "expected_hex": "0x32e6014",
-                    "expected_str": "032E-6014"
-                },
-                {
                     "name": "chrono32d",
                     "node_id": 292,
                     "seq": 73,
@@ -244,18 +232,6 @@
                     "seq_offset": 1948,
                     "expected_hex": "0x1609ded539e7e61",
                     "expected_str": "0160-9DED-539E-7E61"
-                },
-                {
-                    "name": "uchrono32bs",
-                    "node_id": 311,
-                    "seq": 0,
-                    "node_idx": 20,
-                    "node_salt": 1130,
-                    "seq_idx": 70,
-                    "seq_salt": 821,
-                    "seq_offset": 0,
-                    "expected_hex": "0x32e6014",
-                    "expected_str": "032E-6014"
                 },
                 {
                     "name": "uchrono32d",
@@ -486,18 +462,6 @@
                     "expected_str": "02C3-84E5-ABBA-DD05"
                 },
                 {
-                    "name": "chrono32bs",
-                    "node_id": 331,
-                    "seq": 0,
-                    "node_idx": 40,
-                    "node_salt": 1150,
-                    "seq_idx": 90,
-                    "seq_salt": 841,
-                    "seq_offset": 0,
-                    "expected_hex": "0x32e6014",
-                    "expected_str": "032E-6014"
-                },
-                {
                     "name": "chrono32d",
                     "node_id": 332,
                     "seq": 113,
@@ -724,18 +688,6 @@
                     "seq_offset": 1988,
                     "expected_hex": "0x161a4d3c3951c19",
                     "expected_str": "0161-A4D3-C395-1C19"
-                },
-                {
-                    "name": "uchrono32bs",
-                    "node_id": 351,
-                    "seq": 0,
-                    "node_idx": 60,
-                    "node_salt": 1170,
-                    "seq_idx": 110,
-                    "seq_salt": 861,
-                    "seq_offset": 0,
-                    "expected_hex": "0x32e6014",
-                    "expected_str": "032E-6014"
                 },
                 {
                     "name": "uchrono32d",
@@ -966,18 +918,6 @@
                     "expected_str": "02C0-8A3A-8B01-71FF"
                 },
                 {
-                    "name": "chrono32bs",
-                    "node_id": 371,
-                    "seq": 0,
-                    "node_idx": 80,
-                    "node_salt": 1190,
-                    "seq_idx": 2,
-                    "seq_salt": 881,
-                    "seq_offset": 0,
-                    "expected_hex": "0x32e6014",
-                    "expected_str": "032E-6014"
-                },
-                {
                     "name": "chrono32d",
                     "node_id": 372,
                     "seq": 25,
@@ -1206,18 +1146,6 @@
                     "expected_str": "0161-A341-D391-7033"
                 },
                 {
-                    "name": "uchrono32bs",
-                    "node_id": 391,
-                    "seq": 0,
-                    "node_idx": 100,
-                    "node_salt": 1210,
-                    "seq_idx": 22,
-                    "seq_salt": 901,
-                    "seq_offset": 0,
-                    "expected_hex": "0x32e6014",
-                    "expected_str": "032E-6014"
-                },
-                {
                     "name": "uchrono32d",
                     "node_id": 392,
                     "seq": 45,
@@ -1444,18 +1372,6 @@
                     "seq_offset": 2048,
                     "expected_hex": "0x2c37e9977df5747",
                     "expected_str": "02C3-7E99-77DF-5747"
-                },
-                {
-                    "name": "chrono32bs",
-                    "node_id": 411,
-                    "seq": 0,
-                    "node_idx": 120,
-                    "node_salt": 1230,
-                    "seq_idx": 42,
-                    "seq_salt": 921,
-                    "seq_offset": 0,
-                    "expected_hex": "0x32e6014",
-                    "expected_str": "032E-6014"
                 },
                 {
                     "name": "chrono32d",
@@ -2034,30 +1950,6 @@
                     "seq_offset": 1,
                     "expected_hex": "0x4",
                     "expected_str": "0000-0004"
-                },
-                {
-                    "name": "uchrono32bs",
-                    "node_id": 123,
-                    "seq": 0,
-                    "node_idx": 1,
-                    "node_salt": 456,
-                    "seq_idx": 2,
-                    "seq_salt": 321,
-                    "seq_offset": 0,
-                    "expected_hex": "0x0",
-                    "expected_str": "0000-0000"
-                },
-                {
-                    "name": "chrono32bs",
-                    "node_id": 123,
-                    "seq": 0,
-                    "node_idx": 1,
-                    "node_salt": 456,
-                    "seq_idx": 2,
-                    "seq_salt": 321,
-                    "seq_offset": 0,
-                    "expected_hex": "0x0",
-                    "expected_str": "0000-0000"
                 }
             ]
         },
@@ -2520,30 +2412,6 @@
                     "seq_offset": 1,
                     "expected_hex": "0x7c65efc",
                     "expected_str": "07C6-5EFC"
-                },
-                {
-                    "name": "uchrono32bs",
-                    "node_id": 123,
-                    "seq": 0,
-                    "node_idx": 1,
-                    "node_salt": 456,
-                    "seq_idx": 2,
-                    "seq_salt": 321,
-                    "seq_offset": 0,
-                    "expected_hex": "0x1d27e43f",
-                    "expected_str": "1D27-E43F"
-                },
-                {
-                    "name": "chrono32bs",
-                    "node_id": 123,
-                    "seq": 0,
-                    "node_idx": 1,
-                    "node_salt": 456,
-                    "seq_idx": 2,
-                    "seq_salt": 321,
-                    "seq_offset": 0,
-                    "expected_hex": "0x1d27e43f",
-                    "expected_str": "1D27-E43F"
                 }
             ]
         },
@@ -2678,12 +2546,6 @@
         }
     ],
     "variant_specs": [
-        {
-            "variant": "chrono32bs",
-            "t_bits": 31,
-            "n_bits": 0,
-            "s_bits": 0
-        },
         {
             "variant": "chrono32d",
             "t_bits": 17,

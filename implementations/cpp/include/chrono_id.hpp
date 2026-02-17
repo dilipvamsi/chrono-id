@@ -125,7 +125,6 @@ inline int64_t days_from_civil(int y, int m, int d) {
 #define CHRONO_US_H 3600000000ULL   ///< One hour.
 #define CHRONO_US_TM 600000000ULL   ///< Ten minutes.
 #define CHRONO_US_M 60000000ULL     ///< One minute.
-#define CHRONO_US_BS 2000000ULL     ///< Two seconds (Beacon period).
 #define CHRONO_US_S 1000000ULL      ///< One second.
 #define CHRONO_US_DS 100000ULL      ///< One decisecond.
 #define CHRONO_US_CS 10000ULL       ///< One centisecond.
@@ -165,7 +164,6 @@ constexpr uint64_t US_MAP[] = {
     CHRONO_US_H,  // H
     CHRONO_US_TM, // TM
     CHRONO_US_M,  // M
-    CHRONO_US_BS, // BS
     CHRONO_US_S,  // S
     CHRONO_US_DS, // DS
     CHRONO_US_CS, // CS
@@ -256,7 +254,6 @@ static constexpr TSFunc TS_COMPUTE[] = {
     calc_div<CHRONO_US_H>,  // H
     calc_div<CHRONO_US_TM>, // TM
     calc_div<CHRONO_US_M>,  // M
-    calc_div<CHRONO_US_BS>, // BS
     calc_div<CHRONO_US_S>,  // S
     calc_div<CHRONO_US_DS>, // DS
     calc_div<CHRONO_US_CS>, // CS
@@ -281,12 +278,11 @@ enum class Precision {
   H = 6,   ///< Hour.
   TM = 7,  ///< Ten Minutes.
   M = 8,   ///< Minute.
-  BS = 9,  ///< Beacon Second (2 seconds).
-  S = 10,  ///< Second.
-  DS = 11, ///< Decisecond (100ms).
-  CS = 12, ///< Centisecond (10ms).
-  MS = 13, ///< Millisecond (1ms).
-  US = 14  ///< Microsecond (1us).
+  S = 9,   ///< Second.
+  DS = 10, ///< Decisecond (100ms).
+  CS = 11, ///< Centisecond (10ms).
+  MS = 12, ///< Millisecond (1ms).
+  US = 13  ///< Microsecond (1us).
 };
 
 /**
@@ -779,10 +775,6 @@ using UChrono32m = ChronoID<uint32_t, detail::EPOCH_2020_SEC, Precision::M, 2,
                             2>; ///< Unsigned 32-bit, Minute precision.
 using Chrono32m = ChronoID<int32_t, detail::EPOCH_2020_SEC, Precision::M, 1,
                            2>; ///< Signed 32-bit, Minute precision.
-using UChrono32bs = ChronoID<uint32_t, detail::EPOCH_2020_SEC, Precision::BS, 1,
-                             0>; ///< Unsigned 32-bit, Beacon precision.
-using Chrono32bs = ChronoID<int32_t, detail::EPOCH_2020_SEC, Precision::BS, 0,
-                            0>; ///< Signed 32-bit, Beacon precision.
 /** @} */
 
 } // namespace chrono_id

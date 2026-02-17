@@ -68,12 +68,11 @@ class Precision(IntEnum):
     H = 6  # Hour
     TM = 7  # Ten-Minute
     M = 8  # Minute
-    BS = 9  # Binary Second (2 seconds)
-    S = 10  # Second
-    DS = 11  # Decisecond (100ms)
-    CS = 12  # Centisecond (10ms)
-    MS = 13  # Millisecond
-    US = 14  # Microsecond
+    S = 9  # Second
+    DS = 10  # Decisecond (100ms)
+    CS = 11  # Centisecond (10ms)
+    MS = 12  # Millisecond
+    US = 13  # Microsecond
 
 
 # --- Dispatch Tables for High-Performance Timestamping ---
@@ -111,10 +110,6 @@ def _ts_tm(dt: datetime) -> int:
 
 def _ts_m(dt: datetime) -> int:
     return (int(dt.timestamp()) - EPOCH_2020) // 60
-
-
-def _ts_bs(dt: datetime) -> int:
-    return (int(dt.timestamp()) - EPOCH_2020) // 2
 
 
 def _ts_s(dt: datetime) -> int:
@@ -159,7 +154,6 @@ TS_COMPUTE: List[Callable[[datetime], int]] = [
     _ts_h,
     _ts_tm,
     _ts_m,
-    _ts_bs,
     _ts_s,
     _ts_ds,
     _ts_cs,
@@ -210,10 +204,6 @@ def _rev_m(ts: int) -> float:
     return float(EPOCH_2020 + (ts * 60))
 
 
-def _rev_bs(ts: int) -> float:
-    return float(EPOCH_2020 + (ts * 2))
-
-
 def _rev_s(ts: int) -> float:
     return float(EPOCH_2020 + ts)
 
@@ -245,7 +235,6 @@ TS_REVERSE: List[Callable[[int], float]] = [
     _rev_h,
     _rev_tm,
     _rev_m,
-    _rev_bs,
     _rev_s,
     _rev_ds,
     _rev_cs,
@@ -691,54 +680,6 @@ class ChronoBase(int):
         return f"{self.__class__.__name__}({self.formatted()})"
 
 
-class ChronoBasebs(ChronoBase):
-    """
-    Specialized base for zero-entropy variants (e.g., Binary Second).
-    Removes the overhead of mixing logic entirely.
-    """
-
-    @classmethod
-    def from_persona(
-        cls: Type[T],
-        dt: datetime,
-        node_id: int = 0,
-        seq: int = 0,
-        persona: Optional[Persona] = None,
-        ts: Optional[int] = None,
-    ) -> T:
-        """
-        Zero-overhead assembly for timestamp-only variants (e.g. BS).
-
-        Bypasses all mixing and shift logic because entropy bits (N/S) are zero.
-        Used by 'uchrono32bs' and 'chrono32bs'.
-        """
-        if dt is None:
-            raise ChronoError("Input date is null")
-        if dt.timestamp() < EPOCH_2020:
-            raise ChronoError("Timestamp underflow: Date is before Epoch (2020-01-01)")
-        ts_val = (ts if ts is not None else TS_COMPUTE[cls.PRECISION](dt)) & cls.T_MASK
-        return super().__new__(cls, ts_val)
-
-    @classmethod
-    def from_parts(
-        cls: Type[T],
-        dt: datetime,
-        node_id: int = 0,
-        seq: int = 0,
-        p_idx: int = 0,
-        salt: int = 0,
-        ts: Optional[int] = None,
-        persona: Optional[Persona] = None,
-    ) -> T:
-        """Zero-overhead assembly for timestamp-only variants (e.g. BS)."""
-        if dt is None:
-            raise ChronoError("Input date is null")
-        if dt.timestamp() < EPOCH_2020:
-            raise ChronoError("Timestamp underflow: Date is before Epoch (2020-01-01)")
-        ts_val = (ts if ts is not None else TS_COMPUTE[cls.PRECISION](dt)) & cls.T_MASK
-        return super().__new__(cls, ts_val)
-
-
 # --- 64-bit High Entropy Family ---
 
 
@@ -1034,21 +975,6 @@ class Chrono32m(ChronoBase):
 
     PRECISION = Precision.M
     T_BITS, N_BITS, S_BITS = 28, 1, 2
-
-
-class UChrono32bs(ChronoBasebs):
-    """Unsigned 32-bit Binary Second (2s) ID. [T:32][N:0][S:0]. 272 years range."""
-
-    PRECISION = Precision.BS
-    T_BITS, N_BITS, S_BITS = 32, 0, 0
-    SIGNED = False
-
-
-class Chrono32bs(ChronoBasebs):
-    """Signed 32-bit Binary Second (2s) ID. [0][T:31][N:0][S:0]."""
-
-    PRECISION = Precision.BS
-    T_BITS, N_BITS, S_BITS = 31, 0, 0
 
 
 # --- End of Core Implementation ---

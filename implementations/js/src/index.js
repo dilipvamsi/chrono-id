@@ -110,12 +110,11 @@
     H: 6,
     TM: 7,
     M: 8,
-    BS: 9,
-    S: 10,
-    DS: 11,
-    CS: 12,
-    MS: 13,
-    US: 14,
+    S: 9,
+    DS: 10,
+    CS: 11,
+    MS: 12,
+    US: 13,
   };
 
   const TS_COMPUTE = [
@@ -144,8 +143,6 @@
       BigInt(Math.floor((Math.floor(dt.getTime() / 1000) - EPOCH_2020) / 600)),
     (dt) =>
       BigInt(Math.floor((Math.floor(dt.getTime() / 1000) - EPOCH_2020) / 60)),
-    (dt) =>
-      BigInt(Math.floor((Math.floor(dt.getTime() / 1000) - EPOCH_2020) / 2)),
     (dt) => BigInt(Math.floor(dt.getTime() / 1000) - EPOCH_2020),
     (dt) =>
       BigInt(Math.floor(dt.getTime() / 1000) - EPOCH_2020) * 10n +
@@ -198,7 +195,6 @@
     (ts) => EPOCH_2020 + Number(ts) * 3600,
     (ts) => EPOCH_2020 + Number(ts) * 600,
     (ts) => EPOCH_2020 + Number(ts) * 60,
-    (ts) => EPOCH_2020 + Number(ts) * 2,
     (ts) => EPOCH_2020 + Number(ts),
     (ts) => EPOCH_2020 + Number(ts) / 10,
     (ts) => EPOCH_2020 + Number(ts) / 100,
@@ -606,24 +602,6 @@
     }
   }
 
-  /**
-   * Specialized variant base for "Big Second" (BS) types which contain no entropy bits.
-   * Useful for coarse time-tracking.
-   * @private
-   */
-  class ChronoBasebs extends Chrono32Base {
-    static fromPersona(dt, node_id = 0, seq = 0, persona = null, ts = null) {
-      if (!dt) throw new ChronoError("Input date is null");
-      if (Math.floor(dt.getTime() / 1000) < EPOCH_2020)
-        throw new ChronoError(
-          "Timestamp underflow: Date is before Epoch (2020-01-01)",
-        );
-      const ts_val =
-        (ts !== null ? BigInt(ts) : this.PRECISION_FUNC(dt)) & this.T_MASK;
-      return new this(ts_val);
-    }
-  }
-
   // --- Precision Multi-Variant Definitions ---
   // Each variant defines its precision level, bit-layout, and signedness.
   const VARIANTS = {
@@ -665,15 +643,6 @@
     Chrono32tm: { p: Precision.TM, t: 24, n: 3, s: 4 },
     UChrono32m: { p: Precision.M, t: 28, n: 2, s: 2, signed: false },
     Chrono32m: { p: Precision.M, t: 28, n: 1, s: 2 },
-    UChrono32bs: {
-      p: Precision.BS,
-      t: 32,
-      n: 0,
-      s: 0,
-      signed: false,
-      base: ChronoBasebs,
-    },
-    Chrono32bs: { p: Precision.BS, t: 31, n: 0, s: 0, base: ChronoBasebs },
   };
 
   // Create and export classes for each defined variant.
@@ -695,7 +664,6 @@
     3600000000n,
     600000000n,
     60000000n,
-    2000000n,
     1000000n,
     100000n,
     10000n,
