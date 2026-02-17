@@ -29,8 +29,11 @@ fn main() {
     // Define a persona with a fixed multiplier to test its specific avalanche properties
     let p = generator::Persona {
         node_id: 0,
-        salt,
-        multiplier_idx: p_idx,
+        node_salt: salt,
+        node_idx: p_idx,
+        seq_offset: 0,
+        seq_idx: p_idx,
+        seq_salt: salt,
     };
     let gen = generator::Generator::new_with_persona(p, 0);
 
@@ -43,8 +46,8 @@ fn main() {
         let val2 = val1 ^ (1u64 << bit_to_flip);
 
         // Mix both values
-        let res1 = gen.mix(val1, bits);
-        let res2 = gen.mix(val2, bits);
+        let res1 = gen.mix(val1, bits, p.node_idx, p.node_salt);
+        let res2 = gen.mix(val2, bits, p.node_idx, p.node_salt);
 
         // Compare flipped bits in the output
         let diff = res1 ^ res2;

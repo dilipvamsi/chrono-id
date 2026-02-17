@@ -4,7 +4,7 @@
 //! precision for entropy to maximize collision safety in uncoordinated multi-tenant systems.
 //!
 //! ## Verification Goals:
-//! 1. **Crockford Encoding:** Ensure 32-bit IDs encode to a fixed 7-character string.
+//! 1. **Hyphenated Hex Formatting:** Ensure 32-bit IDs format to a fixed 9-character string (XXXX-XXXX).
 //! 2. **Entropy Limits:** Empirically observe the Birthday Paradox in action for 24-bit entropy.
 
 use chrono_sim::generator;
@@ -18,16 +18,16 @@ async fn main() {
 /// Runs the Scenario 4 suite.
 async fn run_scenario_4_chrono32y() {
     println!("\n🧪 Scenario 4: chrono32y Tenant IDs");
-    println!("   Testing 24-bit entropy limits and Crockford encoding...");
+    println!("   Testing 24-bit entropy limits and Hyphenated Hex formatting...");
 
     // --- Test 1: Encoding Format ---
-    // Standard Crockford Base32 encoding should be exactly 7 characters for a 32-bit integer.
+    // Standard Hyphenated Hex formatting should be exactly 9 characters (including -) for a 32-bit integer.
     let sample = generator::generate_chrono32y();
-    let encoded = generator::encode_crockford(sample);
+    let encoded = generator::format_hyphenated_hex(sample);
     println!("   > Sample ID: {} -> {}", sample, encoded);
 
-    if encoded.len() != 7 {
-        println!("❌ FAILURE: Encoding length incorrect. Expected 7, got {}.", encoded.len());
+    if encoded.len() != 9 {
+        println!("❌ FAILURE: Formatting length incorrect. Expected 9, got {}.", encoded.len());
         return;
     }
 

@@ -1,108 +1,2922 @@
 {
+    "$schema": "./cross_platform_tests.schema.json",
     "valid_cases": [
         {
-            "comment": "Unix Epoch",
-            "iso": "1970-01-01T00:00:00Z",
-            "variants": [
-                {
-                    "name": "chrono64",
-                    "expected_timestamp": 0
-                },
-                {
-                    "name": "uchrono64",
-                    "expected_timestamp": 0
-                },
-                {
-                    "name": "chrono64ms",
-                    "expected_timestamp": 0
-                },
-                {
-                    "name": "uchrono64ms",
-                    "expected_timestamp": 0
-                }
-            ]
-        },
-        {
-            "comment": "Epoch 2000",
-            "iso": "2000-01-01T00:00:00Z",
-            "variants": [
-                {
-                    "name": "chrono32",
-                    "expected_timestamp": 0
-                },
-                {
-                    "name": "uchrono32",
-                    "expected_timestamp": 0
-                },
-                {
-                    "name": "chrono32h",
-                    "expected_timestamp": 0
-                },
-                {
-                    "name": "uchrono32h",
-                    "expected_timestamp": 0
-                },
-                {
-                    "name": "chrono32m",
-                    "expected_timestamp": 0
-                },
-                {
-                    "name": "uchrono32m",
-                    "expected_timestamp": 0
-                },
-                {
-                    "name": "chrono32w",
-                    "expected_timestamp": 0
-                },
-                {
-                    "name": "uchrono32w",
-                    "expected_timestamp": 0
-                }
-            ]
-        },
-        {
-            "comment": "Standard date with ms",
-            "iso": "2023-05-20T10:30:00.123Z",
-            "variants": [
-                {
-                    "name": "chrono64ms",
-                    "expected_iso": "2023-05-20T10:30:00.123Z"
-                }
-            ]
-        },
-        {
-            "comment": "Standard date with us",
+            "comment": "Exhaustive Multiplier Test (All 128 Indices Exercise)",
             "iso": "2023-05-20T10:30:00.123456Z",
             "variants": [
                 {
+                    "name": "chrono32bs",
+                    "node_id": 291,
+                    "seq": 0,
+                    "node_idx": 0,
+                    "node_salt": 1110,
+                    "seq_idx": 50,
+                    "seq_salt": 801,
+                    "seq_offset": 0,
+                    "expected_hex": "0x32e6014",
+                    "expected_str": "032E-6014"
+                },
+                {
+                    "name": "chrono32d",
+                    "node_id": 292,
+                    "seq": 73,
+                    "node_idx": 1,
+                    "node_salt": 1111,
+                    "seq_idx": 51,
+                    "seq_salt": 802,
+                    "seq_offset": 10,
+                    "expected_hex": "0x134f1ef",
+                    "expected_str": "0134-F1EF"
+                },
+                {
+                    "name": "chrono32h",
+                    "node_id": 293,
+                    "seq": 10,
+                    "node_idx": 2,
+                    "node_salt": 1112,
+                    "seq_idx": 52,
+                    "seq_salt": 803,
+                    "seq_offset": 11,
+                    "expected_hex": "0xe7a56a",
+                    "expected_str": "00E7-A56A"
+                },
+                {
+                    "name": "chrono32hy",
+                    "node_id": 294,
+                    "seq": 459,
+                    "node_idx": 3,
+                    "node_salt": 1113,
+                    "seq_idx": 53,
+                    "seq_salt": 804,
+                    "seq_offset": 1932,
+                    "expected_hex": "0x1a75bd1",
+                    "expected_str": "01A7-5BD1"
+                },
+                {
+                    "name": "chrono32m",
+                    "node_id": 295,
+                    "seq": 0,
+                    "node_idx": 4,
+                    "node_salt": 1114,
+                    "seq_idx": 54,
+                    "seq_salt": 805,
+                    "seq_offset": 1,
+                    "expected_hex": "0xd92ab6",
+                    "expected_str": "00D9-2AB6"
+                },
+                {
+                    "name": "chrono32mo",
+                    "node_id": 296,
+                    "seq": 461,
+                    "node_idx": 5,
+                    "node_salt": 1115,
+                    "seq_idx": 55,
+                    "seq_salt": 806,
+                    "seq_offset": 910,
+                    "expected_hex": "0x141cd45",
+                    "expected_str": "0141-CD45"
+                },
+                {
+                    "name": "chrono32q",
+                    "node_id": 297,
+                    "seq": 462,
+                    "node_idx": 6,
+                    "node_salt": 1116,
+                    "seq_idx": 56,
+                    "seq_salt": 807,
+                    "seq_offset": 1935,
+                    "expected_hex": "0x1ac6bb0",
+                    "expected_str": "01AC-6BB0"
+                },
+                {
+                    "name": "chrono32tm",
+                    "node_id": 298,
+                    "seq": 15,
+                    "node_idx": 7,
+                    "node_salt": 1117,
+                    "seq_idx": 57,
+                    "seq_salt": 808,
+                    "seq_offset": 0,
+                    "expected_hex": "0x15b77f5",
+                    "expected_str": "015B-77F5"
+                },
+                {
+                    "name": "chrono32w",
+                    "node_id": 299,
+                    "seq": 464,
+                    "node_idx": 8,
+                    "node_salt": 1118,
+                    "seq_idx": 58,
+                    "seq_salt": 809,
+                    "seq_offset": 401,
+                    "expected_hex": "0x160f680",
+                    "expected_str": "0160-F680"
+                },
+                {
+                    "name": "chrono32y",
+                    "node_id": 300,
+                    "seq": 465,
+                    "node_idx": 9,
+                    "node_salt": 1119,
+                    "seq_idx": 59,
+                    "seq_salt": 810,
+                    "seq_offset": 1938,
+                    "expected_hex": "0x1c69c53",
+                    "expected_str": "01C6-9C53"
+                },
+                {
+                    "name": "chrono64cs",
+                    "node_id": 301,
+                    "seq": 466,
+                    "node_idx": 10,
+                    "node_salt": 1120,
+                    "seq_idx": 60,
+                    "seq_salt": 811,
+                    "seq_offset": 1939,
+                    "expected_hex": "0x13e1d87d62d1926",
+                    "expected_str": "013E-1D87-D62D-1926"
+                },
+                {
+                    "name": "chrono64d",
+                    "node_id": 302,
+                    "seq": 467,
+                    "node_idx": 11,
+                    "node_salt": 1121,
+                    "seq_idx": 61,
+                    "seq_salt": 812,
+                    "seq_offset": 1940,
+                    "expected_hex": "0x134ea78d7abdc1b",
+                    "expected_str": "0134-EA78-D7AB-DC1B"
+                },
+                {
+                    "name": "chrono64ds",
+                    "node_id": 303,
+                    "seq": 468,
+                    "node_idx": 12,
+                    "node_salt": 1122,
+                    "seq_idx": 62,
+                    "seq_salt": 813,
+                    "seq_offset": 1941,
+                    "expected_hex": "0x1fcfc0c8a20fb66",
+                    "expected_str": "01FC-FC0C-8A20-FB66"
+                },
+                {
+                    "name": "chrono64h",
+                    "node_id": 304,
+                    "seq": 469,
+                    "node_idx": 13,
+                    "node_salt": 1123,
+                    "seq_idx": 63,
+                    "seq_salt": 814,
+                    "seq_offset": 1942,
+                    "expected_hex": "0x1cf4b6a32670b99",
+                    "expected_str": "01CF-4B6A-3267-0B99"
+                },
+                {
+                    "name": "chrono64m",
+                    "node_id": 305,
+                    "seq": 470,
+                    "node_idx": 14,
+                    "node_salt": 1124,
+                    "seq_idx": 64,
+                    "seq_salt": 815,
+                    "seq_offset": 1943,
+                    "expected_hex": "0x1b25563077499ce",
+                    "expected_str": "01B2-5563-0774-99CE"
+                },
+                {
+                    "name": "chrono64mo",
+                    "node_id": 306,
+                    "seq": 471,
+                    "node_idx": 15,
+                    "node_salt": 1125,
+                    "seq_idx": 65,
+                    "seq_salt": 816,
+                    "seq_offset": 1944,
+                    "expected_hex": "0x142de904ee77837",
+                    "expected_str": "0142-DE90-4EE7-7837"
+                },
+                {
+                    "name": "chrono64ms",
+                    "node_id": 307,
+                    "seq": 472,
+                    "node_idx": 16,
+                    "node_salt": 1126,
+                    "seq_idx": 66,
+                    "seq_salt": 817,
+                    "seq_offset": 921,
+                    "expected_hex": "0x18da4e9cbb59c12",
+                    "expected_str": "018D-A4E9-CBB5-9C12"
+                },
+                {
+                    "name": "chrono64s",
+                    "node_id": 308,
+                    "seq": 473,
+                    "node_idx": 17,
+                    "node_salt": 1127,
+                    "seq_idx": 67,
+                    "seq_salt": 818,
+                    "seq_offset": 1946,
+                    "expected_hex": "0x197300a08f5e977",
+                    "expected_str": "0197-300A-08F5-E977"
+                },
+                {
                     "name": "chrono64us",
-                    "expected_iso": "2023-05-20T10:30:00.123456Z"
+                    "node_id": 309,
+                    "seq": 26,
+                    "node_idx": 18,
+                    "node_salt": 1128,
+                    "seq_idx": 68,
+                    "seq_salt": 819,
+                    "seq_offset": 27,
+                    "expected_hex": "0x184530c50f102fe",
+                    "expected_str": "0184-530C-50F1-02FE"
+                },
+                {
+                    "name": "chrono64w",
+                    "node_id": 310,
+                    "seq": 475,
+                    "node_idx": 19,
+                    "node_salt": 1129,
+                    "seq_idx": 69,
+                    "seq_salt": 820,
+                    "seq_offset": 1948,
+                    "expected_hex": "0x1609ded539e7e61",
+                    "expected_str": "0160-9DED-539E-7E61"
+                },
+                {
+                    "name": "uchrono32bs",
+                    "node_id": 311,
+                    "seq": 0,
+                    "node_idx": 20,
+                    "node_salt": 1130,
+                    "seq_idx": 70,
+                    "seq_salt": 821,
+                    "seq_offset": 0,
+                    "expected_hex": "0x32e6014",
+                    "expected_str": "032E-6014"
+                },
+                {
+                    "name": "uchrono32d",
+                    "node_id": 312,
+                    "seq": 93,
+                    "node_idx": 21,
+                    "node_salt": 1131,
+                    "seq_idx": 71,
+                    "seq_salt": 822,
+                    "seq_offset": 30,
+                    "expected_hex": "0x269e9c7",
+                    "expected_str": "0269-E9C7"
+                },
+                {
+                    "name": "uchrono32h",
+                    "node_id": 313,
+                    "seq": 30,
+                    "node_idx": 22,
+                    "node_salt": 1132,
+                    "seq_idx": 72,
+                    "seq_salt": 823,
+                    "seq_offset": 31,
+                    "expected_hex": "0x1cf4a64",
+                    "expected_str": "01CF-4A64"
+                },
+                {
+                    "name": "uchrono32hy",
+                    "node_id": 314,
+                    "seq": 479,
+                    "node_idx": 23,
+                    "node_salt": 1133,
+                    "seq_idx": 73,
+                    "seq_salt": 824,
+                    "seq_offset": 1952,
+                    "expected_hex": "0x319bd9f",
+                    "expected_str": "0319-BD9F"
+                },
+                {
+                    "name": "uchrono32m",
+                    "node_id": 315,
+                    "seq": 0,
+                    "node_idx": 24,
+                    "node_salt": 1134,
+                    "seq_idx": 74,
+                    "seq_salt": 825,
+                    "seq_offset": 1,
+                    "expected_hex": "0x1b2556c",
+                    "expected_str": "01B2-556C"
+                },
+                {
+                    "name": "uchrono32mo",
+                    "node_id": 316,
+                    "seq": 481,
+                    "node_idx": 25,
+                    "node_salt": 1135,
+                    "seq_idx": 75,
+                    "seq_salt": 826,
+                    "seq_offset": 930,
+                    "expected_hex": "0x28b0c8d",
+                    "expected_str": "028B-0C8D"
+                },
+                {
+                    "name": "uchrono32q",
+                    "node_id": 317,
+                    "seq": 482,
+                    "node_idx": 26,
+                    "node_salt": 1136,
+                    "seq_idx": 76,
+                    "seq_salt": 827,
+                    "seq_offset": 1955,
+                    "expected_hex": "0x34c2a56",
+                    "expected_str": "034C-2A56"
+                },
+                {
+                    "name": "uchrono32tm",
+                    "node_id": 318,
+                    "seq": 3,
+                    "node_idx": 27,
+                    "node_salt": 1137,
+                    "seq_idx": 77,
+                    "seq_salt": 828,
+                    "seq_offset": 4,
+                    "expected_hex": "0x2b6ef73",
+                    "expected_str": "02B6-EF73"
+                },
+                {
+                    "name": "uchrono32w",
+                    "node_id": 319,
+                    "seq": 484,
+                    "node_idx": 28,
+                    "node_salt": 1138,
+                    "seq_idx": 78,
+                    "seq_salt": 829,
+                    "seq_offset": 421,
+                    "expected_hex": "0x2c0460e",
+                    "expected_str": "02C0-460E"
+                },
+                {
+                    "name": "uchrono32y",
+                    "node_id": 320,
+                    "seq": 485,
+                    "node_idx": 29,
+                    "node_salt": 1139,
+                    "seq_idx": 79,
+                    "seq_salt": 830,
+                    "seq_offset": 1958,
+                    "expected_hex": "0x38d9db7",
+                    "expected_str": "038D-9DB7"
+                },
+                {
+                    "name": "uchrono64cs",
+                    "node_id": 321,
+                    "seq": 486,
+                    "node_idx": 30,
+                    "node_salt": 1140,
+                    "seq_idx": 80,
+                    "seq_salt": 831,
+                    "seq_offset": 1959,
+                    "expected_hex": "0x27c3b0fac1037ae",
+                    "expected_str": "027C-3B0F-AC10-37AE"
+                },
+                {
+                    "name": "uchrono64d",
+                    "node_id": 322,
+                    "seq": 487,
+                    "node_idx": 31,
+                    "node_salt": 1141,
+                    "seq_idx": 81,
+                    "seq_salt": 832,
+                    "seq_offset": 1960,
+                    "expected_hex": "0x269d7e53badac9f",
+                    "expected_str": "0269-D7E5-3BAD-AC9F"
+                },
+                {
+                    "name": "uchrono64ds",
+                    "node_id": 323,
+                    "seq": 488,
+                    "node_idx": 32,
+                    "node_salt": 1142,
+                    "seq_idx": 82,
+                    "seq_salt": 833,
+                    "seq_offset": 1961,
+                    "expected_hex": "0x3f9f8191f90ebbc",
+                    "expected_str": "03F9-F819-1F90-EBBC"
+                },
+                {
+                    "name": "uchrono64h",
+                    "node_id": 324,
+                    "seq": 489,
+                    "node_idx": 33,
+                    "node_salt": 1143,
+                    "seq_idx": 83,
+                    "seq_salt": 834,
+                    "seq_offset": 1962,
+                    "expected_hex": "0x39e901df37041fd",
+                    "expected_str": "039E-901D-F370-41FD"
+                },
+                {
+                    "name": "uchrono64m",
+                    "node_id": 325,
+                    "seq": 490,
+                    "node_idx": 34,
+                    "node_salt": 1144,
+                    "seq_idx": 84,
+                    "seq_salt": 835,
+                    "seq_offset": 1963,
+                    "expected_hex": "0x364aadd6bf64de2",
+                    "expected_str": "0364-AADD-6BF6-4DE2"
+                },
+                {
+                    "name": "uchrono64mo",
+                    "node_id": 326,
+                    "seq": 491,
+                    "node_idx": 35,
+                    "node_salt": 1145,
+                    "seq_idx": 85,
+                    "seq_salt": 836,
+                    "seq_offset": 1964,
+                    "expected_hex": "0x28a7e514d277c2b",
+                    "expected_str": "028A-7E51-4D27-7C2B"
+                },
+                {
+                    "name": "uchrono64ms",
+                    "node_id": 327,
+                    "seq": 492,
+                    "node_idx": 36,
+                    "node_salt": 1146,
+                    "seq_idx": 86,
+                    "seq_salt": 837,
+                    "seq_offset": 941,
+                    "expected_hex": "0x31b49d3977645da",
+                    "expected_str": "031B-49D3-9776-45DA"
+                },
+                {
+                    "name": "uchrono64s",
+                    "node_id": 328,
+                    "seq": 493,
+                    "node_idx": 37,
+                    "node_salt": 1147,
+                    "seq_idx": 87,
+                    "seq_salt": 838,
+                    "seq_offset": 1966,
+                    "expected_hex": "0x32e60144f89ddaf",
+                    "expected_str": "032E-6014-4F89-DDAF"
+                },
+                {
+                    "name": "uchrono64us",
+                    "node_id": 329,
+                    "seq": 14,
+                    "node_idx": 38,
+                    "node_salt": 1148,
+                    "seq_idx": 88,
+                    "seq_salt": 839,
+                    "seq_offset": 15,
+                    "expected_hex": "0x308a618a1e20670",
+                    "expected_str": "0308-A618-A1E2-0670"
+                },
+                {
+                    "name": "uchrono64w",
+                    "node_id": 330,
+                    "seq": 495,
+                    "node_idx": 39,
+                    "node_salt": 1149,
+                    "seq_idx": 89,
+                    "seq_salt": 840,
+                    "seq_offset": 1968,
+                    "expected_hex": "0x2c384e5abbadd05",
+                    "expected_str": "02C3-84E5-ABBA-DD05"
+                },
+                {
+                    "name": "chrono32bs",
+                    "node_id": 331,
+                    "seq": 0,
+                    "node_idx": 40,
+                    "node_salt": 1150,
+                    "seq_idx": 90,
+                    "seq_salt": 841,
+                    "seq_offset": 0,
+                    "expected_hex": "0x32e6014",
+                    "expected_str": "032E-6014"
+                },
+                {
+                    "name": "chrono32d",
+                    "node_id": 332,
+                    "seq": 113,
+                    "node_idx": 41,
+                    "node_salt": 1151,
+                    "seq_idx": 91,
+                    "seq_salt": 842,
+                    "seq_offset": 50,
+                    "expected_hex": "0x134d19f",
+                    "expected_str": "0134-D19F"
+                },
+                {
+                    "name": "chrono32h",
+                    "node_id": 333,
+                    "seq": 18,
+                    "node_idx": 42,
+                    "node_salt": 1152,
+                    "seq_idx": 92,
+                    "seq_salt": 843,
+                    "seq_offset": 19,
+                    "expected_hex": "0xe7a5b8",
+                    "expected_str": "00E7-A5B8"
+                },
+                {
+                    "name": "chrono32hy",
+                    "node_id": 334,
+                    "seq": 499,
+                    "node_idx": 43,
+                    "node_salt": 1153,
+                    "seq_idx": 93,
+                    "seq_salt": 844,
+                    "seq_offset": 1972,
+                    "expected_hex": "0x1b29975",
+                    "expected_str": "01B2-9975"
+                },
+                {
+                    "name": "chrono32m",
+                    "node_id": 335,
+                    "seq": 0,
+                    "node_idx": 44,
+                    "node_salt": 1154,
+                    "seq_idx": 94,
+                    "seq_salt": 845,
+                    "seq_offset": 1,
+                    "expected_hex": "0xd92ab6",
+                    "expected_str": "00D9-2AB6"
+                },
+                {
+                    "name": "chrono32mo",
+                    "node_id": 336,
+                    "seq": 501,
+                    "node_idx": 45,
+                    "node_salt": 1155,
+                    "seq_idx": 95,
+                    "seq_salt": 846,
+                    "seq_offset": 950,
+                    "expected_hex": "0x145cfbb",
+                    "expected_str": "0145-CFBB"
+                },
+                {
+                    "name": "chrono32q",
+                    "node_id": 337,
+                    "seq": 502,
+                    "node_idx": 46,
+                    "node_salt": 1156,
+                    "seq_idx": 96,
+                    "seq_salt": 847,
+                    "seq_offset": 1975,
+                    "expected_hex": "0x1a6db6c",
+                    "expected_str": "01A6-DB6C"
+                },
+                {
+                    "name": "chrono32tm",
+                    "node_id": 338,
+                    "seq": 7,
+                    "node_idx": 47,
+                    "node_salt": 1157,
+                    "seq_idx": 97,
+                    "seq_salt": 848,
+                    "seq_offset": 8,
+                    "expected_hex": "0x15b77f3",
+                    "expected_str": "015B-77F3"
+                },
+                {
+                    "name": "chrono32w",
+                    "node_id": 339,
+                    "seq": 504,
+                    "node_idx": 48,
+                    "node_salt": 1158,
+                    "seq_idx": 98,
+                    "seq_salt": 849,
+                    "seq_offset": 441,
+                    "expected_hex": "0x160ab0c",
+                    "expected_str": "0160-AB0C"
+                },
+                {
+                    "name": "chrono32y",
+                    "node_id": 340,
+                    "seq": 505,
+                    "node_idx": 49,
+                    "node_salt": 1159,
+                    "seq_idx": 99,
+                    "seq_salt": 850,
+                    "seq_offset": 1978,
+                    "expected_hex": "0x1ca9be1",
+                    "expected_str": "01CA-9BE1"
+                },
+                {
+                    "name": "chrono64cs",
+                    "node_id": 341,
+                    "seq": 506,
+                    "node_idx": 50,
+                    "node_salt": 1160,
+                    "seq_idx": 100,
+                    "seq_salt": 851,
+                    "seq_offset": 1979,
+                    "expected_hex": "0x13e1d87d64fd986",
+                    "expected_str": "013E-1D87-D64F-D986"
+                },
+                {
+                    "name": "chrono64d",
+                    "node_id": 342,
+                    "seq": 507,
+                    "node_idx": 51,
+                    "node_salt": 1161,
+                    "seq_idx": 101,
+                    "seq_salt": 852,
+                    "seq_offset": 1980,
+                    "expected_hex": "0x134c52aff8e73d3",
+                    "expected_str": "0134-C52A-FF8E-73D3"
+                },
+                {
+                    "name": "chrono64ds",
+                    "node_id": 343,
+                    "seq": 508,
+                    "node_idx": 52,
+                    "node_salt": 1162,
+                    "seq_idx": 102,
+                    "seq_salt": 853,
+                    "seq_offset": 1981,
+                    "expected_hex": "0x1fcfc0c8fd27d08",
+                    "expected_str": "01FC-FC0C-8FD2-7D08"
+                },
+                {
+                    "name": "chrono64h",
+                    "node_id": 344,
+                    "seq": 509,
+                    "node_idx": 53,
+                    "node_salt": 1163,
+                    "seq_idx": 103,
+                    "seq_salt": 854,
+                    "seq_offset": 1982,
+                    "expected_hex": "0x1cf4a2ec6713b91",
+                    "expected_str": "01CF-4A2E-C671-3B91"
+                },
+                {
+                    "name": "chrono64m",
+                    "node_id": 345,
+                    "seq": 510,
+                    "node_idx": 54,
+                    "node_salt": 1164,
+                    "seq_idx": 104,
+                    "seq_salt": 855,
+                    "seq_offset": 1983,
+                    "expected_hex": "0x1b255604576fab6",
+                    "expected_str": "01B2-5560-4576-FAB6"
+                },
+                {
+                    "name": "chrono64mo",
+                    "node_id": 346,
+                    "seq": 511,
+                    "node_idx": 55,
+                    "node_salt": 1165,
+                    "seq_idx": 105,
+                    "seq_salt": 856,
+                    "seq_offset": 1984,
+                    "expected_hex": "0x1429756be5f008f",
+                    "expected_str": "0142-9756-BE5F-008F"
+                },
+                {
+                    "name": "chrono64ms",
+                    "node_id": 347,
+                    "seq": 512,
+                    "node_idx": 56,
+                    "node_salt": 1166,
+                    "seq_idx": 106,
+                    "seq_salt": 857,
+                    "seq_offset": 961,
+                    "expected_hex": "0x18da4e9cbb65680",
+                    "expected_str": "018D-A4E9-CBB6-5680"
+                },
+                {
+                    "name": "chrono64s",
+                    "node_id": 348,
+                    "seq": 513,
+                    "node_idx": 57,
+                    "node_salt": 1167,
+                    "seq_idx": 107,
+                    "seq_salt": 858,
+                    "seq_offset": 1986,
+                    "expected_hex": "0x197300a18419c1d",
+                    "expected_str": "0197-300A-1841-9C1D"
+                },
+                {
+                    "name": "chrono64us",
+                    "node_id": 349,
+                    "seq": 2,
+                    "node_idx": 58,
+                    "node_salt": 1168,
+                    "seq_idx": 108,
+                    "seq_salt": 859,
+                    "seq_offset": 3,
+                    "expected_hex": "0x184530c50f1022c",
+                    "expected_str": "0184-530C-50F1-022C"
+                },
+                {
+                    "name": "chrono64w",
+                    "node_id": 350,
+                    "seq": 515,
+                    "node_idx": 59,
+                    "node_salt": 1169,
+                    "seq_idx": 109,
+                    "seq_salt": 860,
+                    "seq_offset": 1988,
+                    "expected_hex": "0x161a4d3c3951c19",
+                    "expected_str": "0161-A4D3-C395-1C19"
+                },
+                {
+                    "name": "uchrono32bs",
+                    "node_id": 351,
+                    "seq": 0,
+                    "node_idx": 60,
+                    "node_salt": 1170,
+                    "seq_idx": 110,
+                    "seq_salt": 861,
+                    "seq_offset": 0,
+                    "expected_hex": "0x32e6014",
+                    "expected_str": "032E-6014"
+                },
+                {
+                    "name": "uchrono32d",
+                    "node_id": 352,
+                    "seq": 5,
+                    "node_idx": 61,
+                    "node_salt": 1171,
+                    "seq_idx": 111,
+                    "seq_salt": 862,
+                    "seq_offset": 70,
+                    "expected_hex": "0x269d9d1",
+                    "expected_str": "0269-D9D1"
+                },
+                {
+                    "name": "uchrono32h",
+                    "node_id": 353,
+                    "seq": 6,
+                    "node_idx": 62,
+                    "node_salt": 1172,
+                    "seq_idx": 112,
+                    "seq_salt": 863,
+                    "seq_offset": 7,
+                    "expected_hex": "0x1cf4bb2",
+                    "expected_str": "01CF-4BB2"
+                },
+                {
+                    "name": "uchrono32hy",
+                    "node_id": 354,
+                    "seq": 519,
+                    "node_idx": 63,
+                    "node_salt": 1173,
+                    "seq_idx": 113,
+                    "seq_salt": 864,
+                    "seq_offset": 1992,
+                    "expected_hex": "0x36b18cb",
+                    "expected_str": "036B-18CB"
+                },
+                {
+                    "name": "uchrono32m",
+                    "node_id": 355,
+                    "seq": 0,
+                    "node_idx": 64,
+                    "node_salt": 1174,
+                    "seq_idx": 114,
+                    "seq_salt": 865,
+                    "seq_offset": 1,
+                    "expected_hex": "0x1b25566",
+                    "expected_str": "01B2-5566"
+                },
+                {
+                    "name": "uchrono32mo",
+                    "node_id": 356,
+                    "seq": 521,
+                    "node_idx": 65,
+                    "node_salt": 1175,
+                    "seq_idx": 115,
+                    "seq_salt": 866,
+                    "seq_offset": 970,
+                    "expected_hex": "0x28d6f1b",
+                    "expected_str": "028D-6F1B"
+                },
+                {
+                    "name": "uchrono32q",
+                    "node_id": 357,
+                    "seq": 522,
+                    "node_idx": 66,
+                    "node_salt": 1176,
+                    "seq_idx": 116,
+                    "seq_salt": 867,
+                    "seq_offset": 1995,
+                    "expected_hex": "0x37bdfda",
+                    "expected_str": "037B-DFDA"
+                },
+                {
+                    "name": "uchrono32tm",
+                    "node_id": 358,
+                    "seq": 11,
+                    "node_idx": 67,
+                    "node_salt": 1177,
+                    "seq_idx": 117,
+                    "seq_salt": 868,
+                    "seq_offset": 12,
+                    "expected_hex": "0x2b6ef73",
+                    "expected_str": "02B6-EF73"
+                },
+                {
+                    "name": "uchrono32w",
+                    "node_id": 359,
+                    "seq": 12,
+                    "node_idx": 68,
+                    "node_salt": 1178,
+                    "seq_idx": 118,
+                    "seq_salt": 869,
+                    "seq_offset": 461,
+                    "expected_hex": "0x2c19a10",
+                    "expected_str": "02C1-9A10"
+                },
+                {
+                    "name": "uchrono32y",
+                    "node_id": 360,
+                    "seq": 525,
+                    "node_idx": 69,
+                    "node_salt": 1179,
+                    "seq_idx": 119,
+                    "seq_salt": 870,
+                    "seq_offset": 1998,
+                    "expected_hex": "0x3b29bdb",
+                    "expected_str": "03B2-9BDB"
+                },
+                {
+                    "name": "uchrono64cs",
+                    "node_id": 361,
+                    "seq": 526,
+                    "node_idx": 70,
+                    "node_salt": 1180,
+                    "seq_idx": 120,
+                    "seq_salt": 871,
+                    "seq_offset": 1999,
+                    "expected_hex": "0x27c3b0fac07bfbe",
+                    "expected_str": "027C-3B0F-AC07-BFBE"
+                },
+                {
+                    "name": "uchrono64d",
+                    "node_id": 362,
+                    "seq": 527,
+                    "node_idx": 71,
+                    "node_salt": 1181,
+                    "seq_idx": 121,
+                    "seq_salt": 872,
+                    "seq_offset": 2000,
+                    "expected_hex": "0x269ec30dbce2247",
+                    "expected_str": "0269-EC30-DBCE-2247"
+                },
+                {
+                    "name": "uchrono64ds",
+                    "node_id": 363,
+                    "seq": 528,
+                    "node_idx": 72,
+                    "node_salt": 1182,
+                    "seq_idx": 122,
+                    "seq_salt": 873,
+                    "seq_offset": 2001,
+                    "expected_hex": "0x3f9f819134ea854",
+                    "expected_str": "03F9-F819-134E-A854"
+                },
+                {
+                    "name": "uchrono64h",
+                    "node_id": 364,
+                    "seq": 529,
+                    "node_idx": 73,
+                    "node_salt": 1183,
+                    "seq_idx": 123,
+                    "seq_salt": 874,
+                    "seq_offset": 2002,
+                    "expected_hex": "0x39e93932769e9a5",
+                    "expected_str": "039E-9393-2769-E9A5"
+                },
+                {
+                    "name": "uchrono64m",
+                    "node_id": 365,
+                    "seq": 530,
+                    "node_idx": 74,
+                    "node_salt": 1184,
+                    "seq_idx": 124,
+                    "seq_salt": 875,
+                    "seq_offset": 2003,
+                    "expected_hex": "0x364aacfa4b69fca",
+                    "expected_str": "0364-AACF-A4B6-9FCA"
+                },
+                {
+                    "name": "uchrono64mo",
+                    "node_id": 366,
+                    "seq": 531,
+                    "node_idx": 75,
+                    "node_salt": 1185,
+                    "seq_idx": 125,
+                    "seq_salt": 876,
+                    "seq_offset": 2004,
+                    "expected_hex": "0x285cdaefe8e0b53",
+                    "expected_str": "0285-CDAE-FE8E-0B53"
+                },
+                {
+                    "name": "uchrono64ms",
+                    "node_id": 367,
+                    "seq": 532,
+                    "node_idx": 76,
+                    "node_salt": 1186,
+                    "seq_idx": 126,
+                    "seq_salt": 877,
+                    "seq_offset": 981,
+                    "expected_hex": "0x31b49d3977214e8",
+                    "expected_str": "031B-49D3-9772-14E8"
+                },
+                {
+                    "name": "uchrono64s",
+                    "node_id": 368,
+                    "seq": 533,
+                    "node_idx": 77,
+                    "node_salt": 1187,
+                    "seq_idx": 127,
+                    "seq_salt": 878,
+                    "seq_offset": 2006,
+                    "expected_hex": "0x32e60144969d175",
+                    "expected_str": "032E-6014-4969-D175"
+                },
+                {
+                    "name": "uchrono64us",
+                    "node_id": 369,
+                    "seq": 22,
+                    "node_idx": 78,
+                    "node_salt": 1188,
+                    "seq_idx": 0,
+                    "seq_salt": 879,
+                    "seq_offset": 23,
+                    "expected_hex": "0x308a618a1e205f8",
+                    "expected_str": "0308-A618-A1E2-05F8"
+                },
+                {
+                    "name": "uchrono64w",
+                    "node_id": 370,
+                    "seq": 535,
+                    "node_idx": 79,
+                    "node_salt": 1189,
+                    "seq_idx": 1,
+                    "seq_salt": 880,
+                    "seq_offset": 2008,
+                    "expected_hex": "0x2c08a3a8b0171ff",
+                    "expected_str": "02C0-8A3A-8B01-71FF"
+                },
+                {
+                    "name": "chrono32bs",
+                    "node_id": 371,
+                    "seq": 0,
+                    "node_idx": 80,
+                    "node_salt": 1190,
+                    "seq_idx": 2,
+                    "seq_salt": 881,
+                    "seq_offset": 0,
+                    "expected_hex": "0x32e6014",
+                    "expected_str": "032E-6014"
+                },
+                {
+                    "name": "chrono32d",
+                    "node_id": 372,
+                    "seq": 25,
+                    "node_idx": 81,
+                    "node_salt": 1191,
+                    "seq_idx": 3,
+                    "seq_salt": 882,
+                    "seq_offset": 90,
+                    "expected_hex": "0x134d1af",
+                    "expected_str": "0134-D1AF"
+                },
+                {
+                    "name": "chrono32h",
+                    "node_id": 373,
+                    "seq": 26,
+                    "node_idx": 82,
+                    "node_salt": 1192,
+                    "seq_idx": 4,
+                    "seq_salt": 883,
+                    "seq_offset": 27,
+                    "expected_hex": "0xe7a4ae",
+                    "expected_str": "00E7-A4AE"
+                },
+                {
+                    "name": "chrono32hy",
+                    "node_id": 374,
+                    "seq": 539,
+                    "node_idx": 83,
+                    "node_salt": 1193,
+                    "seq_idx": 5,
+                    "seq_salt": 884,
+                    "seq_offset": 2012,
+                    "expected_hex": "0x1a0df11",
+                    "expected_str": "01A0-DF11"
+                },
+                {
+                    "name": "chrono32m",
+                    "node_id": 375,
+                    "seq": 0,
+                    "node_idx": 84,
+                    "node_salt": 1194,
+                    "seq_idx": 6,
+                    "seq_salt": 885,
+                    "seq_offset": 1,
+                    "expected_hex": "0xd92ab4",
+                    "expected_str": "00D9-2AB4"
+                },
+                {
+                    "name": "chrono32mo",
+                    "node_id": 376,
+                    "seq": 541,
+                    "node_idx": 85,
+                    "node_salt": 1195,
+                    "seq_idx": 7,
+                    "seq_salt": 886,
+                    "seq_offset": 990,
+                    "expected_hex": "0x1478cdd",
+                    "expected_str": "0147-8CDD"
+                },
+                {
+                    "name": "chrono32q",
+                    "node_id": 377,
+                    "seq": 542,
+                    "node_idx": 86,
+                    "node_salt": 1196,
+                    "seq_idx": 8,
+                    "seq_salt": 887,
+                    "seq_offset": 2015,
+                    "expected_hex": "0x1b898d6",
+                    "expected_str": "01B8-98D6"
+                },
+                {
+                    "name": "chrono32tm",
+                    "node_id": 378,
+                    "seq": 15,
+                    "node_idx": 87,
+                    "node_salt": 1197,
+                    "seq_idx": 9,
+                    "seq_salt": 888,
+                    "seq_offset": 0,
+                    "expected_hex": "0x15b77f3",
+                    "expected_str": "015B-77F3"
+                },
+                {
+                    "name": "chrono32w",
+                    "node_id": 379,
+                    "seq": 32,
+                    "node_idx": 88,
+                    "node_salt": 1198,
+                    "seq_idx": 10,
+                    "seq_salt": 889,
+                    "seq_offset": 481,
+                    "expected_hex": "0x1610afc",
+                    "expected_str": "0161-0AFC"
+                },
+                {
+                    "name": "chrono32y",
+                    "node_id": 380,
+                    "seq": 545,
+                    "node_idx": 89,
+                    "node_salt": 1199,
+                    "seq_idx": 11,
+                    "seq_salt": 890,
+                    "seq_offset": 2018,
+                    "expected_hex": "0x1e9dd55",
+                    "expected_str": "01E9-DD55"
+                },
+                {
+                    "name": "chrono64cs",
+                    "node_id": 381,
+                    "seq": 546,
+                    "node_idx": 90,
+                    "node_salt": 1200,
+                    "seq_idx": 12,
+                    "seq_salt": 891,
+                    "seq_offset": 2019,
+                    "expected_hex": "0x13e1d87d6149e6c",
+                    "expected_str": "013E-1D87-D614-9E6C"
+                },
+                {
+                    "name": "chrono64d",
+                    "node_id": 382,
+                    "seq": 547,
+                    "node_idx": 91,
+                    "node_salt": 1201,
+                    "seq_idx": 13,
+                    "seq_salt": 892,
+                    "seq_offset": 2020,
+                    "expected_hex": "0x134fec4d79b69dd",
+                    "expected_str": "0134-FEC4-D79B-69DD"
+                },
+                {
+                    "name": "chrono64ds",
+                    "node_id": 383,
+                    "seq": 548,
+                    "node_idx": 92,
+                    "node_salt": 1202,
+                    "seq_idx": 14,
+                    "seq_salt": 893,
+                    "seq_offset": 2021,
+                    "expected_hex": "0x1fcfc0c8ff7b15c",
+                    "expected_str": "01FC-FC0C-8FF7-B15C"
+                },
+                {
+                    "name": "chrono64h",
+                    "node_id": 384,
+                    "seq": 549,
+                    "node_idx": 93,
+                    "node_salt": 1203,
+                    "seq_idx": 15,
+                    "seq_salt": 894,
+                    "seq_offset": 2022,
+                    "expected_hex": "0x1cf4ae066638d0b",
+                    "expected_str": "01CF-4AE0-6663-8D0B"
+                },
+                {
+                    "name": "chrono64m",
+                    "node_id": 385,
+                    "seq": 550,
+                    "node_idx": 94,
+                    "node_salt": 1204,
+                    "seq_idx": 16,
+                    "seq_salt": 895,
+                    "seq_offset": 2023,
+                    "expected_hex": "0x1b2556541762a14",
+                    "expected_str": "01B2-5565-4176-2A14"
+                },
+                {
+                    "name": "chrono64mo",
+                    "node_id": 386,
+                    "seq": 551,
+                    "node_idx": 95,
+                    "node_salt": 1205,
+                    "seq_idx": 17,
+                    "seq_salt": 896,
+                    "seq_offset": 2024,
+                    "expected_hex": "0x1462def7e8b8315",
+                    "expected_str": "0146-2DEF-7E8B-8315"
+                },
+                {
+                    "name": "chrono64ms",
+                    "node_id": 387,
+                    "seq": 552,
+                    "node_idx": 96,
+                    "node_salt": 1206,
+                    "seq_idx": 18,
+                    "seq_salt": 897,
+                    "seq_offset": 1001,
+                    "expected_hex": "0x18da4e9cbbe8d7a",
+                    "expected_str": "018D-A4E9-CBBE-8D7A"
+                },
+                {
+                    "name": "chrono64s",
+                    "node_id": 388,
+                    "seq": 553,
+                    "node_idx": 97,
+                    "node_salt": 1207,
+                    "seq_idx": 19,
+                    "seq_salt": 898,
+                    "seq_offset": 2026,
+                    "expected_hex": "0x197300a0a6ddf79",
+                    "expected_str": "0197-300A-0A6D-DF79"
+                },
+                {
+                    "name": "chrono64us",
+                    "node_id": 389,
+                    "seq": 10,
+                    "node_idx": 98,
+                    "node_salt": 1208,
+                    "seq_idx": 20,
+                    "seq_salt": 899,
+                    "seq_offset": 11,
+                    "expected_hex": "0x184530c50f10362",
+                    "expected_str": "0184-530C-50F1-0362"
+                },
+                {
+                    "name": "chrono64w",
+                    "node_id": 390,
+                    "seq": 555,
+                    "node_idx": 99,
+                    "node_salt": 1209,
+                    "seq_idx": 21,
+                    "seq_salt": 900,
+                    "seq_offset": 2028,
+                    "expected_hex": "0x161a341d3917033",
+                    "expected_str": "0161-A341-D391-7033"
+                },
+                {
+                    "name": "uchrono32bs",
+                    "node_id": 391,
+                    "seq": 0,
+                    "node_idx": 100,
+                    "node_salt": 1210,
+                    "seq_idx": 22,
+                    "seq_salt": 901,
+                    "seq_offset": 0,
+                    "expected_hex": "0x32e6014",
+                    "expected_str": "032E-6014"
+                },
+                {
+                    "name": "uchrono32d",
+                    "node_id": 392,
+                    "seq": 45,
+                    "node_idx": 101,
+                    "node_salt": 1211,
+                    "seq_idx": 23,
+                    "seq_salt": 902,
+                    "seq_offset": 110,
+                    "expected_hex": "0x269c987",
+                    "expected_str": "0269-C987"
+                },
+                {
+                    "name": "uchrono32h",
+                    "node_id": 393,
+                    "seq": 14,
+                    "node_idx": 102,
+                    "node_salt": 1212,
+                    "seq_idx": 24,
+                    "seq_salt": 903,
+                    "seq_offset": 15,
+                    "expected_hex": "0x1cf49ea",
+                    "expected_str": "01CF-49EA"
+                },
+                {
+                    "name": "uchrono32hy",
+                    "node_id": 394,
+                    "seq": 559,
+                    "node_idx": 103,
+                    "node_salt": 1213,
+                    "seq_idx": 25,
+                    "seq_salt": 904,
+                    "seq_offset": 2032,
+                    "expected_hex": "0x32918df",
+                    "expected_str": "0329-18DF"
+                },
+                {
+                    "name": "uchrono32m",
+                    "node_id": 395,
+                    "seq": 0,
+                    "node_idx": 104,
+                    "node_salt": 1214,
+                    "seq_idx": 26,
+                    "seq_salt": 905,
+                    "seq_offset": 1,
+                    "expected_hex": "0x1b2556c",
+                    "expected_str": "01B2-556C"
+                },
+                {
+                    "name": "uchrono32mo",
+                    "node_id": 396,
+                    "seq": 561,
+                    "node_idx": 105,
+                    "node_salt": 1215,
+                    "seq_idx": 27,
+                    "seq_salt": 906,
+                    "seq_offset": 1010,
+                    "expected_hex": "0x289cdb5",
+                    "expected_str": "0289-CDB5"
+                },
+                {
+                    "name": "uchrono32q",
+                    "node_id": 397,
+                    "seq": 562,
+                    "node_idx": 106,
+                    "node_salt": 1216,
+                    "seq_idx": 28,
+                    "seq_salt": 907,
+                    "seq_offset": 2035,
+                    "expected_hex": "0x37ebd8c",
+                    "expected_str": "037E-BD8C"
+                },
+                {
+                    "name": "uchrono32tm",
+                    "node_id": 398,
+                    "seq": 3,
+                    "node_idx": 107,
+                    "node_salt": 1217,
+                    "seq_idx": 29,
+                    "seq_salt": 908,
+                    "seq_offset": 4,
+                    "expected_hex": "0x2b6ef31",
+                    "expected_str": "02B6-EF31"
+                },
+                {
+                    "name": "uchrono32w",
+                    "node_id": 399,
+                    "seq": 52,
+                    "node_idx": 108,
+                    "node_salt": 1218,
+                    "seq_idx": 30,
+                    "seq_salt": 909,
+                    "seq_offset": 501,
+                    "expected_hex": "0x2c1b222",
+                    "expected_str": "02C1-B222"
+                },
+                {
+                    "name": "uchrono32y",
+                    "node_id": 400,
+                    "seq": 565,
+                    "node_idx": 109,
+                    "node_salt": 1219,
+                    "seq_idx": 31,
+                    "seq_salt": 910,
+                    "seq_offset": 2038,
+                    "expected_hex": "0x3c49837",
+                    "expected_str": "03C4-9837"
+                },
+                {
+                    "name": "uchrono64cs",
+                    "node_id": 401,
+                    "seq": 566,
+                    "node_idx": 110,
+                    "node_salt": 1220,
+                    "seq_idx": 32,
+                    "seq_salt": 911,
+                    "seq_offset": 2039,
+                    "expected_hex": "0x27c3b0facf139e4",
+                    "expected_str": "027C-3B0F-ACF1-39E4"
+                },
+                {
+                    "name": "uchrono64d",
+                    "node_id": 402,
+                    "seq": 567,
+                    "node_idx": 111,
+                    "node_salt": 1221,
+                    "seq_idx": 33,
+                    "seq_salt": 912,
+                    "seq_offset": 2040,
+                    "expected_hex": "0x269be5c4bb5f8a9",
+                    "expected_str": "0269-BE5C-4BB5-F8A9"
+                },
+                {
+                    "name": "uchrono64ds",
+                    "node_id": 403,
+                    "seq": 568,
+                    "node_idx": 112,
+                    "node_salt": 1222,
+                    "seq_idx": 34,
+                    "seq_salt": 913,
+                    "seq_offset": 2041,
+                    "expected_hex": "0x3f9f81910c07630",
+                    "expected_str": "03F9-F819-10C0-7630"
+                },
+                {
+                    "name": "uchrono64h",
+                    "node_id": 404,
+                    "seq": 569,
+                    "node_idx": 113,
+                    "node_salt": 1223,
+                    "seq_idx": 35,
+                    "seq_salt": 914,
+                    "seq_offset": 2042,
+                    "expected_hex": "0x39e92e77372fb1f",
+                    "expected_str": "039E-92E7-7372-FB1F"
+                },
+                {
+                    "name": "uchrono64m",
+                    "node_id": 405,
+                    "seq": 570,
+                    "node_idx": 114,
+                    "node_salt": 1224,
+                    "seq_idx": 36,
+                    "seq_salt": 915,
+                    "seq_offset": 2043,
+                    "expected_hex": "0x364aad17974a168",
+                    "expected_str": "0364-AAD1-7974-A168"
+                },
+                {
+                    "name": "uchrono64mo",
+                    "node_id": 406,
+                    "seq": 571,
+                    "node_idx": 115,
+                    "node_salt": 1225,
+                    "seq_idx": 37,
+                    "seq_salt": 916,
+                    "seq_offset": 2044,
+                    "expected_hex": "0x288d93d3d918759",
+                    "expected_str": "0288-D93D-3D91-8759"
+                },
+                {
+                    "name": "uchrono64ms",
+                    "node_id": 407,
+                    "seq": 572,
+                    "node_idx": 116,
+                    "node_salt": 1226,
+                    "seq_idx": 38,
+                    "seq_salt": 917,
+                    "seq_offset": 1021,
+                    "expected_hex": "0x31b49d3977ba422",
+                    "expected_str": "031B-49D3-977B-A422"
+                },
+                {
+                    "name": "uchrono64s",
+                    "node_id": 408,
+                    "seq": 573,
+                    "node_idx": 117,
+                    "node_salt": 1227,
+                    "seq_idx": 39,
+                    "seq_salt": 918,
+                    "seq_offset": 2046,
+                    "expected_hex": "0x32e601404f9e979",
+                    "expected_str": "032E-6014-04F9-E979"
+                },
+                {
+                    "name": "uchrono64us",
+                    "node_id": 409,
+                    "seq": 30,
+                    "node_idx": 118,
+                    "node_salt": 1228,
+                    "seq_idx": 40,
+                    "seq_salt": 919,
+                    "seq_offset": 31,
+                    "expected_hex": "0x308a618a1e20166",
+                    "expected_str": "0308-A618-A1E2-0166"
+                },
+                {
+                    "name": "uchrono64w",
+                    "node_id": 410,
+                    "seq": 575,
+                    "node_idx": 119,
+                    "node_salt": 1229,
+                    "seq_idx": 41,
+                    "seq_salt": 920,
+                    "seq_offset": 2048,
+                    "expected_hex": "0x2c37e9977df5747",
+                    "expected_str": "02C3-7E99-77DF-5747"
+                },
+                {
+                    "name": "chrono32bs",
+                    "node_id": 411,
+                    "seq": 0,
+                    "node_idx": 120,
+                    "node_salt": 1230,
+                    "seq_idx": 42,
+                    "seq_salt": 921,
+                    "seq_offset": 0,
+                    "expected_hex": "0x32e6014",
+                    "expected_str": "032E-6014"
+                },
+                {
+                    "name": "chrono32d",
+                    "node_id": 412,
+                    "seq": 65,
+                    "node_idx": 121,
+                    "node_salt": 1231,
+                    "seq_idx": 43,
+                    "seq_salt": 922,
+                    "seq_offset": 2,
+                    "expected_hex": "0x134d5ff",
+                    "expected_str": "0134-D5FF"
+                },
+                {
+                    "name": "chrono32h",
+                    "node_id": 413,
+                    "seq": 2,
+                    "node_idx": 122,
+                    "node_salt": 1232,
+                    "seq_idx": 44,
+                    "seq_salt": 923,
+                    "seq_offset": 3,
+                    "expected_hex": "0xe7a4fc",
+                    "expected_str": "00E7-A4FC"
+                },
+                {
+                    "name": "chrono32hy",
+                    "node_id": 414,
+                    "seq": 579,
+                    "node_idx": 123,
+                    "node_salt": 1233,
+                    "seq_idx": 45,
+                    "seq_salt": 924,
+                    "seq_offset": 4,
+                    "expected_hex": "0x1b41bb5",
+                    "expected_str": "01B4-1BB5"
+                },
+                {
+                    "name": "chrono32m",
+                    "node_id": 415,
+                    "seq": 0,
+                    "node_idx": 124,
+                    "node_salt": 1234,
+                    "seq_idx": 46,
+                    "seq_salt": 925,
+                    "seq_offset": 1,
+                    "expected_hex": "0xd92ab6",
+                    "expected_str": "00D9-2AB6"
+                },
+                {
+                    "name": "chrono32mo",
+                    "node_id": 416,
+                    "seq": 581,
+                    "node_idx": 125,
+                    "node_salt": 1235,
+                    "seq_idx": 47,
+                    "seq_salt": 926,
+                    "seq_offset": 6,
+                    "expected_hex": "0x144cf8d",
+                    "expected_str": "0144-CF8D"
+                },
+                {
+                    "name": "chrono32q",
+                    "node_id": 417,
+                    "seq": 582,
+                    "node_idx": 126,
+                    "node_salt": 1236,
+                    "seq_idx": 48,
+                    "seq_salt": 927,
+                    "seq_offset": 7,
+                    "expected_hex": "0x1b44dd2",
+                    "expected_str": "01B4-4DD2"
+                },
+                {
+                    "name": "chrono32tm",
+                    "node_id": 418,
+                    "seq": 7,
+                    "node_idx": 127,
+                    "node_salt": 1237,
+                    "seq_idx": 49,
+                    "seq_salt": 928,
+                    "seq_offset": 8,
+                    "expected_hex": "0x15b77f1",
+                    "expected_str": "015B-77F1"
+                }
+            ]
+        },
+        {
+            "description": "Formatting Standard Baselines (Hyphenated Hex)",
+            "iso": "2023-05-20T10:30:00.000000Z",
+            "variants": [
+                {
+                    "name": "chrono32y",
+                    "comment": "32-bit: 8 hex chars, 2 chunks",
+                    "node_id": 4660,
+                    "seq": 1383,
+                    "node_idx": 0,
+                    "node_salt": 0,
+                    "seq_idx": 0,
+                    "seq_salt": 0,
+                    "seq_offset": 0,
+                    "expected_hex": "0x1c0e1f7",
+                    "expected_str": "01C0-E1F7"
+                },
+                {
+                    "name": "chrono64s",
+                    "comment": "64-bit: 16 hex chars, 4 chunks",
+                    "node_id": 4660,
+                    "seq": 1383,
+                    "node_idx": 0,
+                    "node_salt": 0,
+                    "seq_idx": 0,
+                    "seq_salt": 0,
+                    "seq_offset": 0,
+                    "expected_hex": "0x197300a3bbe5add",
+                    "expected_str": "0197-300A-3BBE-5ADD"
+                }
+            ]
+        },
+        {
+            "comment": "Epoch baseline",
+            "iso": "2020-01-01T00:00:00Z",
+            "variants": [
+                {
+                    "name": "uchrono64mo",
+                    "node_id": 123,
+                    "seq": 456,
+                    "node_idx": 1,
+                    "node_salt": 456,
+                    "seq_idx": 2,
+                    "seq_salt": 321,
+                    "seq_offset": 789,
+                    "expected_hex": "0xf7694cf605d0e",
+                    "expected_str": "000F-7694-CF60-5D0E"
+                },
+                {
+                    "name": "chrono64mo",
+                    "node_id": 123,
+                    "seq": 456,
+                    "node_idx": 1,
+                    "node_salt": 456,
+                    "seq_idx": 2,
+                    "seq_salt": 321,
+                    "seq_offset": 789,
+                    "expected_hex": "0x7bb4dcf605d0e",
+                    "expected_str": "0007-BB4D-CF60-5D0E"
+                },
+                {
+                    "name": "uchrono64w",
+                    "node_id": 123,
+                    "seq": 456,
+                    "node_idx": 1,
+                    "node_salt": 456,
+                    "seq_idx": 2,
+                    "seq_salt": 321,
+                    "seq_offset": 789,
+                    "expected_hex": "0x3dda533d8190a",
+                    "expected_str": "0003-DDA5-33D8-190A"
+                },
+                {
+                    "name": "chrono64w",
+                    "node_id": 123,
+                    "seq": 456,
+                    "node_idx": 1,
+                    "node_salt": 456,
+                    "seq_idx": 2,
+                    "seq_salt": 321,
+                    "seq_offset": 789,
+                    "expected_hex": "0x1eed373d8190a",
+                    "expected_str": "0001-EED3-73D8-190A"
+                },
+                {
+                    "name": "uchrono64d",
+                    "node_id": 123,
+                    "seq": 456,
+                    "node_idx": 1,
+                    "node_salt": 456,
+                    "seq_idx": 2,
+                    "seq_salt": 321,
+                    "seq_offset": 789,
+                    "expected_hex": "0x7bb429ec08f6",
+                    "expected_str": "0000-7BB4-29EC-08F6"
+                },
+                {
+                    "name": "chrono64d",
+                    "node_id": 123,
+                    "seq": 456,
+                    "node_idx": 1,
+                    "node_salt": 456,
+                    "seq_idx": 2,
+                    "seq_salt": 321,
+                    "seq_offset": 789,
+                    "expected_hex": "0x3dda61ec08f6",
+                    "expected_str": "0000-3DDA-61EC-08F6"
+                },
+                {
+                    "name": "uchrono64h",
+                    "node_id": 123,
+                    "seq": 456,
+                    "node_idx": 1,
+                    "node_salt": 456,
+                    "seq_idx": 2,
+                    "seq_salt": 321,
+                    "seq_offset": 789,
+                    "expected_hex": "0x7bb617b02e4",
+                    "expected_str": "0000-07BB-617B-02E4"
+                },
+                {
+                    "name": "chrono64h",
+                    "node_id": 123,
+                    "seq": 456,
+                    "node_idx": 1,
+                    "node_salt": 456,
+                    "seq_idx": 2,
+                    "seq_salt": 321,
+                    "seq_offset": 789,
+                    "expected_hex": "0x3dd8afb02e4",
+                    "expected_str": "0000-03DD-8AFB-02E4"
+                },
+                {
+                    "name": "uchrono64m",
+                    "node_id": 123,
+                    "seq": 456,
+                    "node_idx": 1,
+                    "node_salt": 456,
+                    "seq_idx": 2,
+                    "seq_salt": 321,
+                    "seq_offset": 789,
+                    "expected_hex": "0x1eea075e98",
+                    "expected_str": "0000-001E-EA07-5E98"
+                },
+                {
+                    "name": "chrono64m",
+                    "node_id": 123,
+                    "seq": 456,
+                    "node_idx": 1,
+                    "node_salt": 456,
+                    "seq_idx": 2,
+                    "seq_salt": 321,
+                    "seq_offset": 789,
+                    "expected_hex": "0xf72bf5e98",
+                    "expected_str": "0000-000F-72BF-5E98"
+                },
+                {
+                    "name": "uchrono64s",
+                    "node_id": 123,
+                    "seq": 456,
+                    "node_idx": 1,
+                    "node_salt": 456,
+                    "seq_idx": 2,
+                    "seq_salt": 321,
+                    "seq_offset": 789,
+                    "expected_hex": "0x7b79e9b0",
+                    "expected_str": "0000-0000-7B79-E9B0"
+                },
+                {
+                    "name": "chrono64s",
+                    "node_id": 123,
+                    "seq": 456,
+                    "node_idx": 1,
+                    "node_salt": 456,
+                    "seq_idx": 2,
+                    "seq_salt": 321,
+                    "seq_offset": 789,
+                    "expected_hex": "0x3d09e9b0",
+                    "expected_str": "0000-0000-3D09-E9B0"
+                },
+                {
+                    "name": "uchrono64ds",
+                    "node_id": 123,
+                    "seq": 456,
+                    "node_idx": 1,
+                    "node_salt": 456,
+                    "seq_idx": 2,
+                    "seq_salt": 321,
+                    "seq_offset": 789,
+                    "expected_hex": "0xf427844",
+                    "expected_str": "0000-0000-0F42-7844"
+                },
+                {
+                    "name": "chrono64ds",
+                    "node_id": 123,
+                    "seq": 456,
+                    "node_idx": 1,
+                    "node_salt": 456,
+                    "seq_idx": 2,
+                    "seq_salt": 321,
+                    "seq_offset": 789,
+                    "expected_hex": "0x7fc7844",
+                    "expected_str": "0000-0000-07FC-7844"
+                },
+                {
+                    "name": "uchrono64cs",
+                    "node_id": 123,
+                    "seq": 456,
+                    "node_idx": 1,
+                    "node_salt": 456,
+                    "seq_idx": 2,
+                    "seq_salt": 321,
+                    "seq_offset": 789,
+                    "expected_hex": "0xe2ffb0",
+                    "expected_str": "0000-0000-00E2-FFB0"
+                },
+                {
+                    "name": "chrono64cs",
+                    "node_id": 123,
+                    "seq": 456,
+                    "node_idx": 1,
+                    "node_salt": 456,
+                    "seq_idx": 2,
+                    "seq_salt": 321,
+                    "seq_offset": 789,
+                    "expected_hex": "0x1f9fb0",
+                    "expected_str": "0000-0000-001F-9FB0"
+                },
+                {
+                    "name": "uchrono64ms",
+                    "node_id": 123,
+                    "seq": 456,
+                    "node_idx": 1,
+                    "node_salt": 456,
+                    "seq_idx": 2,
+                    "seq_salt": 321,
+                    "seq_offset": 789,
+                    "expected_hex": "0x7e7c4",
+                    "expected_str": "0000-0000-0007-E7C4"
+                },
+                {
+                    "name": "chrono64ms",
+                    "node_id": 123,
+                    "seq": 456,
+                    "node_idx": 1,
+                    "node_salt": 456,
+                    "seq_idx": 2,
+                    "seq_salt": 321,
+                    "seq_offset": 789,
+                    "expected_hex": "0x84fc4",
+                    "expected_str": "0000-0000-0008-4FC4"
+                },
+                {
+                    "name": "uchrono64us",
+                    "node_id": 123,
+                    "seq": 8,
+                    "node_idx": 1,
+                    "node_salt": 456,
+                    "seq_idx": 2,
+                    "seq_salt": 321,
+                    "seq_offset": 21,
+                    "expected_hex": "0x732",
+                    "expected_str": "0000-0000-0000-0732"
+                },
+                {
+                    "name": "chrono64us",
+                    "node_id": 123,
+                    "seq": 8,
+                    "node_idx": 1,
+                    "node_salt": 456,
+                    "seq_idx": 2,
+                    "seq_salt": 321,
+                    "seq_offset": 21,
+                    "expected_hex": "0x272",
+                    "expected_str": "0000-0000-0000-0272"
+                },
+                {
+                    "name": "uchrono32y",
+                    "node_id": 123,
+                    "seq": 456,
+                    "node_idx": 1,
+                    "node_salt": 456,
+                    "seq_idx": 2,
+                    "seq_salt": 321,
+                    "seq_offset": 789,
+                    "expected_hex": "0xf4d8a6",
+                    "expected_str": "00F4-D8A6"
+                },
+                {
+                    "name": "chrono32y",
+                    "node_id": 123,
+                    "seq": 456,
+                    "node_idx": 1,
+                    "node_salt": 456,
+                    "seq_idx": 2,
+                    "seq_salt": 321,
+                    "seq_offset": 789,
+                    "expected_hex": "0x7178a6",
+                    "expected_str": "0071-78A6"
+                },
+                {
+                    "name": "uchrono32hy",
+                    "node_id": 123,
+                    "seq": 456,
+                    "node_idx": 1,
+                    "node_salt": 456,
+                    "seq_idx": 2,
+                    "seq_salt": 321,
+                    "seq_offset": 789,
+                    "expected_hex": "0x7178a6",
+                    "expected_str": "0071-78A6"
+                },
+                {
+                    "name": "chrono32hy",
+                    "node_id": 123,
+                    "seq": 456,
+                    "node_idx": 1,
+                    "node_salt": 456,
+                    "seq_idx": 2,
+                    "seq_salt": 321,
+                    "seq_offset": 789,
+                    "expected_hex": "0xfc8a6",
+                    "expected_str": "000F-C8A6"
+                },
+                {
+                    "name": "uchrono32q",
+                    "node_id": 123,
+                    "seq": 456,
+                    "node_idx": 1,
+                    "node_salt": 456,
+                    "seq_idx": 2,
+                    "seq_salt": 321,
+                    "seq_offset": 789,
+                    "expected_hex": "0xfc8a6",
+                    "expected_str": "000F-C8A6"
+                },
+                {
+                    "name": "chrono32q",
+                    "node_id": 123,
+                    "seq": 456,
+                    "node_idx": 1,
+                    "node_salt": 456,
+                    "seq_idx": 2,
+                    "seq_salt": 321,
+                    "seq_offset": 789,
+                    "expected_hex": "0x1098a6",
+                    "expected_str": "0010-98A6"
+                },
+                {
+                    "name": "uchrono32mo",
+                    "node_id": 123,
+                    "seq": 456,
+                    "node_idx": 1,
+                    "node_salt": 456,
+                    "seq_idx": 2,
+                    "seq_salt": 321,
+                    "seq_offset": 789,
+                    "expected_hex": "0x84fc4",
+                    "expected_str": "0008-4FC4"
+                },
+                {
+                    "name": "chrono32mo",
+                    "node_id": 123,
+                    "seq": 456,
+                    "node_idx": 1,
+                    "node_salt": 456,
+                    "seq_idx": 2,
+                    "seq_salt": 321,
+                    "seq_offset": 789,
+                    "expected_hex": "0x78fc4",
+                    "expected_str": "0007-8FC4"
+                },
+                {
+                    "name": "uchrono32w",
+                    "node_id": 123,
+                    "seq": 456,
+                    "node_idx": 1,
+                    "node_salt": 456,
+                    "seq_idx": 2,
+                    "seq_salt": 321,
+                    "seq_offset": 277,
+                    "expected_hex": "0x3c6f0",
+                    "expected_str": "0003-C6F0"
+                },
+                {
+                    "name": "chrono32w",
+                    "node_id": 123,
+                    "seq": 456,
+                    "node_idx": 1,
+                    "node_salt": 456,
+                    "seq_idx": 2,
+                    "seq_salt": 321,
+                    "seq_offset": 277,
+                    "expected_hex": "0x136f0",
+                    "expected_str": "0001-36F0"
+                },
+                {
+                    "name": "uchrono32d",
+                    "node_id": 123,
+                    "seq": 72,
+                    "node_idx": 1,
+                    "node_salt": 456,
+                    "seq_idx": 2,
+                    "seq_salt": 321,
+                    "seq_offset": 21,
+                    "expected_hex": "0x4df4",
+                    "expected_str": "0000-4DF4"
+                },
+                {
+                    "name": "chrono32d",
+                    "node_id": 123,
+                    "seq": 72,
+                    "node_idx": 1,
+                    "node_salt": 456,
+                    "seq_idx": 2,
+                    "seq_salt": 321,
+                    "seq_offset": 21,
+                    "expected_hex": "0x17f4",
+                    "expected_str": "0000-17F4"
+                },
+                {
+                    "name": "uchrono32h",
+                    "node_id": 123,
+                    "seq": 8,
+                    "node_idx": 1,
+                    "node_salt": 456,
+                    "seq_idx": 2,
+                    "seq_salt": 321,
+                    "seq_offset": 21,
+                    "expected_hex": "0x272",
+                    "expected_str": "0000-0272"
+                },
+                {
+                    "name": "chrono32h",
+                    "node_id": 123,
+                    "seq": 8,
+                    "node_idx": 1,
+                    "node_salt": 456,
+                    "seq_idx": 2,
+                    "seq_salt": 321,
+                    "seq_offset": 21,
+                    "expected_hex": "0x72",
+                    "expected_str": "0000-0072"
+                },
+                {
+                    "name": "uchrono32tm",
+                    "node_id": 123,
+                    "seq": 8,
+                    "node_idx": 1,
+                    "node_salt": 456,
+                    "seq_idx": 2,
+                    "seq_salt": 321,
+                    "seq_offset": 5,
+                    "expected_hex": "0x3a",
+                    "expected_str": "0000-003A"
+                },
+                {
+                    "name": "chrono32tm",
+                    "node_id": 123,
+                    "seq": 8,
+                    "node_idx": 1,
+                    "node_salt": 456,
+                    "seq_idx": 2,
+                    "seq_salt": 321,
+                    "seq_offset": 5,
+                    "expected_hex": "0x3a",
+                    "expected_str": "0000-003A"
+                },
+                {
+                    "name": "uchrono32m",
+                    "node_id": 123,
+                    "seq": 0,
+                    "node_idx": 1,
+                    "node_salt": 456,
+                    "seq_idx": 2,
+                    "seq_salt": 321,
+                    "seq_offset": 1,
+                    "expected_hex": "0xc",
+                    "expected_str": "0000-000C"
+                },
+                {
+                    "name": "chrono32m",
+                    "node_id": 123,
+                    "seq": 0,
+                    "node_idx": 1,
+                    "node_salt": 456,
+                    "seq_idx": 2,
+                    "seq_salt": 321,
+                    "seq_offset": 1,
+                    "expected_hex": "0x4",
+                    "expected_str": "0000-0004"
+                },
+                {
+                    "name": "uchrono32bs",
+                    "node_id": 123,
+                    "seq": 0,
+                    "node_idx": 1,
+                    "node_salt": 456,
+                    "seq_idx": 2,
+                    "seq_salt": 321,
+                    "seq_offset": 0,
+                    "expected_hex": "0x0",
+                    "expected_str": "0000-0000"
+                },
+                {
+                    "name": "chrono32bs",
+                    "node_id": 123,
+                    "seq": 0,
+                    "node_idx": 1,
+                    "node_salt": 456,
+                    "seq_idx": 2,
+                    "seq_salt": 321,
+                    "seq_offset": 0,
+                    "expected_hex": "0x0",
+                    "expected_str": "0000-0000"
+                }
+            ]
+        },
+        {
+            "comment": "Far future baseline",
+            "iso": "2050-12-31T23:59:59Z",
+            "variants": [
+                {
+                    "name": "uchrono64mo",
+                    "node_id": 123,
+                    "seq": 456,
+                    "node_idx": 1,
+                    "node_salt": 456,
+                    "seq_idx": 2,
+                    "seq_salt": 321,
+                    "seq_offset": 789,
+                    "expected_hex": "0x173f7694cf605d0e",
+                    "expected_str": "173F-7694-CF60-5D0E"
+                },
+                {
+                    "name": "chrono64mo",
+                    "node_id": 123,
+                    "seq": 456,
+                    "node_idx": 1,
+                    "node_salt": 456,
+                    "seq_idx": 2,
+                    "seq_salt": 321,
+                    "seq_offset": 789,
+                    "expected_hex": "0xb9fbb4dcf605d0e",
+                    "expected_str": "0B9F-BB4D-CF60-5D0E"
+                },
+                {
+                    "name": "uchrono64w",
+                    "node_id": 123,
+                    "seq": 456,
+                    "node_idx": 1,
+                    "node_salt": 456,
+                    "seq_idx": 2,
+                    "seq_salt": 321,
+                    "seq_offset": 789,
+                    "expected_hex": "0x1947dda533d8190a",
+                    "expected_str": "1947-DDA5-33D8-190A"
+                },
+                {
+                    "name": "chrono64w",
+                    "node_id": 123,
+                    "seq": 456,
+                    "node_idx": 1,
+                    "node_salt": 456,
+                    "seq_idx": 2,
+                    "seq_salt": 321,
+                    "seq_offset": 789,
+                    "expected_hex": "0xca3eed373d8190a",
+                    "expected_str": "0CA3-EED3-73D8-190A"
+                },
+                {
+                    "name": "uchrono64d",
+                    "node_id": 123,
+                    "seq": 456,
+                    "node_idx": 1,
+                    "node_salt": 456,
+                    "seq_idx": 2,
+                    "seq_salt": 321,
+                    "seq_offset": 789,
+                    "expected_hex": "0x161d7bb429ec08f6",
+                    "expected_str": "161D-7BB4-29EC-08F6"
+                },
+                {
+                    "name": "chrono64d",
+                    "node_id": 123,
+                    "seq": 456,
+                    "node_idx": 1,
+                    "node_salt": 456,
+                    "seq_idx": 2,
+                    "seq_salt": 321,
+                    "seq_offset": 789,
+                    "expected_hex": "0xb0ebdda61ec08f6",
+                    "expected_str": "0B0E-BDDA-61EC-08F6"
+                },
+                {
+                    "name": "uchrono64h",
+                    "node_id": 123,
+                    "seq": 456,
+                    "node_idx": 1,
+                    "node_salt": 456,
+                    "seq_idx": 2,
+                    "seq_salt": 321,
+                    "seq_offset": 789,
+                    "expected_hex": "0x212c3fbb617b02e4",
+                    "expected_str": "212C-3FBB-617B-02E4"
+                },
+                {
+                    "name": "chrono64h",
+                    "node_id": 123,
+                    "seq": 456,
+                    "node_idx": 1,
+                    "node_salt": 456,
+                    "seq_idx": 2,
+                    "seq_salt": 321,
+                    "seq_offset": 789,
+                    "expected_hex": "0x10961fdd8afb02e4",
+                    "expected_str": "1096-1FDD-8AFB-02E4"
+                },
+                {
+                    "name": "uchrono64m",
+                    "node_id": 123,
+                    "seq": 456,
+                    "node_idx": 1,
+                    "node_salt": 456,
+                    "seq_idx": 2,
+                    "seq_salt": 321,
+                    "seq_offset": 789,
+                    "expected_hex": "0x1f197bfeea075e98",
+                    "expected_str": "1F19-7BFE-EA07-5E98"
+                },
+                {
+                    "name": "chrono64m",
+                    "node_id": 123,
+                    "seq": 456,
+                    "node_idx": 1,
+                    "node_salt": 456,
+                    "seq_idx": 2,
+                    "seq_salt": 321,
+                    "seq_offset": 789,
+                    "expected_hex": "0xf8cbdff72bf5e98",
+                    "expected_str": "0F8C-BDFF-72BF-5E98"
+                },
+                {
+                    "name": "uchrono64s",
+                    "node_id": 123,
+                    "seq": 456,
+                    "node_idx": 1,
+                    "node_salt": 456,
+                    "seq_idx": 2,
+                    "seq_salt": 321,
+                    "seq_offset": 789,
+                    "expected_hex": "0x1d27e43ffb79e9b0",
+                    "expected_str": "1D27-E43F-FB79-E9B0"
+                },
+                {
+                    "name": "chrono64s",
+                    "node_id": 123,
+                    "seq": 456,
+                    "node_idx": 1,
+                    "node_salt": 456,
+                    "seq_idx": 2,
+                    "seq_salt": 321,
+                    "seq_offset": 789,
+                    "expected_hex": "0xe93f21ffd09e9b0",
+                    "expected_str": "0E93-F21F-FD09-E9B0"
+                },
+                {
+                    "name": "uchrono64ds",
+                    "node_id": 123,
+                    "seq": 456,
+                    "node_idx": 1,
+                    "node_salt": 456,
+                    "seq_idx": 2,
+                    "seq_salt": 321,
+                    "seq_offset": 789,
+                    "expected_hex": "0x2471dd4f6f427844",
+                    "expected_str": "2471-DD4F-6F42-7844"
+                },
+                {
+                    "name": "chrono64ds",
+                    "node_id": 123,
+                    "seq": 456,
+                    "node_idx": 1,
+                    "node_salt": 456,
+                    "seq_idx": 2,
+                    "seq_salt": 321,
+                    "seq_offset": 789,
+                    "expected_hex": "0x1238eea7b7fc7844",
+                    "expected_str": "1238-EEA7-B7FC-7844"
+                },
+                {
+                    "name": "uchrono64cs",
+                    "node_id": 123,
+                    "seq": 456,
+                    "node_idx": 1,
+                    "node_salt": 456,
+                    "seq_idx": 2,
+                    "seq_salt": 321,
+                    "seq_offset": 789,
+                    "expected_hex": "0x16c72a519ce2ffb0",
+                    "expected_str": "16C7-2A51-9CE2-FFB0"
+                },
+                {
+                    "name": "chrono64cs",
+                    "node_id": 123,
+                    "seq": 456,
+                    "node_idx": 1,
+                    "node_salt": 456,
+                    "seq_idx": 2,
+                    "seq_salt": 321,
+                    "seq_offset": 789,
+                    "expected_hex": "0xb639528ce1f9fb0",
+                    "expected_str": "0B63-9528-CE1F-9FB0"
+                },
+                {
+                    "name": "uchrono64ms",
+                    "node_id": 123,
+                    "seq": 456,
+                    "node_idx": 1,
+                    "node_salt": 456,
+                    "seq_idx": 2,
+                    "seq_salt": 321,
+                    "seq_offset": 789,
+                    "expected_hex": "0x1c78f4e60307e7c4",
+                    "expected_str": "1C78-F4E6-0307-E7C4"
+                },
+                {
+                    "name": "chrono64ms",
+                    "node_id": 123,
+                    "seq": 456,
+                    "node_idx": 1,
+                    "node_salt": 456,
+                    "seq_idx": 2,
+                    "seq_salt": 321,
+                    "seq_offset": 789,
+                    "expected_hex": "0xe3c7a7301884fc4",
+                    "expected_str": "0E3C-7A73-0188-4FC4"
+                },
+                {
+                    "name": "uchrono64us",
+                    "node_id": 123,
+                    "seq": 8,
+                    "node_idx": 1,
+                    "node_salt": 456,
+                    "seq_idx": 2,
+                    "seq_salt": 321,
+                    "seq_offset": 21,
+                    "expected_hex": "0x1bce1f289eee0732",
+                    "expected_str": "1BCE-1F28-9EEE-0732"
+                },
+                {
+                    "name": "chrono64us",
+                    "node_id": 123,
+                    "seq": 8,
+                    "node_idx": 1,
+                    "node_salt": 456,
+                    "seq_idx": 2,
+                    "seq_salt": 321,
+                    "seq_offset": 21,
+                    "expected_hex": "0xde70f944f770272",
+                    "expected_str": "0DE7-0F94-4F77-0272"
+                },
+                {
+                    "name": "uchrono32y",
+                    "node_id": 123,
+                    "seq": 456,
+                    "node_idx": 1,
+                    "node_salt": 456,
+                    "seq_idx": 2,
+                    "seq_salt": 321,
+                    "seq_offset": 789,
+                    "expected_hex": "0x1ef4d8a6",
+                    "expected_str": "1EF4-D8A6"
+                },
+                {
+                    "name": "chrono32y",
+                    "node_id": 123,
+                    "seq": 456,
+                    "node_idx": 1,
+                    "node_salt": 456,
+                    "seq_idx": 2,
+                    "seq_salt": 321,
+                    "seq_offset": 789,
+                    "expected_hex": "0xf7178a6",
+                    "expected_str": "0F71-78A6"
+                },
+                {
+                    "name": "uchrono32hy",
+                    "node_id": 123,
+                    "seq": 456,
+                    "node_idx": 1,
+                    "node_salt": 456,
+                    "seq_idx": 2,
+                    "seq_salt": 321,
+                    "seq_offset": 789,
+                    "expected_hex": "0x1ef178a6",
+                    "expected_str": "1EF1-78A6"
+                },
+                {
+                    "name": "chrono32hy",
+                    "node_id": 123,
+                    "seq": 456,
+                    "node_idx": 1,
+                    "node_salt": 456,
+                    "seq_idx": 2,
+                    "seq_salt": 321,
+                    "seq_offset": 789,
+                    "expected_hex": "0xf4fc8a6",
+                    "expected_str": "0F4F-C8A6"
+                },
+                {
+                    "name": "uchrono32q",
+                    "node_id": 123,
+                    "seq": 456,
+                    "node_idx": 1,
+                    "node_salt": 456,
+                    "seq_idx": 2,
+                    "seq_salt": 321,
+                    "seq_offset": 789,
+                    "expected_hex": "0x1ecfc8a6",
+                    "expected_str": "1ECF-C8A6"
+                },
+                {
+                    "name": "chrono32q",
+                    "node_id": 123,
+                    "seq": 456,
+                    "node_idx": 1,
+                    "node_salt": 456,
+                    "seq_idx": 2,
+                    "seq_salt": 321,
+                    "seq_offset": 789,
+                    "expected_hex": "0xf7098a6",
+                    "expected_str": "0F70-98A6"
+                },
+                {
+                    "name": "uchrono32mo",
+                    "node_id": 123,
+                    "seq": 456,
+                    "node_idx": 1,
+                    "node_salt": 456,
+                    "seq_idx": 2,
+                    "seq_salt": 321,
+                    "seq_offset": 789,
+                    "expected_hex": "0x17384fc4",
+                    "expected_str": "1738-4FC4"
+                },
+                {
+                    "name": "chrono32mo",
+                    "node_id": 123,
+                    "seq": 456,
+                    "node_idx": 1,
+                    "node_salt": 456,
+                    "seq_idx": 2,
+                    "seq_salt": 321,
+                    "seq_offset": 789,
+                    "expected_hex": "0xb9f8fc4",
+                    "expected_str": "0B9F-8FC4"
+                },
+                {
+                    "name": "uchrono32w",
+                    "node_id": 123,
+                    "seq": 456,
+                    "node_idx": 1,
+                    "node_salt": 456,
+                    "seq_idx": 2,
+                    "seq_salt": 321,
+                    "seq_offset": 277,
+                    "expected_hex": "0x1947c6f0",
+                    "expected_str": "1947-C6F0"
+                },
+                {
+                    "name": "chrono32w",
+                    "node_id": 123,
+                    "seq": 456,
+                    "node_idx": 1,
+                    "node_salt": 456,
+                    "seq_idx": 2,
+                    "seq_salt": 321,
+                    "seq_offset": 277,
+                    "expected_hex": "0xca336f0",
+                    "expected_str": "0CA3-36F0"
+                },
+                {
+                    "name": "uchrono32d",
+                    "node_id": 123,
+                    "seq": 72,
+                    "node_idx": 1,
+                    "node_salt": 456,
+                    "seq_idx": 2,
+                    "seq_salt": 321,
+                    "seq_offset": 21,
+                    "expected_hex": "0x161d4df4",
+                    "expected_str": "161D-4DF4"
+                },
+                {
+                    "name": "chrono32d",
+                    "node_id": 123,
+                    "seq": 72,
+                    "node_idx": 1,
+                    "node_salt": 456,
+                    "seq_idx": 2,
+                    "seq_salt": 321,
+                    "seq_offset": 21,
+                    "expected_hex": "0xb0e97f4",
+                    "expected_str": "0B0E-97F4"
+                },
+                {
+                    "name": "uchrono32h",
+                    "node_id": 123,
+                    "seq": 8,
+                    "node_idx": 1,
+                    "node_salt": 456,
+                    "seq_idx": 2,
+                    "seq_salt": 321,
+                    "seq_offset": 21,
+                    "expected_hex": "0x10961e72",
+                    "expected_str": "1096-1E72"
+                },
+                {
+                    "name": "chrono32h",
+                    "node_id": 123,
+                    "seq": 8,
+                    "node_idx": 1,
+                    "node_salt": 456,
+                    "seq_idx": 2,
+                    "seq_salt": 321,
+                    "seq_offset": 21,
+                    "expected_hex": "0x84b0e72",
+                    "expected_str": "084B-0E72"
+                },
+                {
+                    "name": "uchrono32tm",
+                    "node_id": 123,
+                    "seq": 8,
+                    "node_idx": 1,
+                    "node_salt": 456,
+                    "seq_idx": 2,
+                    "seq_salt": 321,
+                    "seq_offset": 5,
+                    "expected_hex": "0x18e12f3a",
+                    "expected_str": "18E1-2F3A"
+                },
+                {
+                    "name": "chrono32tm",
+                    "node_id": 123,
+                    "seq": 8,
+                    "node_idx": 1,
+                    "node_salt": 456,
+                    "seq_idx": 2,
+                    "seq_salt": 321,
+                    "seq_offset": 5,
+                    "expected_hex": "0xc7097ba",
+                    "expected_str": "0C70-97BA"
+                },
+                {
+                    "name": "uchrono32m",
+                    "node_id": 123,
+                    "seq": 0,
+                    "node_idx": 1,
+                    "node_salt": 456,
+                    "seq_idx": 2,
+                    "seq_salt": 321,
+                    "seq_offset": 1,
+                    "expected_hex": "0xf8cbdfc",
+                    "expected_str": "0F8C-BDFC"
+                },
+                {
+                    "name": "chrono32m",
+                    "node_id": 123,
+                    "seq": 0,
+                    "node_idx": 1,
+                    "node_salt": 456,
+                    "seq_idx": 2,
+                    "seq_salt": 321,
+                    "seq_offset": 1,
+                    "expected_hex": "0x7c65efc",
+                    "expected_str": "07C6-5EFC"
+                },
+                {
+                    "name": "uchrono32bs",
+                    "node_id": 123,
+                    "seq": 0,
+                    "node_idx": 1,
+                    "node_salt": 456,
+                    "seq_idx": 2,
+                    "seq_salt": 321,
+                    "seq_offset": 0,
+                    "expected_hex": "0x1d27e43f",
+                    "expected_str": "1D27-E43F"
+                },
+                {
+                    "name": "chrono32bs",
+                    "node_id": 123,
+                    "seq": 0,
+                    "node_idx": 1,
+                    "node_salt": 456,
+                    "seq_idx": 2,
+                    "seq_salt": 321,
+                    "seq_offset": 0,
+                    "expected_hex": "0x1d27e43f",
+                    "expected_str": "1D27-E43F"
+                }
+            ]
+        },
+        {
+            "description": "Boundary Analysis: Min (2020-01-01)",
+            "iso": "2020-01-01T00:00:00Z",
+            "variants": [
+                {
+                    "name": "uchrono64s",
+                    "node_id": 0,
+                    "seq": 0,
+                    "node_idx": 0,
+                    "node_salt": 0,
+                    "seq_idx": 0,
+                    "seq_salt": 0,
+                    "seq_offset": 0,
+                    "expected_hex": "0x0",
+                    "expected_str": "0000-0000-0000-0000"
+                }
+            ]
+        },
+        {
+            "description": "Boundary Analysis: Max Saturation (2292-03-15)",
+            "iso": "2292-03-15T12:56:31Z",
+            "variants": [
+                {
+                    "name": "uchrono64s",
+                    "description": "Calculated to result in 0xffffffffffffffff with mult=0x9e37, salt=0",
+                    "node_id": 34937,
+                    "seq": 3309,
+                    "node_idx": 0,
+                    "node_salt": 0,
+                    "seq_idx": 0,
+                    "seq_salt": 0,
+                    "seq_offset": 0,
+                    "expected_hex": "0xffffffffffffffff",
+                    "expected_str": "FFFF-FFFF-FFFF-FFFF"
+                }
+            ]
+        },
+        {
+            "description": "Epoch Transition Proof (2156 Cycle Start)",
+            "iso": "2156-01-01T00:00:00Z",
+            "variants": [
+                {
+                    "name": "uchrono64s",
+                    "node_id": 100,
+                    "seq": 50,
+                    "node_idx": 7,
+                    "node_salt": 1234,
+                    "seq_idx": 12,
+                    "seq_salt": 5678,
+                    "seq_offset": 100,
+                    "expected_hex": "0x7fe76ec0620332d4",
+                    "expected_str": "7FE7-6EC0-6203-32D4"
+                }
+            ]
+        },
+        {
+            "description": "Rollback & Multiplier Divergence (Hero Case Parity)",
+            "iso": "2020-01-01T00:01:40Z",
+            "variants": [
+                {
+                    "description": "Collision Orchestrated (Zero-Mixed coordinates)",
+                    "name": "uchrono64s",
+                    "node_id": 221,
+                    "seq": 983,
+                    "node_idx": 7,
+                    "node_salt": 7495657,
+                    "seq_idx": 7,
+                    "seq_salt": 7495657,
+                    "seq_offset": 0,
+                    "expected_hex": "0x3200000000",
+                    "expected_str": "0000-0032-0000-0000"
                 }
             ]
         }
     ],
+    "precision_checks": [
+        {
+            "variant": "chrono32y",
+            "input_iso": "2025-12-31T23:59:59Z",
+            "expected_iso": "2025-01-01T00:00:00Z"
+        },
+        {
+            "variant": "chrono64s",
+            "input_iso": "2025-01-01T12:30:45.999Z",
+            "expected_iso": "2025-01-01T12:30:45Z"
+        }
+    ],
     "error_cases": [
         {
-            "name": "null_input",
-            "input": null,
-            "expected_error": "Input string is null"
+            "name": "underflow_2020",
+            "input": "2019-12-31T23:59:59Z",
+            "variant": "chrono64s",
+            "expected_error": "Timestamp underflow: Date is before Epoch (2020-01-01)"
+        }
+    ],
+    "bit_splits": [
+        {
+            "description": "uchrono64s: High Timestamp Bit",
+            "variant": "uchrono64s",
+            "iso": "2292-03-15T12:56:31Z",
+            "node_id": 0,
+            "seq": 0,
+            "expected_hex": "0xffffffff80000000",
+            "expected_timestamp_bits": "111111111111111111111111111111111",
+            "expected_node_bits": "0000000000000000",
+            "expected_seq_bits": "000000000000000"
         },
         {
-            "name": "invalid_format",
-            "input": "not-a-date",
-            "expected_error": "Invalid ISO 8601 format"
+            "description": "uchrono64s: High Node ID Bit (Mixed)",
+            "variant": "uchrono64s",
+            "iso": "2020-01-01T00:00:00Z",
+            "node_id": 1,
+            "seq": 0,
+            "expected_hex": "0x4f1b8000",
+            "expected_timestamp_bits": "000000000000000000000000000000000",
+            "expected_node_bits": "1001111000110111",
+            "expected_seq_bits": "000000000000000"
         },
         {
-            "name": "underflow_1970",
-            "input": "1960-01-01T00:00:00Z",
-            "variant": "chrono64",
-            "expected_error": "Timestamp underflow: Date is before Unix Epoch (1970-01-01)"
+            "description": "uchrono64s: High Sequence Bit (Mixed)",
+            "variant": "uchrono64s",
+            "iso": "2020-01-01T00:00:00Z",
+            "node_id": 0,
+            "seq": 1,
+            "expected_hex": "0x4f1b",
+            "expected_timestamp_bits": "000000000000000000000000000000000",
+            "expected_node_bits": "0000000000000000",
+            "expected_seq_bits": "100111100011011"
+        }
+    ],
+    "variant_specs": [
+        {
+            "variant": "chrono32bs",
+            "t_bits": 31,
+            "n_bits": 0,
+            "s_bits": 0
         },
         {
-            "name": "underflow_2000",
-            "input": "1999-12-31T23:59:59Z",
-            "variant": "chrono32",
-            "expected_error": "Timestamp underflow: Date is before Epoch (32-bit types require 2000-01-01 or later)"
+            "variant": "chrono32d",
+            "t_bits": 17,
+            "n_bits": 7,
+            "s_bits": 7
+        },
+        {
+            "variant": "chrono32h",
+            "t_bits": 22,
+            "n_bits": 4,
+            "s_bits": 5
+        },
+        {
+            "variant": "chrono32hy",
+            "t_bits": 9,
+            "n_bits": 11,
+            "s_bits": 11
+        },
+        {
+            "variant": "chrono32m",
+            "t_bits": 28,
+            "n_bits": 1,
+            "s_bits": 2
+        },
+        {
+            "variant": "chrono32mo",
+            "t_bits": 12,
+            "n_bits": 9,
+            "s_bits": 10
+        },
+        {
+            "variant": "chrono32q",
+            "t_bits": 10,
+            "n_bits": 10,
+            "s_bits": 11
+        },
+        {
+            "variant": "chrono32tm",
+            "t_bits": 24,
+            "n_bits": 3,
+            "s_bits": 4
+        },
+        {
+            "variant": "chrono32w",
+            "t_bits": 14,
+            "n_bits": 8,
+            "s_bits": 9
+        },
+        {
+            "variant": "chrono32y",
+            "t_bits": 8,
+            "n_bits": 12,
+            "s_bits": 11
+        },
+        {
+            "variant": "chrono64cs",
+            "t_bits": 40,
+            "n_bits": 11,
+            "s_bits": 12
+        },
+        {
+            "variant": "chrono64d",
+            "t_bits": 17,
+            "n_bits": 23,
+            "s_bits": 23
+        },
+        {
+            "variant": "chrono64ds",
+            "t_bits": 36,
+            "n_bits": 14,
+            "s_bits": 13
+        },
+        {
+            "variant": "chrono64h",
+            "t_bits": 21,
+            "n_bits": 21,
+            "s_bits": 21
+        },
+        {
+            "variant": "chrono64m",
+            "t_bits": 27,
+            "n_bits": 18,
+            "s_bits": 18
+        },
+        {
+            "variant": "chrono64mo",
+            "t_bits": 12,
+            "n_bits": 25,
+            "s_bits": 26
+        },
+        {
+            "variant": "chrono64ms",
+            "t_bits": 43,
+            "n_bits": 10,
+            "s_bits": 10
+        },
+        {
+            "variant": "chrono64s",
+            "t_bits": 33,
+            "n_bits": 15,
+            "s_bits": 15
+        },
+        {
+            "variant": "chrono64us",
+            "t_bits": 53,
+            "n_bits": 5,
+            "s_bits": 5
+        },
+        {
+            "variant": "chrono64w",
+            "t_bits": 14,
+            "n_bits": 25,
+            "s_bits": 24
+        },
+        {
+            "variant": "uchrono32bs",
+            "t_bits": 32,
+            "n_bits": 0,
+            "s_bits": 0
+        },
+        {
+            "variant": "uchrono32d",
+            "t_bits": 17,
+            "n_bits": 8,
+            "s_bits": 7
+        },
+        {
+            "variant": "uchrono32h",
+            "t_bits": 22,
+            "n_bits": 5,
+            "s_bits": 5
+        },
+        {
+            "variant": "uchrono32hy",
+            "t_bits": 9,
+            "n_bits": 12,
+            "s_bits": 11
+        },
+        {
+            "variant": "uchrono32m",
+            "t_bits": 28,
+            "n_bits": 2,
+            "s_bits": 2
+        },
+        {
+            "variant": "uchrono32mo",
+            "t_bits": 12,
+            "n_bits": 10,
+            "s_bits": 10
+        },
+        {
+            "variant": "uchrono32q",
+            "t_bits": 10,
+            "n_bits": 11,
+            "s_bits": 11
+        },
+        {
+            "variant": "uchrono32tm",
+            "t_bits": 24,
+            "n_bits": 4,
+            "s_bits": 4
+        },
+        {
+            "variant": "uchrono32w",
+            "t_bits": 14,
+            "n_bits": 9,
+            "s_bits": 9
+        },
+        {
+            "variant": "uchrono32y",
+            "t_bits": 8,
+            "n_bits": 13,
+            "s_bits": 11
+        },
+        {
+            "variant": "uchrono64cs",
+            "t_bits": 40,
+            "n_bits": 12,
+            "s_bits": 12
+        },
+        {
+            "variant": "uchrono64d",
+            "t_bits": 17,
+            "n_bits": 24,
+            "s_bits": 23
+        },
+        {
+            "variant": "uchrono64ds",
+            "t_bits": 36,
+            "n_bits": 15,
+            "s_bits": 13
+        },
+        {
+            "variant": "uchrono64h",
+            "t_bits": 21,
+            "n_bits": 22,
+            "s_bits": 21
+        },
+        {
+            "variant": "uchrono64m",
+            "t_bits": 27,
+            "n_bits": 19,
+            "s_bits": 18
+        },
+        {
+            "variant": "uchrono64mo",
+            "t_bits": 12,
+            "n_bits": 26,
+            "s_bits": 26
+        },
+        {
+            "variant": "uchrono64ms",
+            "t_bits": 43,
+            "n_bits": 11,
+            "s_bits": 10
+        },
+        {
+            "variant": "uchrono64s",
+            "t_bits": 33,
+            "n_bits": 16,
+            "s_bits": 15
+        },
+        {
+            "variant": "uchrono64us",
+            "t_bits": 53,
+            "n_bits": 6,
+            "s_bits": 5
+        },
+        {
+            "variant": "uchrono64w",
+            "t_bits": 14,
+            "n_bits": 26,
+            "s_bits": 24
         }
     ]
 }

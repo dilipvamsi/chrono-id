@@ -3,41 +3,38 @@
 //! This proof verifies the usability and ordering claims of ChronoID.
 //!
 //! ## Verification Goals:
-//! 1. **Crockford Round-Trip:** Verify that `u32 -> String -> u32` Crockford
-//!    Base32 conversion is lossless (crucial for portable Foreign Keys).
+//! 1. **Hyphenated Hex Round-Trip:** Verify that `u32 -> String -> u32` hyphenated
+//!    hex (XXXX-XXXX) conversion is lossless (crucial for portable Foreign Keys).
 //! 2. **Bucket Sortability:** Verify that IDs are strictly monotonic across
 //!    second boundaries.
 //! 3. **Sort Key Ties:** Mathematically confirm that highly compressed keys
 //!    (chrono32h) intentionally опыта "Collisions/Ties" when entropy is exhausted.
 
+use chrono_sim::generator;
 use std::collections::HashSet;
 use std::thread;
 use std::time::Duration;
-use chrono_sim::generator;
 
-const CROCKFORD_CHARS: &[u8; 32] = b"0123456789ABCDEFGHJKMNPQRSTVWXYZ";
-
-/// Decodes Crockford Base32 string back to u32.
-fn decode_crockford(s: &str) -> u32 {
-    let mut v: u64 = 0;
-    for c in s.chars() {
-        let idx = CROCKFORD_CHARS.iter().position(|&x| x as char == c).expect("Invalid char");
-        v = (v * 32) + idx as u64;
-    }
-    v as u32
+/// Decodes hyphenated hex string back to u32.
+fn decode_hyphenated_hex(s: &str) -> u32 {
+    let clean = s.replace("-", "");
+    u32::from_str_radix(&clean, 16).expect("Invalid hex")
 }
 
 fn main() {
     println!("🧪 Scenario 13: Sortability & Decoding Verification\n");
 
-    // --- Sub-Test 1: Crockford Round-Trip ---
+    // --- Sub-Test 1: Hyphenated Hex Round-Trip ---
     // Proves the encoding is deterministic and reversible for database lookups.
-    println!("1️⃣  Checking Crockford Base32 Round-Trip...");
+    println!("1️⃣  Checking Hyphenated Hex Round-Trip...");
     let test_ids = vec![0, 1, 32, 1000, 2147483647, 4294967295];
     for &id in &test_ids {
-        let encoded = generator::encode_crockford(id);
-        let decoded = decode_crockford(&encoded);
-        print!("   ID: {:<10} -> Enc: {:<7} -> Dec: {:<10} ", id, encoded, decoded);
+        let encoded = generator::format_hyphenated_hex(id);
+        let decoded = decode_hyphenated_hex(&encoded);
+        print!(
+            "   ID: {:<10} -> Enc: {:<9} -> Dec: {:<10} ",
+            id, encoded, decoded
+        );
         assert_eq!(id, decoded);
         println!("✅");
     }
@@ -45,12 +42,15 @@ fn main() {
     let mut rng = rand::thread_rng();
     use rand::Rng;
     let n_fuzz = 100_000;
-    println!("   > Fuzzing {} random values for round-trip consistency...", n_fuzz);
+    println!(
+        "   > Fuzzing {} random values for round-trip consistency...",
+        n_fuzz
+    );
     for _ in 0..n_fuzz {
         let id: u32 = rng.gen();
-        let enc = generator::encode_crockford(id);
-        let dec = decode_crockford(&enc);
-        assert_eq!(id, dec, "Crockford decode failed for {}", id);
+        let enc = generator::format_hyphenated_hex(id);
+        let dec = decode_hyphenated_hex(&enc);
+        assert_eq!(id, dec, "Hex decode failed for {}", id);
     }
     println!("   ✅ SUCCESS: All 100,000 fuzzed values passed.\n");
 
@@ -96,11 +96,13 @@ fn main() {
     }
 
     if first_collision > 0 && first_collision <= 1025 {
-        println!("   ✅ SUCCESS: Deterministic tie detected at index {}.", first_collision);
+        println!(
+            "   ✅ SUCCESS: Deterministic tie detected at index {}.",
+            first_collision
+        );
     } else {
         println!("   ❌ FAILURE: No tie detected in entropy-exhausted window.");
     }
 
     println!("\n✅ VERDICT: Sortability, Encoding, and Hour-Window constraints verified.");
 }
-

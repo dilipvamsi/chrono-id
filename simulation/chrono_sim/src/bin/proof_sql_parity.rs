@@ -35,14 +35,17 @@ fn main() {
         let f_val = rng.gen();
         let f_p_idx = rng.gen_range(0..128);
 
-        let res_sql = uchrono_mix_sql_logic(f_val, f_bits, f_p_idx, f_salt);
+        let res_sql = uchrono_mix_sql_logic(f_val, f_bits, f_p_idx as u8, f_salt);
         let p = generator::Persona {
             node_id: 1,
-            salt: f_salt,
-            multiplier_idx: f_p_idx as usize,
+            node_salt: f_salt,
+            node_idx: f_p_idx as usize,
+            seq_offset: 0,
+            seq_idx: f_p_idx as usize,
+            seq_salt: f_salt,
         };
         let gen = generator::Generator::new_with_persona(p, 0);
-        let res_rust = gen.mix(f_val, f_bits);
+        let res_rust = gen.mix(f_val, f_bits, p.node_idx, p.node_salt);
 
         if res_sql != res_rust {
             panic!("Fuzz Failure at iteration {}! SQL: {}, Rust: {}", i, res_sql, res_rust);

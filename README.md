@@ -23,7 +23,7 @@ ChronoID is a high-performance distributed identifier framework that solves the 
 > 📄 [**Formal Proof**](./proof/proof.md) · 🏆 [**Champion Comparison**](./proof/champion.md) · 📊 [**Simulation Report**](./simulation/report.md)
 
 > [!TIP]
-> **Novel Innovation: `chrono32y` — The Tenant ID Problem, Solved.** Tenant IDs appear as Foreign Keys in _every_ child table of a SaaS app. UUID costs 16 bytes per FK × millions of rows = gigabytes wasted. `chrono32y` fits in a **native 32-bit `INT`** (4 bytes), saves **73% of storage** (12 bytes per FK), and encodes as a **7-char Crockford Base32** string (e.g., `8Z5Y03`) for human-readable display. No other ID system offers this.
+> **Novel Innovation: `chrono32y` — The Tenant ID Problem, Solved.** Tenant IDs appear as Foreign Keys in _every_ child table of a SaaS app. UUID costs 16 bytes per FK × millions of rows = gigabytes wasted. `chrono32y` fits in a **native 32-bit `INT`** (4 bytes), saves **73% of storage** (12 bytes per FK), and encodes as a **9-char hyphenated hex** string (e.g., `1F4A-9C2B`) for human-readable display. No other ID system offers this.
 
 ---
 
@@ -69,7 +69,7 @@ ChronoID morphs between three architectural patterns without database migration:
 **Best For:** Serverless (Lambda), Edge, IoT, Offline-First Mobile.
 
 - Zero coordination — nodes require no knowledge of each other
-- **Self-Healing:** If two nodes collide at time $T$, Weyl-Golden divergence forces their IDs apart at $T+1$ with **98.4% probability**
+- **Self-Healing:** If two nodes collide at time $T$, Weyl-Golden divergence forces their IDs apart at $T+1$ with **99.2% probability**
 - **Rotation:** Every 60 seconds, re-rolls Node ID, Salt, and Multiplier via CSPRNG
 - **Burst:** On sequence overflow → immediate persona re-roll (never stalls)
 - **Clock Skew:** Backward jump → treated as burst event, triggers re-roll
@@ -145,8 +145,8 @@ python3 weyl/weyl-lang-gen.py js implementation/weyl_constants.js
 > Every SaaS app references `tenant_id` in every child table. UUID costs **16 bytes per FK** — `chrono32y` costs **4 bytes**. At 1 billion rows, that's **~12 GB saved**.
 >
 > - **Year Precision:** Timestamp updates once per year → 24 bits for entropy (~16.7M tenants/year unsigned)
-> - **Obfuscated:** Appears random (e.g., `9402115`), hiding growth rates from competitors
-> - **Human-Readable:** Encodes as **7-char Crockford Base32** (e.g., `8Z5Y03`) — URL-safe, dictation-friendly
+> - **Obfuscated:** Appears random (e.g., `1F4A-9C2B`), hiding growth rates from competitors
+> - **Human-Readable:** Encodes as **9-char hyphenated hex** (e.g., `1F4A-9C2B`) — URL-safe, easy to dictate, and recognizable.
 > - **Native INT:** 1-cycle JOINs, best-in-class index performance
 
 ---
@@ -159,7 +159,7 @@ python3 weyl/weyl-lang-gen.py js implementation/weyl_constants.js
 | :----------------- | :------------------ | :------------------ | :-------------- | :------------------------ |
 | **Storage**        | ❌ 128-bit          | ✅ 64-bit           | ✅ 32/64-bit    | ✅ **64 + 32-bit tier**   |
 | **Uncoordinated**  | ✅ Random           | ❌ Zookeeper        | ❌ Local only   | ✅ **Mode A: zero coord** |
-| **Self-Healing**   | ❌ Silent duplicate | ❌ Silent duplicate | ❌ Error        | ✅ **98.4% divergence**   |
+| **Self-Healing**   | ❌ Silent duplicate | ❌ Silent duplicate | ❌ Error        | ✅ **99.2% divergence**   |
 | **Shard Routing**  | ❌ Lookup           | ❌ Lookup           | ❌ Not possible | ✅ **Mode C: embedded**   |
 | **FK Compression** | ❌ 16 bytes/ref     | ❌ 8 bytes          | ✅ 4 bytes      | ✅ **chrono32y: 4 bytes** |
 | **Lifespan**       | ✅ Long             | ⚠️ ~69 years        | ✅ Long         | ✅ **250+ years**         |
@@ -170,7 +170,7 @@ python3 weyl/weyl-lang-gen.py js implementation/weyl_constants.js
 | :--------------- | :---------- | :---------- | :---------- | :---------- | :-------------------- |
 | **Storage**      | ❌ 16 bytes | ❌ 20 bytes | ✅ 8 bytes  | ❌ 16 bytes | ✅ **8 bytes (or 4)** |
 | **Native INT**   | ❌ No       | ❌ No       | ✅ `bigint` | ❌ No       | ✅ **`bigint`/`int`** |
-| **Self-Healing** | ❌ None     | ❌ None     | ❌ None     | ❌ None     | ✅ **98.4% diverge**  |
+| **Self-Healing** | ❌ None     | ❌ None     | ❌ None     | ❌ None     | ✅ **99.2% diverge**  |
 | **Polymorphic**  | ❌ Fixed    | ❌ Fixed    | ❌ Fixed    | ❌ Fixed    | ✅ **3 modes**        |
 | **FK Tier**      | ❌ 16 bytes | ❌ 20 bytes | ❌ 8 bytes  | ❌ 16 bytes | ✅ **chrono32y: 4B**  |
 
@@ -180,7 +180,7 @@ python3 weyl/weyl-lang-gen.py js implementation/weyl_constants.js
 
 | Innovation                  | What's New                                                                     |
 | :-------------------------- | :----------------------------------------------------------------------------- |
-| **Self-Healing Collisions** | First ID system with active collision recovery (98.4% divergence at next tick) |
+| **Self-Healing Collisions** | First ID system with active collision recovery (99.2% divergence at next tick) |
 | **Polymorphic Modes**       | 3 architectures, 1 column type — switch without migration                      |
 | **µs → Month Precision**    | Trade time granularity for entropy — 12 variants on one spectrum               |
 | **Never-Stall Bursts**      | Sequence overflow triggers rotation, not blocking                              |

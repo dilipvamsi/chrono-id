@@ -9,8 +9,6 @@
 //! 1. **Collision Proof:** Prove that a 'second' variant ID can represent
 //!    the exact same bit pattern as a 'microsecond' variant ID.
 
-use std::collections::HashSet;
-
 /// Mock function for 's' variant bit layout.
 fn generate_s(ts: u64, node: u64, seq: u64) -> u64 {
     (ts << (16 + 15)) | (node << 15) | seq
@@ -40,7 +38,9 @@ fn main() {
                 break;
             }
         }
-        if collision_found { break; }
+        if collision_found {
+            break;
+        }
     }
 
     if collision_found {

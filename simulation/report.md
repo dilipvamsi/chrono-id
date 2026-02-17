@@ -32,7 +32,7 @@ Verification simulations were performed on the following system to establish a p
 | 10       | chrono32y Mode B Cycle           | 16,777,216 IDs       | 16.7M Perfect       | ✅ PASS |
 | 11       | Register Performance (64 vs 128) | 100,000,000 Ops      | 2.85x Speedup       | ✅ PASS |
 | 12       | Global Bit Split Audit           | 18 Variants          | 18/18 Compliant     | ✅ PASS |
-| 13       | Crockford Base32 Round-Trip      | 100,000 IDs          | 100% Lossless       | ✅ PASS |
+| 13       | Hyphenated Hex Round-Trip        | 100,000 IDs          | 100% Lossless       | ✅ PASS |
 | 14       | Mode C Spin-Wait Defense         | 100,000 Burst IDs    | ~3.6ms delay        | ✅ PASS |
 | 15       | Multi-Epoch Coexistence          | 2 Epoch-Boundary IDs | Sort-break Proof    | ✅ PASS |
 | 16       | Birthday Bound Accuracy          | k=2,072 Nodes        | Proved Accuracy     | ✅ PASS |
@@ -69,7 +69,7 @@ Verification simulations were performed on the following system to establish a p
 
 - **Scenario 11: Register Efficiency** [Scale: 100,000,000 Ops] — Benchmarks 64-bit integer ops vs 128-bit strings. Result: 2.85x CPU throughput advantage.
 - **Scenario 12: Global Bit Audit** [Scale: 18 Variants] — Systematic compliance check for all 18 library variants. Verified spec-match for all bit-splits.
-- **Scenario 13: Crockford Sortability** [Scale: 100,000 IDs] — Verifies that Base32 encoding maintains perfect binary lexicographical order. Result: Perfect sort.
+- **Scenario 13: Hyphenated Hex Sortability** [Scale: 100,000 IDs] — Verifies that hex encoding maintains perfect binary lexicographical order. Result: Perfect sort.
 - **Scenario 14: Spin-Wait Precision** [Scale: 5,000 Burst IDs] — Measures micro-delays during sequence exhaustion to ensure unique tick-handoffs. Result: Stable blocking.
 - **Scenario 15: Epoch Coexistence** [Scale: 1,000,000 IDs] — Verifies absolute sorting behavior across multi-epoch boundary wraps. Result: Monotonic wrap.
 - **Scenario 16: Birthday Guardrails** [Scale: k=2,072 Nodes] — Confirms that empirical collision rates match theoretical Birthday Paradox limits at $k=2072$.

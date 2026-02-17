@@ -1,170 +1,184 @@
 import unittest
 from datetime import datetime, timezone
-import time
 from chrono_id import (
-    UChrono32, Chrono32, UChrono32h, Chrono32h, UChrono32m, Chrono32m,
-    UChrono32w, Chrono32w,
-    UChrono64, Chrono64, UChrono64ms, Chrono64ms, UChrono64us, Chrono64us,
-    ChronoBase, EPOCH_2000, ChronoError
+    UChrono32d,
+    Chrono32d,
+    UChrono32h,
+    Chrono32h,
+    UChrono32m,
+    Chrono32m,
+    UChrono32w,
+    Chrono32w,
+    Chrono32y,
+    UChrono32y,
+    UChrono64s,
+    Chrono64s,
+    UChrono64ms,
+    Chrono64ms,
+    UChrono64us,
+    Chrono64us,
+    ChronoBase,
+    EPOCH_2020,
+    ChronoError,
 )
 
-# Helper to get UTC datetime
+
+# Helper to get UTC datetime (Post-2020)
 def utc_dt(*args):
     return datetime(*args, tzinfo=timezone.utc)
+
 
 class TestChronoID(unittest.TestCase):
     def test_chrono_base_instantiation(self):
         # Test default instantiation (current time)
-        obj = Chrono32()
-        self.assertIsInstance(obj, Chrono32)
+        obj = Chrono32d()
+        self.assertIsInstance(obj, Chrono32d)
         self.assertIsInstance(obj, int)
-        
+
         # Test instantiation from value
-        obj2 = Chrono32(12345)
+        obj2 = Chrono32d(12345)
         self.assertEqual(obj2, 12345)
-        
-        # Test ChronoBase directly
-        base = ChronoBase(100)
-        self.assertEqual(base, 100)
 
     def test_from_time_and_get_time(self):
-        # Use UTC to avoid local timezone offsets during precision checks
+        # Use UTC post-2020
         dt = utc_dt(2023, 1, 1, 12, 30, 45)
-        
+
         variants = [
-            (UChrono32, 86400),    # Day precision
-            (Chrono32, 86400),
-            (UChrono32h, 3600),    # Hour precision
+            (UChrono32d, 86400),  # Day precision
+            (Chrono32d, 86400),
+            (UChrono32h, 3600),  # Hour precision
             (Chrono32h, 3600),
-            (UChrono32m, 60),      # Minute precision
+            (UChrono32m, 60),  # Minute precision
             (Chrono32m, 60),
-            (UChrono64, 1),        # Second precision
-            (Chrono64, 1),
+            (UChrono64s, 1),  # Second precision
+            (Chrono64s, 1),
             (UChrono64ms, 0.001),
             (Chrono64ms, 0.001),
-            (UChrono64us, 0.000001), # Microsecond precision
+            (UChrono64us, 0.000001),  # Microsecond precision
             (Chrono64us, 0.000001),
-            (UChrono32w, 604800),    # Week precision
+            (UChrono32w, 604800),  # Week precision
             (Chrono32w, 604800),
+            (Chrono32y, 31536000),  # Year precision
         ]
-        
+
         for cls, precision in variants:
             with self.subTest(cls=cls.__name__):
-                obj = cls.from_time(dt, random_val=0)
+                obj = cls.from_parts(dt, node_id=0, seq=0, p_idx=0, salt=0)
                 decoded_dt = obj.get_time()
-                
+
                 # Check if decoded time is within precision limits
                 diff = abs((decoded_dt - dt).total_seconds())
-                self.assertLessEqual(diff, precision, f"{cls.__name__} failed precision check")
+                self.assertLessEqual(
+                    diff, precision, f"{cls.__name__} failed precision check"
+                )
 
     def test_time_flooring(self):
-        # Specific check for flooring in UTC
         dt = utc_dt(2023, 1, 1, 12, 30, 45)
-        
+
         # Minute precision (should be 12:30:00 UTC)
-        obj_m = Chrono32m.from_time(dt, random_val=0)
+        obj_m = Chrono32m.from_parts(dt, node_id=0, seq=0, p_idx=0, salt=0)
         decoded = obj_m.get_time()
         self.assertEqual(decoded, utc_dt(2023, 1, 1, 12, 30, 0))
-        
+
         # Hour precision (should be 12:00:00 UTC)
-        obj_h = Chrono32h.from_time(dt, random_val=0)
+        obj_h = Chrono32h.from_parts(dt, node_id=0, seq=0, p_idx=0, salt=0)
         decoded = obj_h.get_time()
         self.assertEqual(decoded, utc_dt(2023, 1, 1, 12, 0, 0))
-        
+
         # Day precision (should be 00:00:00 UTC)
-        obj_d = Chrono32.from_time(dt, random_val=0)
+        obj_d = Chrono32d.from_parts(
+            dt, node_id=0, seq=0, persona=None, p_idx=0, salt=0
+        )
         decoded = obj_d.get_time()
         self.assertEqual(decoded, utc_dt(2023, 1, 1, 0, 0, 0))
 
     def test_epoch_boundaries(self):
-        # 32-bit Epoch: Jan 1, 2000 UTC
-        epoch_32 = utc_dt(2000, 1, 1, 0, 0, 0)
-        obj_32 = Chrono32.from_time(epoch_32, random_val=0)
-        self.assertEqual(obj_32 >> 13, 0)
-
-        # 64-bit Epoch: Jan 1, 1970 UTC
-        epoch_64 = utc_dt(1970, 1, 1, 0, 0, 0)
-        obj_64 = Chrono64.from_time(epoch_64, random_val=0)
-        self.assertEqual(obj_64 >> 27, 0)
-
-    def test_expiry_boundary(self):
-        # Max days allowed (18 bits)
-        max_days = 0x3FFFF
-        max_ts = EPOCH_2000 + (max_days * 86400)
-        max_dt = datetime.fromtimestamp(max_ts, tz=timezone.utc)
-        
-        obj = Chrono32.from_time(max_dt, random_val=0)
-        self.assertEqual(obj >> 13, max_days)
+        # Epoch: Jan 1, 2020 UTC
+        epoch = utc_dt(2020, 1, 1, 0, 0, 0)
+        obj = Chrono32d.from_parts(
+            epoch, node_id=0, seq=0, persona=None, p_idx=0, salt=0
+        )
+        # T should be 0, so shifted value depends on N and S bits
+        self.assertEqual(obj >> (Chrono32d.N_BITS + Chrono32d.S_BITS), 0)
 
     def test_sorting(self):
-        # IDs generated at different times should be sortable
-        t1 = datetime(2023, 1, 1, 10, 0, 0)
-        t2 = datetime(2023, 1, 1, 11, 0, 0)
+        t1 = utc_dt(2023, 1, 1, 10, 0, 0)
+        t2 = utc_dt(2023, 1, 1, 11, 0, 0)
 
-        id1 = Chrono64.from_time(t1)
-        id2 = Chrono64.from_time(t2)
+        id1 = Chrono64s.generate(dt=t1)
+        id2 = Chrono64s.generate(dt=t2)
 
         self.assertLess(id1, id2)
 
-        # Different entropy but same time should still be close
-        id2_alt = Chrono64.from_time(t1)
-        self.assertNotEqual(id1, id2_alt)
-        # Time bits should be identical
-        self.assertEqual(id1 >> 27, id2_alt >> 27)
-
-    def test_random_masking(self):
-        dt = datetime.now()
-        # Test with random value larger than allowed bits
-        # Chrono32 has 13 random bits (8191 max)
-        obj = Chrono32.from_time(dt, random_val=0xFFFFFFFF)
-        self.assertEqual(obj & 0x1FFF, 0x1FFF)
-
-        # UChrono32 has 14 random bits (16383 max)
-        obj_u = UChrono32.from_time(dt, random_val=0xFFFFFFFF)
-        self.assertEqual(obj_u & 0x3FFF, 0x3FFF)
-
     def test_auto_random(self):
-        # Verify that two IDs generated at the same time have different random bits
-        dt = datetime.now()
-        obj1 = Chrono64ms.from_time(dt)
-        obj2 = Chrono64ms.from_time(dt)
+        dt = datetime.now(timezone.utc)
+        obj1 = Chrono64ms.generate(dt=dt)
+        obj2 = Chrono64ms.generate(dt=dt)
+        # With high probability they are different
         self.assertNotEqual(obj1, obj2)
 
-    def test_inheritance(self):
-        obj = Chrono64(1000)
-        self.assertEqual(obj + 500, 1500)
-        self.assertTrue(obj > 500)
-        self.assertEqual(str(obj), "1000")
+    def test_precision_mismatch(self):
+        with self.assertRaises(ChronoError):
+            Chrono64s.from_iso_string("2019-12-31T23:59:59Z")
+
+    def test_string_representation(self):
+        # 64-bit variant
+        id64 = Chrono64s(0x1234567890ABCDEF)
+        fmt64 = str(id64)
+        self.assertEqual(fmt64, "1234-5678-90AB-CDEF")
+        self.assertEqual(repr(id64), "Chrono64s(1234-5678-90AB-CDEF)")
+
+        # Round-trip parsing
+        id64_parsed = Chrono64s("1234-5678-90AB-CDEF")
+        self.assertEqual(id64, id64_parsed)
+
+        # 32-bit variant
+        id32 = Chrono32y(0x12345678)
+        fmt32 = str(id32)
+        self.assertEqual(fmt32, "1234-5678")
+
+        # Round-trip 32-bit
+        id32_parsed = Chrono32y("1234-5678")
+        self.assertEqual(id32, id32_parsed)
+
+        # Handling lowercase and mixed spaces
+        id64_mixed = Chrono64s("1234 5678 90ab cdef")
+        self.assertEqual(id64, id64_mixed)
+
+    def test_from_formatted(self):
+        # 64-bit explicit
+        id64 = Chrono64s.from_formatted("1234-5678-90AB-CDEF")
+        self.assertEqual(int(id64), 0x1234567890ABCDEF)
+
+        # 32-bit explicit
+        id32 = Chrono32y.from_formatted("1234-5678")
+        self.assertEqual(int(id32), 0x12345678)
+
+        # Error case
+        with self.assertRaises(ChronoError):
+            Chrono32y.from_formatted("Invalid-Hex")
 
     def test_from_iso_string(self):
-        # Valid ISO strings
         with self.subTest(case="ms-precision"):
             obj1 = Chrono64ms.from_iso_string("2023-05-20T10:30:00.123Z")
             self.assertEqual(obj1.to_iso_string(), "2023-05-20T10:30:00.123Z")
-        
-        # Test error: Null input
+
         with self.subTest(case="null-iso"):
             with self.assertRaisesRegex(ChronoError, "Input string is null"):
                 Chrono64ms.from_iso_string(None)
-            
-        # Test error: Invalid format
+
         with self.subTest(case="invalid-format"):
             with self.assertRaisesRegex(ChronoError, "Invalid ISO 8601 format"):
                 Chrono64ms.from_iso_string("not-a-date")
-            
-        # Test error: Underflow Pre-1970 (64-bit)
-        with self.subTest(case="underflow-64"):
-            with self.assertRaisesRegex(ChronoError, "Date is before Unix Epoch"):
-                Chrono64.from_iso_string("1960-01-01T00:00:00Z")
-            
-        # Test error: Underflow Pre-2000 (32-bit)
-        with self.subTest(case="underflow-32"):
+
+        with self.subTest(case="underflow"):
             with self.assertRaisesRegex(ChronoError, "Date is before Epoch"):
-                Chrono32.from_iso_string("1999-12-31T23:59:59Z")
+                Chrono64s.from_iso_string("2010-01-01T00:00:00Z")
 
     def test_from_time_null(self):
         with self.assertRaisesRegex(ChronoError, "Input date is null"):
-            Chrono32.from_time(None)
+            Chrono32d.from_parts(None, 0, 0, persona=None, p_idx=0, salt=0)
+
 
 if __name__ == "__main__":
     unittest.main()

@@ -6,9 +6,9 @@ fn main() {
     // Test 1: The "Zero" ID
     // T=0, N=0, S=0. Should be 0.
     // Note: epoch is 2020-01-01. T=0 means 2020-01-01 00:00:00.
-    let id_zero = generator::generate_uchrono64s_at(0, 0); // node=0 internally if not set?
-    // Wait, generate_uchrono64s_at takes (ts, seq). Node is random?
-    // We need a deterministic verify function.
+    let _id_zero = generator::generate_uchrono64s_at(0, 0); // node=0 internally if not set?
+                                                            // Wait, generate_uchrono64s_at takes (ts, seq). Node is random?
+                                                            // We need a deterministic verify function.
 
     // Let's rely on the helper functions or raw logic?
     // The helpers in generator.rs might randomize Node.
@@ -19,15 +19,18 @@ fn main() {
     let s_zero = 0u64;
 
     // Reconstruct s variant: T=33, N=16, S=15.
-    let id_s_zero = (t_zero << 31) | (n_zero << 15) | s_zero; // wait. 33+16+15 = 64.
-    // Shifts: T is top 33. N is next 16. S is bottom 15.
-    // ID = (T << (16+15)) | (N << 15) | S
+    let _id_s_zero = (t_zero << 31) | (n_zero << 15) | s_zero; // wait. 33+16+15 = 64.
+                                                               // Shifts: T is top 33. N is next 16. S is bottom 15.
+                                                               // ID = (T << (16+15)) | (N << 15) | S
     let id_constructed_zero = (t_zero << 31) | (n_zero << 15) | s_zero;
 
     if id_constructed_zero == 0 {
-         println!("✅ PASS: T=0, N=0, S=0 => ID=0 (Valid 2020-01-01 base)");
+        println!("✅ PASS: T=0, N=0, S=0 => ID=0 (Valid 2020-01-01 base)");
     } else {
-         println!("❌ FAIL: Zero input produced non-zero ID: {}", id_constructed_zero);
+        println!(
+            "❌ FAIL: Zero input produced non-zero ID: {}",
+            id_constructed_zero
+        );
     }
 
     // Test 2: The "Max" ID (unsigned)

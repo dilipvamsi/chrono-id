@@ -48,7 +48,7 @@ $$k \approx \sqrt{2 \cdot N \cdot \ln(\frac{1}{1-p})} \approx \sqrt{2 \cdot N \c
 
 Standard random IDs rely on passive probability. ChronoID uses **Fibonacci Hashing** combined with **Weyl Sequences**.
 
-- **The Multiplier:** We use 64 hardcoded seeds derived from the Fractional Golden Ratio ($\phi^{-1} \approx 0.618...$).
+- **The Multiplier:** We use 128 hardcoded seeds derived from the Fractional Golden Ratio ($\phi^{-1} \approx 0.618...$).
 - **The Guarantee:** If Node A and Node B accidentally pick the same Node ID and Salt at time $T$, they will almost certainly have different Multipliers ($M_a \neq M_b$).
   - $ID_a(T+1) = (Seq+1) \times M_a$
   - $ID_b(T+1) = (Seq+1) \times M_b$
@@ -170,7 +170,7 @@ m_basket CONSTANT bigint[] := ARRAY[
 FUNCTION uchrono_mix(v_val, v_bits, v_p_idx, v_salt) {
     v_mask = (1 << v_bits) - 1;
     -- Seed >> Shift | 1 ensures ODD multiplier
-    v_mult = ((m_basket[(v_p_idx & 63) + 1] >> (64 - v_bits)) | 1);
+    v_mult = ((m_basket[(v_p_idx & 127) + 1] >> (64 - v_bits)) | 1);
     -- (LCG * Mult) XOR Salt
     return ((v_val * v_mult) # v_salt) & v_mask;
 }
@@ -219,7 +219,7 @@ _`chrono64s` is the recommended **default** for general-purpose database keys._
 | :--------------- | :---------- | :---------- | :---------- | :---------- | :-------------------- |
 | **Storage**      | ❌ 16 bytes | ❌ 20 bytes | ✅ 8 bytes  | ❌ 16 bytes | ✅ **8 bytes (or 4)** |
 | **Native INT**   | ❌ No       | ❌ No       | ✅ `bigint` | ❌ No       | ✅ **`bigint`/`int`** |
-| **Self-Healing** | ❌ None     | ❌ None     | ❌ None     | ❌ None     | ✅ **98.4% diverge**  |
+| **Self-Healing** | ❌ None     | ❌ None     | ❌ None     | ❌ None     | ✅ **99.2% diverge**  |
 | **Polymorphic**  | ❌ Fixed    | ❌ Fixed    | ❌ Fixed    | ❌ Fixed    | ✅ **3 modes**        |
 | **FK Tier**      | ❌ 16 bytes | ❌ 20 bytes | ❌ 8 bytes  | ❌ 16 bytes | ✅ **chrono32y: 4B**  |
 
@@ -248,4 +248,4 @@ It lists the **Signed** (`chrono`) variants for maximum compatibility with Postg
 > - **Empirical Status:** ✅ **Verified Hero Case.** Simulation Scenario 1 proved **100% recovery** for a Catastrophic 10,000-node mass-collision.
 > - **Critical Data:** Simulation Scenario 9 proves that Signed IDs carry a **1.6x higher statistical risk** than Unsigned; choose Signed only when language support forces it.
 > - _Example:_ `uchrono32y` offers **16.7 Million** IDs/year (24-bit), whereas `chrono32y` offers **8.3 Million** (23-bit).
-> - _Human-Readable:_ `chrono32y` encodes as a **7-character Crockford Base32** string (e.g., `8Z5Y03`) — compact, URL-safe, and verified **Sort-Stable** (Scenario 13).
+> - _Human-Readable:_ `chrono32y` encodes as a **9-character hyphenated hex** string (e.g., `1F4A-9C2B`) — compact, URL-safe, and verified **Sort-Stable** (Scenario 13).

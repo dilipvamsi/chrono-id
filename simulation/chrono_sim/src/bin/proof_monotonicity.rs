@@ -7,7 +7,7 @@
 //!
 //! This script reproducing a sequence-rotation sort inversion.
 
-use chrono_sim::generator::{self, Persona};
+use chrono_sim::generator;
 
 fn main() {
     println!("🧪 Scenario 24: Monotonicity Violation Audit");
@@ -33,5 +33,7 @@ fn main() {
     }
 
     println!("   > Monotonicity Inversions detected: {}", inversions);
-    println!("✅ VERDICT: ChronoID is 'Eventually Sortable' by time, but local monotonicity is bounded.");
+    println!(
+        "✅ VERDICT: ChronoID is 'Eventually Sortable' by time, but local monotonicity is bounded."
+    );
 }

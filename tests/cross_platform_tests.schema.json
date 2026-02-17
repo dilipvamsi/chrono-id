@@ -1,0 +1,100 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "Chrono-ID Cross-Platform Test Suite",
+  "type": "object",
+  "properties": {
+    "valid_cases": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "description": { "type": "string" },
+          "comment": { "type": "string" },
+          "iso": { "type": "string", "format": "date-time" },
+          "variants": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "properties": {
+                "description": { "type": "string" },
+                "name": { "type": "string" },
+                "expected_timestamp": { "type": "integer" },
+                "expected_iso": { "type": "string" },
+                "expected_hex": { "type": "string", "pattern": "^0x[0-9a-fA-F]+$" },
+                "expected_str": { "type": "string", "pattern": "^([0-9a-fA-F]{4}-[0-9a-fA-F]{4}|([0-9a-fA-F]{4}-){3}[0-9a-fA-F]{4})$" },
+                "timestamp_relative": { "type": "integer" },
+                "node_id": { "type": "integer" },
+                "seq": { "type": "integer" },
+                "node_idx": { "type": "integer" },
+                "node_salt": { "type": "integer" },
+                "seq_idx": { "type": "integer" },
+                "seq_salt": { "type": "integer" },
+                "seq_offset": { "type": "integer" },
+                "year": { "type": "integer" }
+              },
+              "required": ["name"]
+            }
+          }
+        },
+        "required": ["iso", "variants"]
+      }
+    },
+    "precision_checks": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "variant": { "type": "string" },
+          "input_iso": { "type": "string" },
+          "expected_iso": { "type": "string" }
+        },
+        "required": ["variant", "input_iso", "expected_iso"]
+      }
+    },
+    "error_cases": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "name": { "type": "string" },
+          "input": { "type": ["string", "null"] },
+          "variant": { "type": "string" },
+          "expected_error": { "type": "string" }
+        },
+        "required": ["name", "expected_error"]
+      }
+    },
+    "bit_splits": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "description": { "type": "string" },
+          "variant": { "type": "string" },
+          "iso": { "type": "string" },
+          "node_id": { "type": "integer" },
+          "seq": { "type": "integer" },
+          "expected_hex": { "type": "string" },
+          "expected_timestamp_bits": { "type": "string" },
+          "expected_node_bits": { "type": "string" },
+          "expected_seq_bits": { "type": "string" }
+        },
+        "required": ["variant", "expected_hex"]
+      }
+    },
+    "variant_specs": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "variant": { "type": "string" },
+          "t_bits": { "type": "integer" },
+          "n_bits": { "type": "integer" },
+          "s_bits": { "type": "integer" }
+        },
+        "required": ["variant", "t_bits", "n_bits", "s_bits"]
+      }
+    }
+  },
+  "required": ["valid_cases", "precision_checks", "error_cases", "bit_splits", "variant_specs"]
+}

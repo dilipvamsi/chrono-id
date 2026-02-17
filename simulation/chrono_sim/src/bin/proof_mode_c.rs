@@ -41,7 +41,7 @@ async fn run_scenario_5_mode_c() {
     // --- Test 2: Maintenance Stability ---
     // Salt rotations update entropy but must NOT change the Node ID routing bits.
     println!("   > Rotating Salt (Simulating Background Maintenance)...");
-    gen.rotate_salt_only();
+    gen.rotate_params_only();
 
     let id2 = gen.generate();
     let extracted2 = (id2 >> generator::SEQ_BITS) & generator::NODE_MASK;

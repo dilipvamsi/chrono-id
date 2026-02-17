@@ -3,8 +3,11 @@
 A Python library for generating K-Sortable 32-bit and 64-bit identifiers.
 
 ## ✨ Features
+
 - **Integer Inheritance**: Every ID class inherits from Python's `int`, allowing them to be used in any mathematical context.
-- **Time Decoding**: All IDs expose a `.get_time()` method.
+- **Hyphenated Hex Standard**: IDs automatically format as `XXXX-XXXX` (32-bit) or `XXXX-XXXX-XXXX-XXXX` (64-bit) for high human readability.
+- **Bidirectional Parsing**: ID classes can parse their hyphenated string representation directly via the constructor.
+- **Time Decoding**: All IDs expose a `.get_time()` method and `.to_iso_string()`.
 - **UTC Consistent**: Internally uses UTC for all calculations to avoid timezone-overlap bugs at epoch boundaries.
 - **Zero Dependencies**: Uses standard library `secrets`, `datetime`, and `time`.
 
@@ -15,7 +18,8 @@ from chrono_id import Chrono64ms, Chrono32, Chrono32h
 
 # 1. Generate current ID (64-bit Millisecond precision)
 id = Chrono64ms()
-print(id)               # 94827349827349
+print(id)               # C67F-32A1-001F-4BCC (hyphenated hex)
+print(int(id))          # 14303492038421033 (raw integer)
 print(id.get_time())    # 2023-10-27 12:45:01.234
 
 # 2. Generate for a specific time (32-bit Day precision)
@@ -27,6 +31,10 @@ old_id = Chrono32.from_time(dt)
 total = id + 1
 if id > old_id:
     print("IDs are sortable!")
+
+# 4. Parse from string (round-trip)
+parsed_id = Chrono64ms("C67F-32A1-001F-4BCC")
+assert id == parsed_id
 ```
 
 ## 🧪 Testing
@@ -38,6 +46,7 @@ make test
 ```
 
 The `Makefile` will automatically:
+
 1. Create a `venv`.
 2. Install `coverage`.
 3. Run the test suite in `tests/`.

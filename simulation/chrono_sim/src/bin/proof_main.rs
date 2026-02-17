@@ -8,9 +8,8 @@
 //! 2. **Entropy Distribution:** Verification of single-node uniqueness at scale.
 //! 3. **Burst Throughput:** Verification of uniqueness during sequence overflow.
 
-use chrono_sim::generator::{self, Generator, Persona};
+use chrono_sim::generator::{Generator, Persona};
 use indicatif::ProgressBar;
-use rand::Rng;
 use std::collections::HashSet;
 use std::sync::{Arc, Mutex};
 use std::time::Instant;
@@ -37,8 +36,11 @@ async fn run_scenario_1_self_healing() {
 
     let p = Persona {
         node_id: shared_node_id,
-        salt: shared_salt,
-        multiplier_idx: persona_idx,
+        node_salt: shared_salt,
+        node_idx: persona_idx,
+        seq_offset: 0,
+        seq_idx: persona_idx,
+        seq_salt: shared_salt,
     };
 
     let mut node_a = Generator::new_with_persona(p, 0);
@@ -88,8 +90,11 @@ async fn run_scenario_1_self_healing() {
         handles.push(tokio::spawn(async move {
             let p = Persona {
                 node_id: shared_node_id,
-                salt: shared_salt,
-                multiplier_idx: shared_multiplier_idx,
+                node_salt: shared_salt,
+                node_idx: shared_multiplier_idx,
+                seq_offset: 0,
+                seq_idx: shared_multiplier_idx,
+                seq_salt: shared_salt,
             };
 
             let mut gen = Generator::new_with_persona(p, shared_seq);

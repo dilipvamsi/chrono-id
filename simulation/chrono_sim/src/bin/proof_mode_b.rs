@@ -32,12 +32,15 @@ fn main() {
 /// Stress tests Mode B for 1 Billion IDs.
 fn verify_burst_capacity() {
     println!("\n   > Testing Burst Capacity (1 Billion IDs)...");
-    use chrono_sim::generator::{Generator, Precision};
+    use chrono_sim::generator::Generator;
 
     // Start a Mode B generator (Instance-Native)
     let mut gen = Generator::new_mode_b();
     let config = gen.get_config();
-    println!("     Config: Time {}b, Node {}b, Seq {}b", config.time_bits, config.node_bits, config.seq_bits);
+    println!(
+        "     Config: Time {}b, Node {}b, Seq {}b",
+        config.time_bits, config.node_bits, config.seq_bits
+    );
 
     let fixed_ts = 1000; // Fixed timestamp to force sequence/node pressure
     let seq_limit = 1u64 << config.seq_bits; // 32,768 IDs per node rotation
@@ -52,13 +55,17 @@ fn verify_burst_capacity() {
     let mut last_node_val = None;
     let mut collisions = 0;
 
-    use std::time::Instant;
     use indicatif::{ProgressBar, ProgressStyle};
+    use std::time::Instant;
 
     let pb = ProgressBar::new(target_ids);
-    pb.set_style(ProgressStyle::default_bar()
-        .template("{spinner:.green} [{elapsed_precise}] [{bar:40.cyan/blue}] {pos}/{len} ({eta})")
-        .unwrap());
+    pb.set_style(
+        ProgressStyle::default_bar()
+            .template(
+                "{spinner:.green} [{elapsed_precise}] [{bar:40.cyan/blue}] {pos}/{len} ({eta})",
+            )
+            .unwrap(),
+    );
 
     let start = Instant::now();
 
@@ -72,7 +79,10 @@ fn verify_burst_capacity() {
             if mixed_node != last {
                 // Node ID rotated to a new Weyl step
                 if !seen_nodes.insert(mixed_node) {
-                    println!("❌ COLLISION: Node ID {:x} repeated at index {}!", mixed_node, i);
+                    println!(
+                        "❌ COLLISION: Node ID {:x} repeated at index {}!",
+                        mixed_node, i
+                    );
                     collisions += 1;
                     break;
                 }
@@ -95,9 +105,9 @@ fn verify_burst_capacity() {
     println!("     Unique Node IDs seen: {}", seen_nodes.len());
 
     if collisions == 0 {
-         println!("✅ SUCCESS: Generated 1 Billion IDs with zero local collisions.");
+        println!("✅ SUCCESS: Generated 1 Billion IDs with zero local collisions.");
     } else {
-         println!("❌ FAILURE: Local collision detected during burst!");
+        println!("❌ FAILURE: Local collision detected during burst!");
     }
 }
 
@@ -118,9 +128,12 @@ fn verify_cycle(name: &str, bits: u64, magic: u64) {
         if !seen.insert(current) {
             let expected = (mask + 1) as usize;
             if count == expected {
-                 println!("✅ SUCCESS: Full period cycle detected ({} values).", count);
+                println!("✅ SUCCESS: Full period cycle detected ({} values).", count);
             } else {
-                 println!("❌ FAILURE: Short cycle detected! Expected {}, Got {}", expected, count);
+                println!(
+                    "❌ FAILURE: Short cycle detected! Expected {}, Got {}",
+                    expected, count
+                );
             }
             break;
         }
@@ -130,9 +143,8 @@ fn verify_cycle(name: &str, bits: u64, magic: u64) {
         count += 1;
 
         if count > (mask as usize) * 2 {
-             println!("❌ FAILURE: Safety break triggered.");
-             break;
+            println!("❌ FAILURE: Safety break triggered.");
+            break;
         }
     }
 }
-

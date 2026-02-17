@@ -32,7 +32,7 @@ The suite is divided into 27 distinct scenarios:
 
 - **Scenario 11: Register Efficiency** [Scale: 100,000,000 Ops] — CPU throughput advantage of 64-bit native arithmetic. (Confirmed 2.85x).
 - **Scenario 12: Bit-Split Audit** [Scale: 18 Variants] — Verification of T/N/S widths across all spectral variants.
-- **Scenario 13: Sortability Round-Trip** [Scale: 100,000 IDs] — Verified lossless Crockford Base32 encoding for FK portability.
+- **Scenario 13: Sortability Round-Trip** [Scale: 100,000 IDs] — Verified lossless Hyphenated Hex formatting for FK portability.
 - **Scenario 14: Burst Wait-Defense** [Scale: 100,000 Burst IDs] — Verified Mode C "Spin-Wait" blocking during millisecond sequence saturation.
 - **Scenario 15: Shard Routing Efficiency** [Scale: 1,000,000,000 Reqs] — O(1) routing performance at 1 billion requests.
 - **Scenario 16: Birthday Bound** [Scale: k=2,072 Nodes] — Empirical proof of 0.1% collision risk target.

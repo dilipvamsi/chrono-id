@@ -4,13 +4,13 @@
 //! 1. Mode A Active Divergence (Distributed collision avoidance under node ID conflict)
 //! 2. Mode B Throughput Cliff (Measured SQLite insert latency over millions of rows)
 
+use chrono_sim::{generator::Generator, Snowflake};
+use rand::Rng;
+use rusqlite::{params, Connection};
+use std::collections::HashSet;
 use std::fs::File;
 use std::io::Write;
-use std::collections::HashSet;
 use std::time::Instant;
-use rand::Rng;
-use rusqlite::{Connection, params};
-use chrono_sim::{generator::{Generator, Mode}, Snowflake};
 use uuid::Uuid;
 
 fn main() {
@@ -92,7 +92,9 @@ fn simulate_active_divergence() {
     let mut file = File::create("../data/entropy_decay.csv").unwrap();
     writeln!(file, "ids,standard_distributed,chronoid").unwrap();
 
-    let n_points = vec![10000, 20000, 30000, 40000, 50000, 60000, 70000, 80000, 90000, 100000];
+    let n_points = vec![
+        10000, 20000, 30000, 40000, 50000, 60000, 70000, 80000, 90000, 100000,
+    ];
     let node_pool_size = 1000; // Small pool (1k) to force node ID conflicts in uncoordinated environments
     let ts_ms = 1600000000000; // Fixed timestamp for distributed collision check
 
@@ -146,10 +148,16 @@ fn simulate_throughput_cliff() {
 
     // Use execute_batch to avoid panics on results from PRAGMAs
     conn_v7.execute_batch("PRAGMA journal_mode = OFF;").unwrap();
-    conn_chrono.execute_batch("PRAGMA journal_mode = OFF;").unwrap();
+    conn_chrono
+        .execute_batch("PRAGMA journal_mode = OFF;")
+        .unwrap();
 
-    conn_v7.execute("CREATE TABLE r (id BLOB PRIMARY KEY, data TEXT)", []).unwrap();
-    conn_chrono.execute("CREATE TABLE r (id INTEGER PRIMARY KEY, data TEXT)", []).unwrap();
+    conn_v7
+        .execute("CREATE TABLE r (id BLOB PRIMARY KEY, data TEXT)", [])
+        .unwrap();
+    conn_chrono
+        .execute("CREATE TABLE r (id INTEGER PRIMARY KEY, data TEXT)", [])
+        .unwrap();
 
     let batch_size = 200_000;
     let total_batches = 10; // 2 Million rows total for speed
@@ -163,7 +171,9 @@ fn simulate_throughput_cliff() {
         let start_v7 = Instant::now();
         conn_v7.execute_batch("BEGIN TRANSACTION;").unwrap();
         {
-            let mut stmt = conn_v7.prepare_cached("INSERT INTO r (id, data) VALUES (?, ?)").unwrap();
+            let mut stmt = conn_v7
+                .prepare_cached("INSERT INTO r (id, data) VALUES (?, ?)")
+                .unwrap();
             for _ in 0..batch_size {
                 let id = Uuid::now_v7();
                 stmt.execute(params![id.as_bytes(), "data"]).unwrap();
@@ -176,7 +186,9 @@ fn simulate_throughput_cliff() {
         let start_chrono = Instant::now();
         conn_chrono.execute_batch("BEGIN TRANSACTION;").unwrap();
         {
-            let mut stmt = conn_chrono.prepare_cached("INSERT INTO r (id, data) VALUES (?, ?)").unwrap();
+            let mut stmt = conn_chrono
+                .prepare_cached("INSERT INTO r (id, data) VALUES (?, ?)")
+                .unwrap();
             for _ in 0..batch_size {
                 let id = gen.generate();
                 stmt.execute(params![id as i64, "data"]).unwrap();
@@ -185,15 +197,22 @@ fn simulate_throughput_cliff() {
         conn_chrono.execute_batch("COMMIT;").unwrap();
         let dur_chrono = start_chrono.elapsed().as_millis();
 
-        println!("     Batch {}: UUIDv7={:?}ms, Chrono={:?}ms", b, dur_v7, dur_chrono);
+        println!(
+            "     Batch {}: UUIDv7={:?}ms, Chrono={:?}ms",
+            b, dur_v7, dur_chrono
+        );
         writeln!(file, "{},{},{}", current_rows, dur_v7, dur_chrono).unwrap();
     }
 }
 
 /// Helper to get SQLite index size in bytes
 fn get_index_size(conn: &Connection) -> i64 {
-    let page_count: i64 = conn.query_row("PRAGMA page_count", [], |r| r.get(0)).unwrap();
-    let page_size: i64 = conn.query_row("PRAGMA page_size", [], |r| r.get(0)).unwrap();
+    let page_count: i64 = conn
+        .query_row("PRAGMA page_count", [], |r| r.get(0))
+        .unwrap();
+    let page_size: i64 = conn
+        .query_row("PRAGMA page_size", [], |r| r.get(0))
+        .unwrap();
     page_count * page_size
 }
 
@@ -209,7 +228,7 @@ fn simulate_storage_footprint() {
     let mut file_d = File::create("../data/storage_tenant.csv").unwrap();
     writeln!(file_d, "type,size_mb").unwrap();
 
-    let n_empirical = 100_000; // Smaller sample for faster simulation, stable enough for linear scaling
+    // let n_empirical = 100_000; // Smaller sample for faster simulation, stable enough for linear scaling
     let n_empirical = 200_000;
 
     // 💥 Strategy: Isolate ID storage by using empty payloads and WITHOUT ROWID.
@@ -218,8 +237,11 @@ fn simulate_storage_footprint() {
     // 1. UUIDv7 (128-bit BLOB)
     let size_v7 = {
         let conn = Connection::open_in_memory().unwrap();
-        conn.execute_batch("PRAGMA journal_mode = OFF;
-             CREATE TABLE r (id BLOB PRIMARY KEY, d TEXT) WITHOUT ROWID;").unwrap();
+        conn.execute_batch(
+            "PRAGMA journal_mode = OFF;
+             CREATE TABLE r (id BLOB PRIMARY KEY, d TEXT) WITHOUT ROWID;",
+        )
+        .unwrap();
         let mut stmt = conn.prepare("INSERT INTO r VALUES (?, '')").unwrap();
         for _ in 0..n_empirical {
             stmt.execute(params![Uuid::now_v7().as_bytes()]).unwrap();
@@ -230,12 +252,16 @@ fn simulate_storage_footprint() {
     // 2. Snowflake (64-bit INTEGER)
     let size_snow = {
         let conn = Connection::open_in_memory().unwrap();
-        conn.execute_batch("PRAGMA journal_mode = OFF;
-             CREATE TABLE r (id INTEGER PRIMARY KEY, d TEXT) WITHOUT ROWID;").unwrap();
+        conn.execute_batch(
+            "PRAGMA journal_mode = OFF;
+             CREATE TABLE r (id INTEGER PRIMARY KEY, d TEXT) WITHOUT ROWID;",
+        )
+        .unwrap();
         let mut stmt = conn.prepare("INSERT INTO r VALUES (?, '')").unwrap();
         let mut snow = Snowflake::new(1);
         for i in 0..n_empirical {
-            stmt.execute(params![snow.generate_at(1600000000000 + i, 0) as i64]).unwrap();
+            stmt.execute(params![snow.generate_at(1600000000000 + i, 0) as i64])
+                .unwrap();
         }
         get_index_size(&conn)
     };
@@ -243,8 +269,11 @@ fn simulate_storage_footprint() {
     // 3. ChronoID 64-bit (Mode B)
     let size_chrono64 = {
         let conn = Connection::open_in_memory().unwrap();
-        conn.execute_batch("PRAGMA journal_mode = OFF;
-             CREATE TABLE r (id INTEGER PRIMARY KEY, d TEXT) WITHOUT ROWID;").unwrap();
+        conn.execute_batch(
+            "PRAGMA journal_mode = OFF;
+             CREATE TABLE r (id INTEGER PRIMARY KEY, d TEXT) WITHOUT ROWID;",
+        )
+        .unwrap();
         let mut stmt = conn.prepare("INSERT INTO r VALUES (?, '')").unwrap();
         let mut gen = Generator::new_mode_b();
         for _ in 0..n_empirical {
@@ -256,12 +285,18 @@ fn simulate_storage_footprint() {
     // 4. uchrono32y (32-bit INTEGER, 24-bit Entropy)
     let size_uchrono32 = {
         let conn = Connection::open_in_memory().unwrap();
-        conn.execute_batch("PRAGMA journal_mode = OFF;
-             CREATE TABLE r (id INTEGER PRIMARY KEY, d TEXT) WITHOUT ROWID;").unwrap();
+        conn.execute_batch(
+            "PRAGMA journal_mode = OFF;
+             CREATE TABLE r (id INTEGER PRIMARY KEY, d TEXT) WITHOUT ROWID;",
+        )
+        .unwrap();
         let mut stmt = conn.prepare("INSERT INTO r VALUES (?, '')").unwrap();
         let seq = std::sync::atomic::AtomicU64::new(0);
         for _ in 0..n_empirical {
-            stmt.execute(params![chrono_sim::generator::generate_chrono32y_mode_b(&seq) as i64]).unwrap();
+            stmt.execute(params![
+                chrono_sim::generator::generate_chrono32y_mode_b(&seq) as i64
+            ])
+            .unwrap();
         }
         get_index_size(&conn)
     };
@@ -274,13 +309,23 @@ fn simulate_storage_footprint() {
     let scale_c = 100_000_000.0 / n_empirical as f64;
     writeln!(file_c, "UUIDv7,{:.2}", (size_v7 as f64 * scale_c) / gb).unwrap();
     writeln!(file_c, "Snowflake,{:.2}", (size_snow as f64 * scale_c) / gb).unwrap();
-    writeln!(file_c, "ChronoID,{:.2}", (size_chrono64 as f64 * scale_c) / gb).unwrap();
+    writeln!(
+        file_c,
+        "ChronoID,{:.2}",
+        (size_chrono64 as f64 * scale_c) / gb
+    )
+    .unwrap();
 
     // Graph D: Max 24-bit (16.7M Rows) Extrapolation
     let scale_d = 16_777_216.0 / n_empirical as f64;
     writeln!(file_d, "UUIDv7,{:.2}", (size_v7 as f64 * scale_d) / mb).unwrap();
     writeln!(file_d, "Snowflake,{:.2}", (size_snow as f64 * scale_d) / mb).unwrap();
-    writeln!(file_d, "uchrono32y,{:.2}", (size_uchrono32 as f64 * scale_d) / mb).unwrap();
+    writeln!(
+        file_d,
+        "uchrono32y,{:.2}",
+        (size_uchrono32 as f64 * scale_d) / mb
+    )
+    .unwrap();
 }
 
 /// Graph G: Register Performance (64-bit vs 128-bit)
@@ -295,11 +340,19 @@ fn simulate_register_performance() {
     let start_64 = Instant::now();
     let mut sum64 = 0u64;
     for i in 0..n {
-        sum64 = std::hint::black_box(sum64.wrapping_add(i as u64).wrapping_mul(0x9E3779B97F4A7C15));
+        sum64 = std::hint::black_box(
+            sum64
+                .wrapping_add(i as u64)
+                .wrapping_mul(0x9E3779B97F4A7C15),
+        );
     }
     std::hint::black_box(sum64);
     let d_64_us = start_64.elapsed().as_micros() as f64;
-    let ops_64 = if d_64_us > 0.0 { (n as f64 / d_64_us) * 1000.0 } else { 0.0 };
+    let ops_64 = if d_64_us > 0.0 {
+        (n as f64 / d_64_us) * 1000.0
+    } else {
+        0.0
+    };
 
     // 2. 128-bit / String Simulation (UUID-like)
     let start_128 = Instant::now();
@@ -309,7 +362,11 @@ fn simulate_register_performance() {
         std::hint::black_box(s);
     }
     let d_128_us = start_128.elapsed().as_micros() as f64;
-    let ops_128 = if d_128_us > 0.0 { (n as f64 / d_128_us) * 1000.0 } else { 0.0 };
+    let ops_128 = if d_128_us > 0.0 {
+        (n as f64 / d_128_us) * 1000.0
+    } else {
+        0.0
+    };
 
     writeln!(file, "ChronoID (64-bit),{:.2}", ops_64).unwrap();
     writeln!(file, "UUID/ULID (128-bit),{:.2}", ops_128).unwrap();
@@ -328,8 +385,11 @@ fn simulate_avalanche() {
 
     let p = chrono_sim::generator::Persona {
         node_id: 0,
-        salt,
-        multiplier_idx: p_idx,
+        node_salt: salt,
+        node_idx: p_idx,
+        seq_offset: 0,
+        seq_idx: p_idx,
+        seq_salt: salt,
     };
     let gen = chrono_sim::generator::Generator::new_with_persona(p, 0);
 
@@ -339,8 +399,8 @@ fn simulate_avalanche() {
             let val1 = rand::random::<u64>() & ((1u64 << bits) - 1);
             let val2 = val1 ^ (1u64 << i);
 
-            let res1 = gen.mix(val1, bits as u8);
-            let res2 = gen.mix(val2, bits as u8);
+            let res1 = gen.mix(val1, bits as u8, p.node_idx, p.node_salt);
+            let res2 = gen.mix(val2, bits as u8, p.node_idx, p.node_salt);
 
             let diff = res1 ^ res2;
             total_flipped += diff.count_ones();

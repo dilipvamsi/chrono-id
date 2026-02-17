@@ -19,8 +19,9 @@ Standard systems force a rigid choice (UUID = Random, Snowflake = Coordinated). 
 - **Best For:** Serverless (Lambda), Edge Computing, IoT, Offline-First Mobile.
 - **Key Advantage:** **Mathematical Self-Healing (The Weyl-Golden Shield).**
   - **The Innovation:** Standard UUIDs rely on _passive_ probability (hoping collisions don't happen). Mode A uses **Active Divergence**.
+  - **The Multiplier:** We use 128 hardcoded seeds derived from the Fractional Golden Ratio ($\phi^{-1} \approx 0.618...$).
   - **The Logic:** It combines a Weyl Sequence ($n \alpha \pmod 1$) with Golden Ratio multipliers.
-  - **The Guarantee:** If two independent nodes accidentally collide at Time $T$, the math guarantees their entropy states will **repel** each other at Time $T+1$ with 98.4% probability.
+  - **The Guarantee:** If two independent nodes accidentally collide at Time $T$, the math guarantees their entropy states will **repel** each other at Time $T+1$ with 99.2% probability.
   - **Empirical Status:** ✅ **Verified.** Simulation Scenario 1 proved 100% recovery for 10,000 colliding nodes.
   - **Divergence Proof:** Scenario 27 verified instant divergence from orchestrated perfect collisions using the 128-prime Weyl basket.
   - **Burst Defense:** On sequence overflow → immediate persona re-roll (emergency rotation).
@@ -59,7 +60,7 @@ While 64-bit handles global uniqueness, `chrono32` solves specific **Storage & S
   - **The Problem:** Tenant IDs appear as Foreign Keys in _every_ child table. UUID costs 16 bytes per reference × millions of rows = gigabytes of wasted storage. No existing ID system addresses this.
   - **The Innovation:** `chrono32y` (Year Precision) updates Time bits only once per year, leaving 24 bits (unsigned) for entropy — ~16.7M unique Tenant IDs per year.
   - **Storage:** Saves **12 bytes per row** in every child table. At 1B rows: **~12 GB saved**.
-  - **Obfuscation:** Appears random (e.g., `9402115`), hiding growth rates. Encodes as **7-char Crockford Base32** (e.g., `8Z5Y03`) for human-readable, URL-safe, dictation-friendly display.
+  - **Obfuscation:** Appears random (e.g., `1F4A-9C2B`), hiding growth rates. Encodes as **9-char hyphenated hex** (e.g., `1F4A-9C2B`) for human-readable, URL-safe, easy to dictate display.
   - **Unique Differentiator:** No other ID system (UUID, ULID, KSUID, Snowflake, NanoID, Xid) offers a purpose-built 32-bit tenant identifier with obfuscation, time-ordering, and native integer performance.
 
 ---
@@ -92,11 +93,11 @@ ChronoID introduces six architectural concepts that have **no equivalent** in an
 
 |  #  | Innovation                      | What It Does                                                                                                                                                                    |    Prior Art?     |
 | :-: | :------------------------------ | :------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ | :---------------: |
-|  1  | **Weyl-Golden Self-Healing**    | If two nodes collide at time $T$, mathematical divergence forces their IDs apart at $T+1$ with 98.4% probability. Every other system produces a **silent duplicate**.           |     **None**      |
+|  1  | **Weyl-Golden Self-Healing**    | If two nodes collide at time $T$, mathematical divergence forces their IDs apart at $T+1$ with 99.2% probability. Every other system produces a **silent duplicate**.           |     **None**      |
 |  2  | **Polymorphic Modes**           | A single `bigint` column supports three architectures (Stateless, Stateful, Managed) — switch modes without schema migration. Every other system is fixed to one pattern.       |     **None**      |
 |  3  | **Configurable Time Precision** | Trade time granularity for entropy across a µs → month spectrum (12 variants). UUID v7, Snowflake, ULID — all locked to milliseconds.                                           |     **None**      |
 |  4  | **Never-Stall Burst Rotation**  | On sequence overflow: Mode A re-rolls persona, Mode B Weyl-Steps to a new Node — **instantly**, zero downtime. Snowflake blocks. AUTO_INCREMENT errors.                         |     **None**      |
-|  5  | **`chrono32y` Tenant ID**       | The first purpose-built 32-bit tenant identifier with time-ordering, obfuscation, and Crockford Base32 encoding. Saves 12 bytes per FK vs UUID.                                 |     **None**      |
+|  5  | **`chrono32y` Tenant ID**       | The first purpose-built 32-bit tenant identifier with time-ordering, obfuscation, and hyphenated hex display. Saves 12 bytes per FK vs UUID.                                    |     **None**      |
 |  6  | **Birthday Shield**             | Periodic persona rotation resets the "birthday room," preventing collision probability from accumulating over time. Reframes the Birthday Paradox as a **feature**, not a risk. | **Novel framing** |
 
 > [!NOTE]
@@ -118,7 +119,7 @@ Every contender wins at something. ChronoID wins at **everything**.
 | **Globally Unique**     | ✅ Probabilistic    | ✅ Deterministic         | ❌ Per-instance   | ✅ **Both (Mode A / Mode C)**    |
 | **B-Tree Performance**  | ❌ Random fragments | ⚠️ Append, but rigid     | ✅ Append         | ✅ **Mode B: append + unique**   |
 | **Shard Routing**       | ❌ Lookup required  | ❌ Lookup required       | ❌ Not possible   | ✅ **Mode C: embedded routing**  |
-| **Collision Recovery**  | ❌ Silent duplicate | ❌ Silent duplicate      | ❌ Error          | ✅ **Self-healing (98.4%)**      |
+| **Collision Recovery**  | ❌ Silent duplicate | ❌ Silent duplicate      | ❌ Error          | ✅ **Self-healing (99.2%)**      |
 | **FK Compression**      | ❌ 16 bytes/ref     | ❌ 8 bytes (no compact)  | ✅ 4 bytes        | ✅ **chrono32y: 4 bytes**        |
 | **Lifespan**            | ✅ Long             | ⚠️ ~69 years (from 2010) | ✅ Long           | ✅ **250+ years**                |
 | **Coordinator Failure** | N/A                 | ❌ ID generation halts   | N/A               | ✅ **Mode A/B: no coordinator**  |
@@ -132,7 +133,7 @@ Every contender wins at something. ChronoID wins at **everything**.
 | **Native Integer**   | ❌ Byte array  | ❌ Byte array   | ✅ `bigint`         | ❌ String   | ❌ Byte array    | ❌ Byte array  | ✅ **`bigint` / `int`**      |
 | **Sortable**         | ✅ ms-order    | ✅ second-order | ✅ ms-order         | ❌ Random   | ✅ second-order  | ✅ sec-order   | ✅ **µs → month**            |
 | **Uncoordinated**    | ✅ Random      | ✅ Random       | ⚠️ Needs Worker ID  | ✅ Random   | ⚠️ Machine ID    | ⚠️ Machine ID  | ✅ **Mode A: zero coord**    |
-| **Self-Healing**     | ❌ None        | ❌ None         | ❌ None             | ❌ None     | ❌ None          | ❌ None        | ✅ **98.4% divergence**      |
+| **Self-Healing**     | ❌ None        | ❌ None         | ❌ None             | ❌ None     | ❌ None          | ❌ None        | ✅ **99.2% divergence**      |
 | **Shard Routing**    | ❌ No          | ❌ No           | ❌ No               | ❌ No       | ❌ No            | ❌ No          | ✅ **Mode C: embedded**      |
 | **Polymorphic**      | ❌ Fixed       | ❌ Fixed        | ❌ Fixed            | ❌ Fixed    | ❌ Fixed         | ❌ Fixed       | ✅ **3 modes, no migration** |
 | **FK Compression**   | ❌ 16 bytes    | ❌ 20 bytes     | ❌ 8 bytes only     | ❌ 16 bytes | ❌ 12 bytes      | ❌ 12 bytes    | ✅ **chrono32y: 4 bytes**    |

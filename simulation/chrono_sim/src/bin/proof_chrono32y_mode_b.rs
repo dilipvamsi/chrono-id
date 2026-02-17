@@ -9,8 +9,8 @@
 //! 2. **Full Space Coverage:** Confirm that every possible entropy value in the
 //!    2^24 space is visited exactly once.
 
-use std::sync::atomic::{AtomicU64, Ordering};
 use chrono_sim::generator;
+use std::sync::atomic::AtomicU64;
 use std::time::Instant;
 
 fn main() {
@@ -58,4 +58,3 @@ fn main() {
         println!("❌ FAILURE: {} Collisions detected.", collisions);
     }
 }
-
