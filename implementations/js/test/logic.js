@@ -177,7 +177,7 @@ function defineTests(describe, it, assert, ChronoID) {
         const id = new ChronoID[name](12345n);
         assert.strictEqual(JSON.stringify(id), '"12345"');
         assert.strictEqual(id.toJSON(), "12345");
-        assert.strictEqual(id.toString(), "12345");
+        assert.strictEqual(id.toString(), id.formatted());
       });
     });
 

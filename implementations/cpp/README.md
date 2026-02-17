@@ -2,17 +2,16 @@
 
 A header-only C++20 library for generating K-sortable, time-based unique identifiers with sub-second precision up to microseconds.
 
-## Features
+## ✨ Features
 
 - **Header-only**: Single file `include/chrono_id.hpp`.
-- **C++20**: Uses modern C++ features.
+- **C++20**: Uses modern C++ features like `if constexpr` and `std::chrono`.
 - **K-Sortable**: IDs are sortable by time.
-- **Microsecond Precision**: Supports millisecond and microsecond precision.
-- **Custom Epoch**: Configurable epoch for shorter IDs.
-- **Randomness**: Includes random bits for collision resistance.
+- **Bit-Parity**: Full bit-parity with Python and JS versions.
+- **Custom Epoch**: Configurable epoch for shorter IDs (Default: 2020-01-01).
 - **No Dependencies**: Standard library only.
 
-## Usage
+## 🚀 Usage
 
 Include `chrono_id.hpp` in your project.
 
@@ -23,38 +22,38 @@ Include `chrono_id.hpp` in your project.
 using namespace chrono_id;
 
 int main() {
-    // Generate a 64-bit ID with millisecond precision
-    auto id = Chrono64ms();
-    std::cout << "ID: " << id.value << std::endl;
-    std::cout << "ISO: " << id.to_iso_string() << std::endl;
+    // 1. Generate a 64-bit ID with millisecond precision
+    auto id = Chrono64ms::generate();
+    std::cout << "ID (BigInt): " << id.value << std::endl;
+    std::cout << "Formatted:   " << id.formatted() << std::endl;  // "C67F-32A1-001F-4BCC"
+    std::cout << "ISO:         " << id.to_iso_string() << std::endl;
 
-    // Parse from ISO string
-    auto parsed = Chrono64ms::from_iso_string("2023-01-01T12:00:00.123Z");
-    std::cout << "Parsed ID: " << parsed.value << std::endl;
+    // 2. Parse from formatted string (Bidirectional)
+    auto parsed = Chrono64ms::from_format("C67F-32A1-001F-4BCC");
+
+    // 3. Generate for specific time and node
+    auto old_id = Chrono64s::from_parts(std::chrono::system_clock::now(), 123, 0);
 
     return 0;
 }
 ```
 
-## Error Handling
-
-The library throws `std::invalid_argument` for:
-- `nullptr` input strings.
-- Invalid ISO 8601 date formats.
-- Timestamp underflows (dates before the configured Epoch).
-- Dates before 1970-01-01.
-
-## Build and Test
+## 🧪 Build and Test
 
 ```bash
 make test
-# or for coverage
-make coverage
+# or for cross-platform JSON parity tests
+make test-json
 ```
 
-## Variants
+## 💎 Variants
 
-- `Chrono32`, `UChrono32`: 32-bit seconds precision.
-- `Chrono64`, `UChrono64`: 64-bit seconds precision.
-- `Chrono64ms`, `UChrono64ms`: 64-bit milliseconds precision.
-- `Chrono64us`, `UChrono64us`: 64-bit microseconds precision.
+The implementation supports 40 precision variants across 32-bit and 64-bit families:
+
+- **64-bit Family**: `Chrono64[mo|w|d|h|m|s|ds|cs|ms|us]` and `UChrono64` equivalents.
+- **32-bit Family**: `Chrono32[y|hy|q|mo|w|d|h|tm|m|bs]` and `UChrono32` equivalents.
+
+Example naming:
+
+- `UChrono64ms`: Unsigned 64-bit, millisecond precision.
+- `Chrono32y`: Signed 32-bit, yearly precision (Member/Tenant IDs).

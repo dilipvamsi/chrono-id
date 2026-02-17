@@ -1,8 +1,26 @@
 /**
- * Chrono-ID TypeScript Definitions (Diamond Standard)
+ * Chrono-ID TypeScript Definitions
  *
  * All ID variants wrap a native BigInt and provide time-ordered uniqueness.
  */
+
+export enum Precision {
+  Y = 0,
+  HY = 1,
+  Q = 2,
+  MO = 3,
+  W = 4,
+  D = 5,
+  H = 6,
+  TM = 7,
+  M = 8,
+  BS = 9,
+  S = 10,
+  DS = 11,
+  CS = 12,
+  MS = 13,
+  US = 14,
+}
 
 export class ChronoError extends Error {}
 
@@ -19,13 +37,64 @@ export interface Persona {
 export abstract class ChronoBase {
   protected value: bigint;
 
+  static readonly PRECISION: Precision;
+  static readonly T_BITS: number;
+  static readonly N_BITS: number;
+  static readonly S_BITS: number;
+  static readonly SIGNED: boolean;
+
   constructor(value?: string | number | bigint);
 
   /**
    * Generates a new ID using autonomous state.
-   * If `dt` is provided, the ID will be pinned to that timestamp.
    */
-  static generate(dt?: Date): ChronoBase;
+  static generate<T extends ChronoBase>(
+    this: new (v?: any) => T,
+    dt?: Date,
+    node_id?: number,
+    seq?: number,
+    persona?: Persona,
+  ): T;
+
+  /**
+   * Constructs an ID from a specific Date and optional random entropy.
+   */
+  static fromTime<T extends ChronoBase>(
+    this: new (v?: any) => T,
+    date: Date,
+    randomVal?: number | bigint,
+  ): T;
+
+  /**
+   * Parses an ISO 8601 string into a Chrono-ID.
+   */
+  static fromISOString<T extends ChronoBase>(
+    this: new (v?: any) => T,
+    iso: string,
+    seq?: number | bigint,
+  ): T;
+
+  /**
+   * Constructs an ID from explicit components with optional mixing.
+   */
+  static fromParts<T extends ChronoBase>(
+    this: new (v?: any) => T,
+    dt: Date,
+    node_id: number,
+    seq: number,
+    p_idx?: number,
+    salt?: number | bigint,
+    ts?: bigint,
+    persona?: Persona,
+  ): T;
+
+  /**
+   * Parses a hyphenated hex string into an ID.
+   */
+  static fromFormat<T extends ChronoBase>(
+    this: new (v?: any) => T,
+    fmt: string,
+  ): T;
 
   /** Decodes the timestamp embedded in the ID. */
   getTime(): Date;
@@ -63,106 +132,106 @@ export abstract class Chrono32Base extends ChronoBase {
 
 // --- 32-bit Family (Epoch 2020) ---
 
-/** Yearly precision: ~255 years capacity. */
+/** Yearly precision: ~256 years (Expiry 2276). */
 export class UChrono32y extends Chrono32Base {}
 export class Chrono32y extends Chrono32Base {}
 
-/** Half-Yearly precision. */
+/** Half-Yearly precision: ~256 years (Expiry 2276). */
 export class UChrono32hy extends Chrono32Base {}
 export class Chrono32hy extends Chrono32Base {}
 
-/** Quarterly precision. */
+/** Quarterly precision: ~256 years (Expiry 2276). */
 export class UChrono32q extends Chrono32Base {}
 export class Chrono32q extends Chrono32Base {}
 
-/** Monthly precision: ~341 years capacity. */
+/** Monthly precision: ~341 years (Expiry 2361). */
 export class UChrono32mo extends Chrono32Base {}
 export class Chrono32mo extends Chrono32Base {}
 
-/** Weekly precision. */
+/** Weekly precision: ~314 years (Expiry 2334). */
 export class UChrono32w extends Chrono32Base {}
 export class Chrono32w extends Chrono32Base {}
 
-/** Daily precision: ~359 years capacity. */
+/** Daily precision: ~358 years (Expiry 2378). */
 export class UChrono32d extends Chrono32Base {}
-export class Chrono32d extends Chrono32Base {
-  static fromTime(date: Date, randomVal?: number | bigint): Chrono32d;
-}
+export class Chrono32d extends Chrono32Base {}
 
-/** Hourly precision: ~477 years capacity. */
+/** Hourly precision: ~478 years (Expiry 2498). */
 export class UChrono32h extends Chrono32Base {}
 export class Chrono32h extends Chrono32Base {}
 
-/** Ten-Minute precision. */
+/** Ten-Minute precision: ~319 years (Expiry 2339). */
 export class UChrono32tm extends Chrono32Base {}
 export class Chrono32tm extends Chrono32Base {}
 
-/** Minute precision: ~510 years capacity. */
+/** Minute precision: ~510 years (Expiry 2530). */
 export class UChrono32m extends Chrono32Base {}
 export class Chrono32m extends Chrono32Base {}
 
-/** Big-Second (Epoch-only) precision: ~136 years capacity. */
+/** Bi-Second (2s) precision: ~136 years (Expiry 2156). Extra bit in uchrono32bs goes to NodeID. */
 export class UChrono32bs extends Chrono32Base {}
 export class Chrono32bs extends Chrono32Base {}
 
 // --- 64-bit Family (Epoch 2020) ---
 
-/** Monthly precision. */
+/** Monthly precision: Expires 2361. */
 export class UChrono64mo extends ChronoBase {}
 export class Chrono64mo extends ChronoBase {}
 
-/** Weekly precision. */
+/** Weekly precision: Expires 2334. */
 export class UChrono64w extends ChronoBase {}
 export class Chrono64w extends ChronoBase {}
 
-/** Daily precision. */
+/** Daily precision: Expires 2378. */
 export class UChrono64d extends ChronoBase {}
 export class Chrono64d extends ChronoBase {}
 
-/** Hourly precision. */
+/** Hourly precision: Expires 2258. */
 export class UChrono64h extends ChronoBase {}
 export class Chrono64h extends ChronoBase {}
 
-/** Minute precision. */
+/** Minute precision: Expires 2275. */
 export class UChrono64m extends ChronoBase {}
 export class Chrono64m extends ChronoBase {}
 
-/** Second precision: Expires 2292 (Signed) / 2412 (Unsigned). */
-export class UChrono64s extends ChronoBase {
-  static fromTime(date: Date, randomVal?: number | bigint): UChrono64s;
-}
-export class Chrono64s extends ChronoBase {
-  static fromTime(date: Date, randomVal?: number | bigint): Chrono64s;
-}
+/** Second precision: Expires 2292. */
+export class UChrono64s extends ChronoBase {}
+export class Chrono64s extends ChronoBase {}
 
-/** Deci-Second precision. */
+/** Deci-Second precision: Expires 2237. */
 export class UChrono64ds extends ChronoBase {}
 export class Chrono64ds extends ChronoBase {}
 
-/** Centi-Second precision. */
+/** Centi-Second precision: Expires 2368. */
 export class UChrono64cs extends ChronoBase {}
 export class Chrono64cs extends ChronoBase {}
 
 /** Millisecond precision: Expires 2298. */
-export class UChrono64ms extends ChronoBase {
-  static fromTime(date: Date, randomVal?: number | bigint): UChrono64ms;
-}
-export class Chrono64ms extends ChronoBase {
-  static fromTime(date: Date, randomVal?: number | bigint): Chrono64ms;
-}
+export class UChrono64ms extends ChronoBase {}
+export class Chrono64ms extends ChronoBase {}
 
 /** Microsecond precision: Expires 2305. */
 export class UChrono64us extends ChronoBase {
-  static fromTime(
+  /**
+   * Constructs an ID from a specific Date and optional random entropy.
+   * Specific to US precision to allow `us_offset`.
+   */
+  static fromTime<T extends ChronoBase>(
+    this: new (v?: any) => T,
     date: Date,
     randomVal?: number | bigint,
     us_offset?: bigint,
-  ): UChrono64us;
+  ): T;
 }
 export class Chrono64us extends ChronoBase {
-  static fromTime(
+  /**
+   * Constructs an ID from a specific Date and optional random entropy.
+   * Specific to US precision to allow `us_offset`.
+   */
+  static fromTime<T extends ChronoBase>(
+    this: new (v?: any) => T,
     date: Date,
     randomVal?: number | bigint,
     us_offset?: bigint,
-  ): Chrono64us;
+  ): T;
 }

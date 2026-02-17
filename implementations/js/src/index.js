@@ -518,6 +518,16 @@
     }
 
     /**
+     * Parses a hyphenated hex string into an ID.
+     * @param {string} fmt - The formatted string (e.g. 0123-4567-89AB-CDEF).
+     * @returns {ChronoBase}
+     */
+    static fromFormat(fmt) {
+      if (!fmt) throw new ChronoError("Formatted input is null");
+      return new this(fmt);
+    }
+
+    /**
      * Reconstructs the original Date object from the encoded timestamp bits.
      * @returns {Date}
      */
@@ -573,7 +583,7 @@
     }
     /** @returns {string} */
     toString() {
-      return this.value.toString();
+      return this.formatted();
     }
     /** @returns {string} JSON-compatible string. */
     toJSON() {

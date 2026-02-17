@@ -541,7 +541,7 @@ _Collisions are "Ties". Use for Partitioning or Mode B/C._
 | **h**   | Hour        |    22/5/5    |  2498  |    10 bits     |     **1**      | Single-Node Shift Sort |
 | **tm**  | 10-Min      |    24/4/4    |  2339  |     8 bits     |   **Manual**   | Batch Partitioning     |
 | **m**   | Minute      |    28/2/2    |  2530  |     4 bits     |   **Single**   | Local App Sorting      |
-| **bs**  | Bi-Sec (2s) |    32/0/0    |  2292  |     0 bits     |    **None**    | **32-bit Sort Index**  |
+| **bs**  | Bi-Sec (2s) |    31/1/0    |  2156  |     1 bit      |    **None**    | **32-bit Sort Index**  |
 
 **Design Philosophy.** The Sort-Key variants invert ChronoID's usual priority. Instead of maximizing suffix entropy for multi-node uniqueness, they **maximize timestamp bits** for the finest possible time ordering within 32 bits. The Node and Sequence fields shrink (or vanish entirely in `bs`), meaning collisions between nodes are expected — but treated as **"ties"**, not errors.
 
@@ -665,7 +665,7 @@ UPDATE state SET
 
 ## 8. Empirical Verification (The Proof-of-Work)
 
-Beyond mathematical modeling, ChronoID's claims have been empirically verified through **27 distinct failure scenarios** in a high-performance Rust simulation environment (Diamond Standard).
+Beyond mathematical modeling, ChronoID's claims have been empirically verified through **27 distinct failure scenarios** in a high-performance Rust simulation environment (Unified Standard).
 
 ### 8.1 Key Results
 
