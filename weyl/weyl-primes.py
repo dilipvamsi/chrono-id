@@ -13,14 +13,18 @@ from decimal import Decimal, getcontext
 # Set precision high enough for 64-bit integer conversion
 getcontext().prec = 30
 
+
 def is_prime(n, k=10):
     """
     Performs the Miller-Rabin primality test.
     k is the number of iterations; 10 is sufficient for 64-bit numbers.
     """
-    if n <= 1: return False
-    if n <= 3: return True
-    if n % 2 == 0: return False
+    if n <= 1:
+        return False
+    if n <= 3:
+        return True
+    if n % 2 == 0:
+        return False
 
     # Miller-Rabin primality test
     r, d = 0, n - 1
@@ -40,14 +44,17 @@ def is_prime(n, k=10):
             return False
     return True
 
+
 def get_next_prime(n):
     """
     Finds the smallest prime p >= n.
     """
-    if n % 2 == 0: n += 1
+    if n % 2 == 0:
+        n += 1
     while not is_prime(n):
         n += 2
     return n
+
 
 # --- Constant Derivation using high-precision Decimal ---
 
@@ -88,9 +95,10 @@ PHI = int(phi_inv * Decimal(2**64))
 step_raw = Decimal(2).sqrt() - 1
 STEP = int(step_raw * Decimal(2**64))
 
+
 def main():
     """
-    Generates the 128-prime Weyl basket and prints raw hex values.
+    Generates the 128-prime Weyl basket and writes to weyl-multipliers.txt.
     """
     mults = []
     current = PHI
@@ -102,9 +110,17 @@ def main():
         p = get_next_prime(target)
         mults.append(p)
 
-    # Print raw hex values for the toolchain
-    for m in mults:
-        print(f"0x{m:016X}")
+    # Write hex values to file (4 per row)
+    multipliers_path = "weyl-multipliers.txt"
+    with open(multipliers_path, "w") as f:
+        for i in range(0, len(mults), 4):
+            batch = [f"0x{m:016X}" for m in mults[i : i + 4]]
+            f.write(" ".join(batch) + "\n")
+
+    print(
+        f"✅ Success: Generated and saved {len(mults)} multipliers to {multipliers_path}"
+    )
+
 
 if __name__ == "__main__":
     main()

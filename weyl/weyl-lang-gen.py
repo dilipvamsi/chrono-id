@@ -10,6 +10,7 @@ import sys
 import os
 import argparse
 
+
 def generate_source(mults, lang):
     """
     Dispatches the correct code emitter based on the target language.
@@ -17,13 +18,17 @@ def generate_source(mults, lang):
     lang = lang.lower()
     count = len(mults)
 
-    def emit_array(header, footer, item_suffix="", items_per_line=4):
+    def emit_array(header, footer, item_suffix="", items_per_line=4, comment=None):
         """
         Generic helper to format a 1D array/list into a multi-line source block.
         """
-        lines = [header]
+        lines = []
+        if comment:
+            lines.append(comment)
+        lines.append(header)
         for i in range(0, count, items_per_line):
-            batch = [m + item_suffix for m in mults[i:i+items_per_line]]
+            # Normalize to lowercase hex for code consistency
+            batch = [m.lower() + item_suffix for m in mults[i : i + items_per_line]]
             line = "    " + ", ".join(batch) + ","
             lines.append(line)
         lines.append(footer)
@@ -31,19 +36,34 @@ def generate_source(mults, lang):
 
     # Rust: pub const WEYL_MULTIPLIERS: [u64; 128] = [...]
     if lang == "rust":
-        return emit_array(f"pub const WEYL_MULTIPLIERS: [u64; {count}] = [", "];")
+        # Rustfmt usually handles arrays fine, but we can add an ignore if needed.
+        return emit_array(
+            f"pub const WEYL_MULTIPLIERS: [u64; {count}] = [",
+            "];",
+            comment="#[rustfmt::skip]",
+        )
 
     # JavaScript/TypeScript: export const WEYL_MULTIPLIERS = [1n, ...] (BigInt)
     elif lang in ["js", "javascript", "ts", "typescript"]:
-        return emit_array("export const WEYL_MULTIPLIERS = [", "];", item_suffix="n")
+        return emit_array(
+            "export const WEYL_MULTIPLIERS = [",
+            "];",
+            item_suffix="n",
+            comment="// prettier-ignore",
+        )
 
     # C/C++: const uint64_t WEYL_MULTIPLIERS[128] = {1ULL, ...}
     elif lang in ["cpp", "c++", "c"]:
-        return emit_array(f"const uint64_t WEYL_MULTIPLIERS[{count}] = {{", "};", item_suffix="ULL")
+        return emit_array(
+            f"const uint64_t WEYL_MULTIPLIERS[{count}] = {{",
+            "};",
+            item_suffix="ULL",
+            comment="/* clang-format off */",
+        )
 
     # Python: WEYL_MULTIPLIERS = [...]
     elif lang == "python":
-        return emit_array("WEYL_MULTIPLIERS = [", "]")
+        return emit_array("WEYL_MULTIPLIERS = [", "]", comment="# fmt: off")
 
     # Odin: WEYL_MULTIPLIERS: [128]u64 = {...}
     elif lang == "odin":
@@ -56,11 +76,24 @@ def generate_source(mults, lang):
     else:
         return f"// Unsupported language: {lang}\n" + "\n".join(mults)
 
+
 def main():
     """
     Main CLI entry point with robust argument handling.
     """
-    supported_langs = ["rust", "js", "ts", "javascript", "typescript", "cpp", "c++", "c", "python", "odin", "go"]
+    supported_langs = [
+        "rust",
+        "js",
+        "ts",
+        "javascript",
+        "typescript",
+        "cpp",
+        "c++",
+        "c",
+        "python",
+        "odin",
+        "go",
+    ]
 
     parser = argparse.ArgumentParser(
         description="ChronoID Weyl Multiplier Generator",
@@ -69,12 +102,15 @@ def main():
 Examples:
   python3 weyl-lang-gen.py rust implementation/weyl.rs
   python3 weyl-lang-gen.py js multipliers.js --source custom_mults.txt
-"""
+""",
     )
 
     parser.add_argument("language", choices=supported_langs, help="Target language")
     parser.add_argument("output", help="Output file path")
-    parser.add_argument("--source", help="Path to multipliers text file (default: weyl-multipliers.txt at script root)")
+    parser.add_argument(
+        "--source",
+        help="Path to multipliers text file (default: weyl-multipliers.txt at script root)",
+    )
 
     args = parser.parse_args()
 
@@ -94,11 +130,17 @@ Examples:
     # 2. Read and validate data
     try:
         with open(multipliers_path, "r") as f:
-            mults = [line.strip() for line in f if line.strip()]
+            content = f.read()
+            # Parse hex values (e.g. 0x..., 0x...) separated by whitespace or commas
+            import re
+
+            mults = re.findall(r"0x[0-9A-F]+", content, re.IGNORECASE)
 
         # Enforce Diamond Standard (128 multipliers)
         if len(mults) != 128:
-            print(f"⚠️ Warning: Found {len(mults)} multipliers. Diamond Standard requires exactly 128.")
+            print(
+                f"⚠️ Warning: Found {len(mults)} multipliers. Diamond Standard requires exactly 128."
+            )
             # We still proceed but warn.
     except Exception as e:
         print(f"❌ Error reading source: {e}")
@@ -115,10 +157,13 @@ Examples:
         output = generate_source(mults, args.language)
         with open(args.output, "w") as f:
             f.write(output + "\n")
-        print(f"✅ Success: Generated {len(mults)} multipliers for {args.language} -> {args.output}")
+        print(
+            f"✅ Success: Generated {len(mults)} multipliers for {args.language} -> {args.output}"
+        )
     except Exception as e:
         print(f"❌ Error writing output: {e}")
         sys.exit(1)
+
 
 if __name__ == "__main__":
     main()

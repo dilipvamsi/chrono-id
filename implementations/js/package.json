@@ -13,7 +13,7 @@
     "README.md"
   ],
   "scripts": {
-    "test": "node test/test.js && node test/test_json.js",
+    "test": "node test/test.js && node test/test-json.js",
     "build": "mkdir -p dist && terser ./src/index.js --compress --mangle --output dist/chrono-id.min.js",
     "prepublishOnly": "npm run build"
   },

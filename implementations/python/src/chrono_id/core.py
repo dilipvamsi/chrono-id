@@ -137,6 +137,17 @@ def _ts_us(dt: datetime) -> int:
     return (int(dt.timestamp()) - EPOCH_2020) * 1000000 + dt.microsecond
 
 
+def _ensure_utc(dt: datetime) -> datetime:
+    """
+    Ensures that the input datetime is UTC-normalized.
+    If naive, it is assumed to be UTC (to maintain cross-platform parity).
+    If aware, it is converted to UTC.
+    """
+    if dt.tzinfo is None:
+        return dt.replace(tzinfo=timezone.utc)
+    return dt.astimezone(timezone.utc)
+
+
 # Array-based dispatch for O(1) timestamp computation.
 TS_COMPUTE: List[Callable[[datetime], int]] = [
     _ts_y,
@@ -378,6 +389,8 @@ class Generator:
         """Generates a unique ID, incrementing sequence if in the same time window."""
         if dt is None:
             dt = datetime.now(timezone.utc)
+        else:
+            dt = _ensure_utc(dt)
         ts_unix = dt.timestamp()
         ts = TS_COMPUTE[self.cls.PRECISION](dt)
 
@@ -491,6 +504,8 @@ class ChronoBase(int):
         """
         if dt is None:
             dt = datetime.now(timezone.utc)
+        else:
+            dt = _ensure_utc(dt)
 
         if persona is None:
             state = _get_thread_state(cls)
@@ -552,6 +567,7 @@ class ChronoBase(int):
         """
         if dt is None:
             raise ChronoError("Input date is null")
+        dt = _ensure_utc(dt)
         if dt.timestamp() < EPOCH_2020:
             raise ChronoError("Timestamp underflow: Date is before Epoch (2020-01-01)")
         ts_val = (ts if ts is not None else TS_COMPUTE[cls.PRECISION](dt)) & cls.T_MASK

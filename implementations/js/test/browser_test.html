@@ -68,12 +68,22 @@
             ok: (val, msg) => { if (!val) throw new Error(msg || 'Expected true'); },
             strictEqual: (a, b) => { if (a !== b) throw new Error(`Expected ${b}, got ${a}`); },
             notStrictEqual: (a, b) => { if (a === b) throw new Error(`Expected not ${b}`); },
-            throws: (fn, regex) => {
+            throws: (fn, errorType, regex) => {
+                // Handle both throws(fn, regex) and throws(fn, errorType, regex)
+                if (errorType instanceof RegExp) {
+                    regex = errorType;
+                    errorType = null;
+                }
                 try {
                     fn();
                 } catch (e) {
-                    if (regex.test(e.message)) return;
-                    throw new Error(`Expected error matching ${regex}, but got: ${e.message}`);
+                    if (errorType && !(e instanceof errorType)) {
+                        throw new Error(`Expected error type ${errorType.name}, but got ${e.constructor.name}`);
+                    }
+                    if (regex && !regex.test(e.message)) {
+                        throw new Error(`Expected error matching ${regex}, but got: ${e.message}`);
+                    }
+                    return;
                 }
                 throw new Error(`Expected function to throw, but it succeeded.`);
             }

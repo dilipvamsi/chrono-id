@@ -3,7 +3,7 @@
 |                      |                                                                           |
 | :------------------- | :------------------------------------------------------------------------ |
 | **Version**          | 1.0                                                                       |
-| **Epoch Standard**   | 2020-01-01 (Unix: 1577836800)                                             |
+| **Epoch Standard**   | 2020-01-01T00:00:00Z (Universal UTC)                                      |
 | **Longevity Target** | 250+ Years (Generational Standard)                                        |
 | **Core Philosophy**  | "Decoupled Identity" — Separating ID Generation Logic from Storage Schema |
 | **Verification**     | 27 Scenarios (100% PASS)                                                  |
@@ -141,6 +141,16 @@ Adding the bit to Sequence instead would double the IDs-per-window-per-generator
 | `uchrono32y` |     32     |       24        |         183          |    ~16.7M    |
 
 **Rule of thumb:** Default to `chrono` (signed) for compatibility. Use `uchrono` (unsigned) when your entire stack supports unsigned integers — it's strictly better when available.
+
+---
+
+## 1.1 Universal Time Standard (UTC)
+
+To guarantee bit-identical IDs across distributed systems, Chrono-ID mandates **UTC** for all timestamp operations.
+
+1. **Component Extraction:** Methods like `getYear()`, `getMonth()`, and `getDay()` must use the UTC variants (e.g., `getUTCFullYear()` in JS) to avoid local timezone offsets.
+2. **Naive Normalization:** Any implementation receiving a "naive" datetime (without an explicit offset) must default to UTC calculation.
+3. **Parity:** A Chrono-ID generated at midnight in Tokyo must be bit-identical to one generated at the same absolute instant in London.
 
 ---
 

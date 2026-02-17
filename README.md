@@ -1,6 +1,7 @@
 # ChronoID: Sortable × Uncoordinated × Compact
 
 > **Status**: 🟢 **Diamond Certified** (27/27 Simulation Scenarios Passed)
+> **Standard**: 🕒 **Strict UTC Enforcement** (All bit-parity and calendar partitioning is UTC-mandatory)
 
 ChronoID is a high-performance distributed identifier framework that solves the **ID Generation Trilemma** — the fundamental impossibility of achieving **Sortability**, **Uncoordinated Scaling**, and **Storage Efficiency** simultaneously with existing standards.
 

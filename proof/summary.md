@@ -1,10 +1,10 @@
 # ChronoID: Sortable × Uncoordinated × Compact — Comprehensive Implementation Guide
 
-|                      |                                    |
-| :------------------- | :--------------------------------- |
-| **Version**          | 1.0                                |
-| **Epoch Standard**   | 2020-01-01 (Unix: 1577836800)      |
-| **Longevity Target** | 250+ Years (Generational Standard) |
+|                      |                                      |
+| :------------------- | :----------------------------------- |
+| **Version**          | 1.0                                  |
+| **Epoch Standard**   | 2020-01-01T00:00:00Z (Universal UTC) |
+| **Longevity Target** | 250+ Years (Generational Standard)   |
 
 ---
 
@@ -31,6 +31,7 @@ Unlike UUIDs (128-bit, passive randomness) or Snowflake IDs (64-bit, rigid coord
 3.  **Maximum Ingestion Speed:** Verified up to **3.87x faster** record insertion than random identifiers (Theorem 4).
 4.  **Polymorphic Engine:** A single standard that morphs between three modes (Stateless, Stateful, Managed).
 5.  **Diamond Standard Verification:** All claims validated by a **27-scenario** Rust simulation suite with **128 prime Weyl multipliers**, including real-world SQLite B-Tree performance certification.
+6.  **Universal UTC Parity:** All implementations mandate absolute UTC timestamp calculation, ensuring that an ID generated in any timezone is bit-identical for the same absolute instant.
 
 ---
 
@@ -59,6 +60,9 @@ Standard random IDs rely on passive probability. ChronoID uses **Fibonacci Hashi
 ---
 
 ## 3. Operational Modes
+
+> [!IMPORTANT]
+> **Universal Time Standard:** All operational modes mandate the use of **UTC** for timestamp extraction and rotation calculations. Local time jumps (DST, timezone shifts) must NOT affect the internal state.
 
 ### Mode A: Autonomous Persona (Client-Side)
 

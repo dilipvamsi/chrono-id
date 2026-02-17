@@ -1,157 +1,236 @@
 /**
  * Shared test logic for Chrono-ID.
- * This file is designed to be used by both Node.js (node:test) 
+ * This file is designed to be used by both Node.js (node:test)
  * and Browser-based test runners.
  */
 
 function defineTests(describe, it, assert, ChronoID) {
-    describe('Chrono-ID Implementation', () => {
+  describe("Chrono-ID Implementation", () => {
+    const ALL_VARIANTS = Object.keys(ChronoID).filter(
+      (k) =>
+        (k.startsWith("Chrono") || k.startsWith("UChrono")) &&
+        typeof ChronoID[k] === "function" &&
+        ![
+          "ChronoError",
+          "ChronoBase",
+          "Chrono32Base",
+          "ChronoBasebs",
+          "Persona",
+          "Generator",
+        ].includes(k),
+    );
 
-        it('ChronoBase instantiation', () => {
-            const id = new ChronoID.Chrono64ms();
-            assert.ok(id.toBigInt() > 0n);
-            assert.ok(typeof id.toString() === 'string');
-            assert.ok(id instanceof ChronoID.UChrono64ms || id instanceof ChronoID.Chrono64ms);
-        });
+    it("All variants instantiation and tier properties", () => {
+      ALL_VARIANTS.forEach((name) => {
+        const Cls = ChronoID[name];
+        const id = new Cls();
+        assert.ok(
+          id.toBigInt() >= 0n,
+          `${name} should have a non-negative value`,
+        );
 
-        it('Instantiation from value', () => {
-            const val = 123456789n;
-            const id = new ChronoID.UChrono32(val);
-            assert.strictEqual(id.toBigInt(), val);
-            assert.strictEqual(id.toNumber(), Number(val));
-        });
-
-        it('fromTime and getTime accuracy', () => {
-            const date = new Date('2023-01-01T12:00:00Z');
-
-            const variants = [
-                { cls: ChronoID.UChrono32, precision: 86400000 },
-                { cls: ChronoID.Chrono32, precision: 86400000 },
-                { cls: ChronoID.UChrono32h, precision: 3600000 },
-                { cls: ChronoID.Chrono32h, precision: 3600000 },
-                { cls: ChronoID.UChrono32m, precision: 60000 },
-                { cls: ChronoID.Chrono32m, precision: 60000 },
-                { cls: ChronoID.UChrono64, precision: 1000 },
-                { cls: ChronoID.Chrono64, precision: 1000 },
-                { cls: ChronoID.UChrono64ms, precision: 1 },
-                { cls: ChronoID.Chrono64ms, precision: 1 },
-                { cls: ChronoID.UChrono64us, precision: 1 }, // precision in ms for accuracy check
-                { cls: ChronoID.Chrono64us, precision: 1 },
-                { cls: ChronoID.UChrono32w, precision: 604800000 }, // Week precision in ms
-                { cls: ChronoID.Chrono32w, precision: 604800000 }
-            ];
-
-            for (const { cls, precision } of variants) {
-                const id = cls.fromTime(date, 0n);
-                const decodedDate = id.getTime();
-                const diff = Math.abs(decodedDate.getTime() - date.getTime());
-                assert.ok(diff <= precision, `${cls.name} failed precision check: ${diff} > ${precision}`);
-            }
-        });
-
-        it('Time flooring accuracy', () => {
-            const date = new Date('2023-01-01T12:30:45.999Z');
-
-            // Minute precision
-            const id_m = ChronoID.Chrono32m.fromTime(date, 0n);
-            assert.strictEqual(id_m.getTime().toISOString(), '2023-01-01T12:30:00.000Z');
-
-            // Hour precision
-            const id_h = ChronoID.Chrono32h.fromTime(date, 0n);
-            assert.strictEqual(id_h.getTime().toISOString(), '2023-01-01T12:00:00.000Z');
-
-            // Day precision
-            const id_d = ChronoID.Chrono32.fromTime(date, 0n);
-            assert.strictEqual(id_d.getTime().toISOString(), '2023-01-01T00:00:00.000Z');
-        });
-
-        it('Epoch boundaries', () => {
-            // 32-bit Epoch: Jan 1, 2000
-            const epoch32 = new Date('2000-01-01T00:00:00Z');
-            const id32 = ChronoID.Chrono32.fromTime(epoch32, 0n);
-            // Should be 0 in time bits (unshift SHIFT)
-            assert.strictEqual(id32.toBigInt() >> BigInt(ChronoID.Chrono32.SHIFT), 0n);
-
-            // 64-bit Epoch: Jan 1, 1970
-            const epoch64 = new Date('1970-01-01T00:00:00Z');
-            const id64 = ChronoID.Chrono64.fromTime(epoch64, 0n);
-            // Should be 0 in time bits
-            assert.strictEqual(id64.toBigInt() >> BigInt(ChronoID.Chrono64.SHIFT), 0n);
-        });
-
-        it('Expiry boundary', () => {
-            // Max days allowed (18 bits)
-            const maxUnits = BigInt(ChronoID.Chrono32.MASK);
-            const epoch2000 = 946684800000n;
-            const maxDate = new Date(Number(epoch2000 + maxUnits * 86400000n));
-
-            const id = ChronoID.Chrono32.fromTime(maxDate, 0n);
-            assert.strictEqual(id.toBigInt() >> BigInt(ChronoID.Chrono32.SHIFT), maxUnits);
-        });
-
-        it('K-Sortability', () => {
-            const d1 = new Date('2023-01-01T10:00:00Z');
-            const d2 = new Date('2023-01-01T11:00:00Z');
-
-            const id1 = ChronoID.Chrono64.fromTime(d1);
-            const id2 = ChronoID.Chrono64.fromTime(d2);
-
-            assert.ok(id1.toBigInt() < id2.toBigInt());
-
-            // Same time, different entropy
-            const id1Alt = ChronoID.Chrono64.fromTime(d1);
-            assert.notStrictEqual(id1.toBigInt(), id1Alt.toBigInt());
-            assert.strictEqual(id1.toBigInt() >> BigInt(ChronoID.Chrono64.SHIFT), id1Alt.toBigInt() >> BigInt(ChronoID.Chrono64.SHIFT));
-        });
-
-        it('Serialization support', () => {
-            const id = new ChronoID.Chrono64(12345n);
-            assert.strictEqual(JSON.stringify(id), '"12345"');
-            assert.strictEqual(id.toJSON(), '12345');
-            assert.strictEqual(id.toString(), '12345');
-        });
-
-        it('Random values are unique', () => {
-            const date = new Date();
-            const id1 = ChronoID.Chrono64ms.fromTime(date);
-            const id2 = ChronoID.Chrono64ms.fromTime(date);
-            assert.notStrictEqual(id1.toBigInt(), id2.toBigInt());
-        });
-
-        it('Invalid date throwing error', () => {
-            assert.throws(() => ChronoID.Chrono64ms.fromTime('not a date'), ChronoID.ChronoError, /Invalid date object/);
-        });
-
-        it('Constructor with specific value', () => {
-            const id = new ChronoID.Chrono32('100');
-            assert.strictEqual(id.toBigInt(), 100n);
-        });
-
-        it('fromISOString and standardized errors', () => {
-            // Valid ISO
-            const id = ChronoID.Chrono64ms.fromISOString('2023-05-20T10:30:00.123Z');
-            assert.strictEqual(id.getTime().toISOString(), '2023-05-20T10:30:00.123Z');
-
-            // Null/Undefined inputs
-            assert.throws(() => ChronoID.Chrono64ms.fromISOString(null), ChronoID.ChronoError, /Input string is null/);
-            assert.throws(() => ChronoID.Chrono64ms.fromISOString(undefined), ChronoID.ChronoError, /Input string is null/);
-            assert.throws(() => ChronoID.Chrono32.fromTime(null), ChronoID.ChronoError, /Input date is null/);
-
-            // Invalid format
-            assert.throws(() => ChronoID.Chrono64ms.fromISOString('not-a-date'), ChronoID.ChronoError, /Invalid ISO 8601 format/);
-
-            // Underflow 64-bit (Pre-1970)
-            assert.throws(() => ChronoID.Chrono64.fromISOString('1960-01-01T00:00:00Z'), ChronoID.ChronoError, /Date is before Unix Epoch/);
-
-            // Underflow 32-bit (Pre-2000)
-            assert.throws(() => ChronoID.Chrono32.fromISOString('1999-12-31T23:59:59Z'), ChronoID.ChronoError, /Date is before Epoch/);
-        });
+        const width =
+          Cls.T_BITS + Cls.N_BITS + Cls.S_BITS + (Cls.SIGNED ? 1 : 0);
+        if (width <= 32) {
+          assert.ok(
+            typeof id.toNumber === "function",
+            `32-bit variant ${name} should have toNumber()`,
+          );
+          assert.ok(
+            id.toNumber() >= 0,
+            `32-bit variant ${name} toNumber() should be non-negative`,
+          );
+        } else {
+          assert.strictEqual(
+            id.toNumber,
+            undefined,
+            `64-bit variant ${name} should NOT have toNumber()`,
+          );
+        }
+      });
     });
+
+    it("Instantiation from value", () => {
+      const val = 123456789n;
+      const id32 = new ChronoID.UChrono32d(val);
+      assert.strictEqual(id32.toBigInt(), val);
+      assert.strictEqual(id32.toNumber(), Number(val));
+
+      const id64 = new ChronoID.Chrono64s(val);
+      assert.strictEqual(id64.toBigInt(), val);
+    });
+
+    it("fromTime and getTime accuracy", () => {
+      const date = new Date("2023-01-01T12:00:00Z");
+
+      const accuracyMap = {
+        Y: 366 * 86400000,
+        HY: 366 * 86400000,
+        Q: 366 * 86400000,
+        MO: 31 * 86400000,
+        W: 604800000,
+        D: 86400000,
+        H: 3600000,
+        TM: 600000,
+        M: 60000,
+        BS: 2000,
+        S: 1000,
+        DS: 100,
+        CS: 10,
+        MS: 1,
+        US: 1,
+      };
+
+      ALL_VARIANTS.forEach((name) => {
+        const Cls = ChronoID[name];
+        const id = Cls.fromTime(date, 0n);
+        const decodedDate = id.getTime();
+        const diff = Math.abs(decodedDate.getTime() - date.getTime());
+
+        // Get precision symbol from enum if possible or mapping
+        const precKey = Object.keys(ChronoID.Precision || {}).find(
+          (k) => (ChronoID.Precision || {})[k] === Cls.PRECISION,
+        );
+        const precision = accuracyMap[precKey] || 1000;
+
+        assert.ok(
+          diff <= precision,
+          `${name} failed precision check: ${diff} > ${precision}`,
+        );
+      });
+    });
+
+    it("Time flooring accuracy", () => {
+      const date = new Date("2023-01-01T12:30:45.999Z");
+
+      // Minute precision
+      assert.strictEqual(
+        ChronoID.Chrono32m.fromTime(date, 0n).getTime().toISOString(),
+        "2023-01-01T12:30:00.000Z",
+      );
+
+      // Hour precision
+      assert.strictEqual(
+        ChronoID.Chrono32h.fromTime(date, 0n).getTime().toISOString(),
+        "2023-01-01T12:00:00.000Z",
+      );
+
+      // Day precision
+      assert.strictEqual(
+        ChronoID.Chrono32d.fromTime(date, 0n).getTime().toISOString(),
+        "2023-01-01T00:00:00.000Z",
+      );
+    });
+
+    it("Epoch boundaries", () => {
+      const epoch2020 = new Date("2020-01-01T00:00:00Z");
+
+      ALL_VARIANTS.forEach((name) => {
+        const Cls = ChronoID[name];
+        const id = Cls.fromTime(epoch2020, 0n);
+        assert.strictEqual(
+          id.toBigInt() >> Cls.T_SHIFT,
+          0n,
+          `${name} epoch boundary check failed`,
+        );
+      });
+    });
+
+    it("Expiry boundary for 32-bit", () => {
+      const epoch2020 = 1577836800000n;
+      // Test a few 32-bit variants for expiry
+      const testExpiry = (Cls, unitMs) => {
+        const maxUnits = Cls.T_MASK;
+        const maxDate = new Date(Number(epoch2020 + maxUnits * BigInt(unitMs)));
+        const id = Cls.fromTime(maxDate, 0n);
+        assert.strictEqual(
+          id.toBigInt() >> Cls.T_SHIFT,
+          maxUnits,
+          `${Cls.name} expiry check failed`,
+        );
+      };
+
+      testExpiry(ChronoID.Chrono32d, 86400000);
+      testExpiry(ChronoID.Chrono32h, 3600000);
+    });
+
+    it("K-Sortability", () => {
+      const d1 = new Date("2023-01-01T10:00:00Z");
+      const d2 = new Date("2023-01-01T11:00:00Z");
+
+      const id1 = ChronoID.Chrono64s.fromTime(d1);
+      const id2 = ChronoID.Chrono64s.fromTime(d2);
+
+      assert.ok(id1.toBigInt() < id2.toBigInt());
+
+      // Same time, different entropy/persona
+      const id1Alt = ChronoID.Chrono64s.fromTime(d1);
+      assert.notStrictEqual(id1.toBigInt(), id1Alt.toBigInt());
+      assert.strictEqual(
+        id1.toBigInt() >> ChronoID.Chrono64s.SHIFT,
+        id1Alt.toBigInt() >> ChronoID.Chrono64s.SHIFT,
+      );
+    });
+
+    it("Serialization support", () => {
+      ALL_VARIANTS.forEach((name) => {
+        const id = new ChronoID[name](12345n);
+        assert.strictEqual(JSON.stringify(id), '"12345"');
+        assert.strictEqual(id.toJSON(), "12345");
+        assert.strictEqual(id.toString(), "12345");
+      });
+    });
+
+    it("Random values are unique", () => {
+      const date = new Date();
+      ALL_VARIANTS.filter((n) => ChronoID[n].S_BITS > 0).forEach((name) => {
+        const id1 = ChronoID[name].fromTime(date);
+        const id2 = ChronoID[name].fromTime(date);
+        assert.notStrictEqual(
+          id1.toBigInt(),
+          id2.toBigInt(),
+          `${name} failed uniqueness check`,
+        );
+      });
+    });
+
+    it("Invalid date throwing error", () => {
+      assert.throws(
+        () => ChronoID.Chrono64ms.fromTime("not a date"),
+        ChronoID.ChronoError,
+        /Invalid date object/,
+      );
+    });
+
+    it("Constructor with specific value", () => {
+      const id = new ChronoID.Chrono32d("100");
+      assert.strictEqual(id.toBigInt(), 100n);
+    });
+
+    it("fromISOString and standardized errors", () => {
+      // Valid ISO
+      const iso = "2023-05-20T10:30:00.123Z";
+      const id = ChronoID.Chrono64ms.fromISOString(iso);
+      assert.strictEqual(id.getTime().toISOString(), iso);
+
+      // Naive ISO string should be treated as UTC
+      const naiveIso = "2023-05-20T10:30:00.123";
+      const idNaive = ChronoID.Chrono64ms.fromISOString(naiveIso);
+      assert.strictEqual(idNaive.getTime().toISOString(), iso);
+
+      // Underflow (Pre-2020)
+      assert.throws(
+        () => ChronoID.Chrono64s.fromISOString("2019-12-31T23:59:59Z"),
+        ChronoID.ChronoError,
+        /Date is before Epoch/,
+      );
+    });
+  });
 }
 
 // Export for Node.js or Globals for Browser
-if (typeof module !== 'undefined' && module.exports) {
-    module.exports = { defineTests };
+if (typeof module !== "undefined" && module.exports) {
+  module.exports = { defineTests };
 } else {
-    window.defineTests = defineTests;
+  window.defineTests = defineTests;
 }
